@@ -81,11 +81,11 @@ const Login  = ({history}) => {
                                 alignItems: 'center',
                             }}
                         >
-                            <Avatar sx={{ width: 82, height: 72, bgcolor: 'white' }}>
-                                <img src={'/static/images/avatar/ausol-logo.png'} />
+                            <Avatar sx={{ width: 100, height: 98, bgcolor: 'white' }}>
+                                <img width={200} height={140} src={'/imagenes/logo.png'} />
                             </Avatar>
                             <Typography component="h1" variant="h5">
-                                SISTEMA GROOT
+                                POLLA MUNDIALISTA
                             </Typography>
                             <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                                 <TextField
@@ -108,11 +108,6 @@ const Login  = ({history}) => {
                                 id="password"
                                 autoComplete="current-password"
                                 />
-                                <FormControlLabel
-                                control={<Checkbox value="remember" color="primary" />}
-                                label="Remember me"
-                                />
-
                                 <Button
                                 type="submit"
                                 fullWidth
@@ -121,18 +116,6 @@ const Login  = ({history}) => {
                                 >
                                 Ingresar
                                 </Button>
-                                <Grid container>
-                                    <Grid item xs>
-                                        <Link href="#" variant="body2">
-                                        Forgot password?
-                                        </Link>
-                                    </Grid>
-                                    <Grid item>
-                                        <Link href="#" variant="body2">
-                                        {"Don't have an account? Sign Up"}
-                                        </Link>
-                                    </Grid>
-                                </Grid>
                             </Box>   
                         </Box>                    
                     </CardContent>

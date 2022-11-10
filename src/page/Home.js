@@ -10,6 +10,7 @@ import Header from '../component/Header';
 import Navigator from '../component/Navigator';
 import Contenedor from '../component/Contenedor';
 import Telefonos from '../component/Telefonos';
+import Partidos from '../component/Partidos';
 
 let theme = createTheme({
     palette: {
@@ -193,7 +194,7 @@ const Home = () => {
           <Box component="main" sx={{ flex: 1, py: 6, px: 4, bgcolor: '#eaeff1' }}>
             <Contenedor>
               {
-                <Telefonos />
+                <Partidos />
               }
             </Contenedor>
           </Box>
@@ -212,8 +213,8 @@ function Copyright() {
     return (
       <Typography variant="body2" color="text.secondary" align="center">
         {'Copyright © '}
-        <Link color="inherit" href="https://mui.com/">
-          AUSOL
+        <Link color="inherit" href="">
+          JDSAURITH
         </Link>{' '}
         {new Date().getFullYear()}.
       </Typography>

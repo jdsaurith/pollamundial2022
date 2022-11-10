@@ -41,48 +41,7 @@ const Header = (props) => {
                             </IconButton>
                         </Grid>
                         <Grid item xs />
-                        <Grid item>
-                            <Link
-                                href="/"
-                                variant="body2"
-                                sx={{
-                                textDecoration: 'none',
-                                color: lightColor,
-                                '&:hover': {
-                                    color: 'common.white',
-                                },
-                                }}
-                                rel="noopener noreferrer"
-                                target="_blank"
-                            >
-                                Go to docs
-                            </Link>
-                        </Grid>
-                        <Grid item>
-                            <Tooltip title="Alerts • No alerts">
-                                <IconButton color="inherit">
-                                <NotificationsIcon />
-                                </IconButton>
-                            </Tooltip>
-                        </Grid>
-                        <Grid item>
-                            <IconButton color="inherit" sx={{ p: 0.5 }}>
-                                <Avatar src="/static/images/avatar/1.jpg" alt="My Avatar" />
-                            </IconButton>
-                        </Grid>
-                    </Grid>
-                </Toolbar>
-            </AppBar>
-
-            <AppBar
-                component="div"
-                color="primary"
-                position="static"
-                elevation={0}
-                sx={{ zIndex: 0 }}
-            >
-                <Toolbar>
-                    <Grid container alignItems="center" spacing={1}>
+                        <Grid container alignItems="center" spacing={1} padding={1.5}>
                         <Grid item xs>
                             <Typography color="inherit" variant="h6" component="h3">
                                 {nombre}
@@ -98,25 +57,12 @@ const Header = (props) => {
                             >
                                 Cerrar Sesión
                             </Button>
-                        </Grid>
-                        {/* <Grid item>
-                        <Tooltip title="Help">
-                            <IconButton color="inherit">
-                            <HelpIcon />
-                            </IconButton>
-                        </Tooltip>
-                        </Grid> */}
+                        </Grid>                        
+                    </Grid>                 
                     </Grid>
                 </Toolbar>
             </AppBar>
-            { vista !== "ticket" && <AppBar component="div" position="static" elevation={0} sx={{ zIndex: 0 }}>
-                <Tabs value={0} textColor="inherit">
-                    {/* <Tab label="Users" />
-                    <Tab label="Sign-in method" />
-                    <Tab label="Templates" />
-                    <Tab label="Usage" /> */}
-                </Tabs>
-            </AppBar>}
+            
         </React.Fragment>
      );
 }

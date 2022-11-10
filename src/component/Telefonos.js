@@ -60,11 +60,6 @@ const Telefonos = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
-    
-    const btnAgregarTelefonos = () =>{
-        console.log("btn agregar..");
-    }
-
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
@@ -130,11 +125,7 @@ const Telefonos = () => {
             </TableFooter>
             </Table>
         </TableContainer>
-        <Box sx={{ position: 'absolute', bottom: 1, right: 16,}}>
-            <Fab color="primary" aria-label="add" onClick={() => btnAgregarTelefonos()}>
-                <AddIcon />
-            </Fab>      
-        </Box>
+        
         </>
      );
 }

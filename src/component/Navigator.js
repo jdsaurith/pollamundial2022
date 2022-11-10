@@ -40,28 +40,20 @@ const categories = [
       id: 'Administración',
       children: [
         {
-          id: 'System Users',
+          id: 'Usuarios',
           icon: <PeopleIcon />,
           // active: true,
         },
-        { id: 'Hitos', icon: <DnsRoundedIcon /> },
-        { id: 'Documentación', icon: <PermMediaOutlinedIcon /> },
-        { id: 'Impresoras', icon: <PublicIcon /> },
-        { id: 'Switches', icon: <SettingsEthernetIcon /> },
-        {
-          id: 'Machine learning',
-          icon: <SettingsInputComponentIcon />,
-        },
+        { id: 'Reglas', icon: <DnsRoundedIcon /> },
+        { id: 'Resultados', icon: <PermMediaOutlinedIcon /> },
       ],
     },
     {
-      id: 'Inventario',
+      id: 'Jugar',
       children: [
-        { id: 'Notebooks', icon: <SettingsIcon /> },
-        { id: 'Computadoras', icon: <TimerIcon /> },
-        { id: 'Prestamos', icon: <PhonelinkSetupIcon /> },
-        { id: 'Periféricos', icon: <PhonelinkSetupIcon /> },
-        { id: 'Telefonos', icon: <PhonelinkSetupIcon /> },
+        { id: 'FECHA 1', icon: <SettingsIcon /> },
+        { id: 'FECHA 2', icon: <TimerIcon /> },
+        { id: 'FECHA 3', icon: <PhonelinkSetupIcon /> },
       ],
     },
   ];
@@ -77,7 +69,7 @@ const Navigator = (props) => {
         <Drawer variant="permanent" {...other}>
             <List disablePadding>
                 <ListItem sx={{ ...item, ...itemCategory, fontSize: 22, color: '#fff' }}>
-                    AUSOL - GCO
+                    POLLA 2022
                 </ListItem>
                 {categories.map(({ id, children }) => (
                     <Box key={id} sx={{ bgcolor: '#101F33' }}>
