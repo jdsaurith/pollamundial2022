@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { 
     Card, CardContent, Container, Box, 
@@ -8,6 +8,9 @@ import {
 import CssBaseline from '@mui/material/CssBaseline';
 import Avatar from '@mui/material/Avatar';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { iniciarSesionAction } from '../action/authAction';
 
 let theme = createTheme({
     palette: {
@@ -42,28 +45,52 @@ let theme = createTheme({
 });
 
 const Login  = ({history}) => {
+  const dispatch = useDispatch();
+  const [input, setInput] = useState({
+      usuario: '',
+      password: '',
+      error: false,
+  });
 
-    const [datos, setDatos] = useState({
-        usuario: '',
-        password: ''
+  //Manda a llamar el action por medio de dispatch de authAction
+  const iniciarSesion = (datos) => dispatch(iniciarSesionAction(datos));
+  //mostrar los datos del state
+  const conectado = useSelector(state => state.auth.conectado);
+  const { usuario, password } = input;
+    //efect para redireccionar al Home
+  useEffect(() => {
+    if(conectado){      
+      history.push('/home');
+    }else{
+      history.push('/');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [conectado])
+
+    //obtener los datos que se van escriibiendo en los campos
+  const onChange = e =>{
+    setInput({
+      ...input,
+      error: false,
+      [e.target.name] : e.target.value
     })
+  } 
 
     const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        // eslint-disable-next-line no-console
-        console.log({
-          usuario: data.get('usuario'),
-          password: data.get('password'),
-        });
+      event.preventDefault();
+       //validar los campos
+      if(usuario.trim() === '' ||  password.trim() === ''){
+        setInput({
+          ...input,
+          error: true
+        })
+        return;
+      }
+      //enviar los datos 
+      //console.log(input);
+      iniciarSesion({usuario, password});
 
-        if(data.get('usuario') === "jdsaurith" & data.get('password') === "123"){
-            history.push("/home");
-        }else if(data.get('usuario') === "ciac" & data.get('password') === "123"){
-            history.push("/ticketusuario");
-        }else{
-            console.log("Usuario Erroneo")
-        }
+        
     };
 
     return ( 
@@ -96,6 +123,7 @@ const Login  = ({history}) => {
                                 label="Usuario"
                                 name="usuario"
                                 autoFocus
+                                onChange={onChange}
                                 />
 
                                 <TextField
@@ -107,6 +135,7 @@ const Login  = ({history}) => {
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
+                                onChange={onChange}
                                 />
                                 <Button
                                 type="submit"

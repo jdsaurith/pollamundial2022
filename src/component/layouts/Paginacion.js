@@ -12,7 +12,6 @@ import LastPageIcon from '@mui/icons-material/LastPage';
 export default function Paginacion (props){
     const theme = useTheme();
     const { count, page, rowsPerPage, onPageChange } = props;
-    console.log(page);
   
     const handleFirstPageButtonClick = (event) => {
       onPageChange(event, 0);

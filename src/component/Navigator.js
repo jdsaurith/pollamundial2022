@@ -20,7 +20,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import PhonelinkSetupIcon from '@mui/icons-material/PhonelinkSetup';
 import DnsRoundedIcon from '@mui/icons-material/DnsRounded';
 
-import Contenedor from './Contenedor';
+import { useSelector } from 'react-redux'
 
 const item = {
     py: '2px',
@@ -45,11 +45,12 @@ const categories = [
           // active: true,
         },
         { id: 'Reglas', icon: <DnsRoundedIcon /> },
+        { id: 'Posiciones', icon: <PermMediaOutlinedIcon /> },
         { id: 'Resultados', icon: <PermMediaOutlinedIcon /> },
       ],
     },
     {
-      id: 'Jugar',
+      id: 'Partidos',
       children: [
         { id: 'FECHA 1', icon: <SettingsIcon /> },
         { id: 'FECHA 2', icon: <TimerIcon /> },
@@ -59,11 +60,11 @@ const categories = [
   ];
 
 const Navigator = (props) => {
-    const { ...other } = props;
-    
+    const { setComponente, ...other} = props;
+    const usuarioadmin = useSelector(state => state.auth.usuario);
+    console.log(usuarioadmin);
     const btnListado = (id) => {
-      console.log("click en el boton" + " " + id);
-      return (<Contenedor nombre="Navigator" />)
+      return setComponente(id);
     }
     return ( 
         <Drawer variant="permanent" {...other}>
@@ -77,12 +78,12 @@ const Navigator = (props) => {
                             <ListItemText sx={{ color: '#fff' }}>{id}</ListItemText>
                         </ListItem>
                         {children.map(({ id: childId, icon, active }) => (
-                        <ListItem button onClick={() => btnListado(childId)} disablePadding key={childId} >
-                            <ListItemButton selected={active} sx={item}>
-                            <ListItemIcon>{icon}</ListItemIcon>
-                            <ListItemText>{childId}</ListItemText>
-                            </ListItemButton>
-                        </ListItem>
+                          <ListItem  button onClick={() => btnListado(childId)} disablePadding key={childId} disabled={childId === 'Usuarios' ? usuarioadmin.tipousuario === 'ROOT' || usuarioadmin.tipousuario === 'ADMIN' ? false:true : false} >
+                              <ListItemButton selected={active} sx={item}>
+                              <ListItemIcon>{icon}</ListItemIcon>
+                              <ListItemText>{childId}</ListItemText>
+                              </ListItemButton>
+                          </ListItem>                          
                         ))}
 
                         <Divider sx={{ mt: 2 }} />

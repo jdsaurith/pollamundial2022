@@ -14,16 +14,21 @@ import Typography from '@mui/material/Typography';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 
-import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { cerrarSesionAction } from '../action/authAction';
+
 const lightColor = 'rgba(255, 255, 255, 0.7)';
 
 const Header = (props) => {
-    const history = useHistory();
-    const { onDrawerToggle, nombre, vista } = props; 
-
-    const cerrarSesion = () =>{
-        history.push("/");
+    const dispatch = useDispatch();
+    const { onDrawerToggle, nombre } = props; 
+    const cerrarSesion = () => dispatch(cerrarSesionAction());
+    
+    
+    const bntcerrarSesion = () =>{
+        cerrarSesion();
     }
+   
 
     return ( 
         <React.Fragment>
@@ -53,7 +58,7 @@ const Header = (props) => {
                                 variant="outlined"
                                 color="inherit"
                                 size="small"
-                                onClick={() => cerrarSesion()}
+                                onClick={() => bntcerrarSesion()}
                             >
                                 Cerrar Sesión
                             </Button>
