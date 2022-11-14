@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
@@ -14,13 +14,20 @@ import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import { TablePagination } from '@mui/material';
 
+
+import { faClipboardList, faEye } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import Paginacion from './layouts/Paginacion';
-import Contenedor from './Contenedor';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { obtenerposicionesAction } from '../action/resultadoAction';
+import Modal from './layouts/Modal';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
+    backgroundColor: '#006db3',
     color: theme.palette.common.white,
   },
   [`&.${tableCellClasses.body}`]: {
@@ -38,27 +45,32 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(
-    posicion,
-    nombres,
-    resultados,
-    puntos,
-) {
-return { posicion, nombres, resultados, puntos };
-}
-
-const rows = [
-  createData(1,'Jefferson Saurith', 159, 6.0),
-  createData(2,'Jesus David', 237, 9.0),
-  createData(3,'Dainer Lascarro', 262, 16.0),
-  createData(4,'Jose Jimenes', 305, 3.7),
-  createData(5,'Juan Jose', 356, 16.0),
-  createData(6,'Marcos Julio', 356, 16.0),
-];
 
 const Posiciones = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [openModal, setOpenModal] = useState(false);
+    const [datos, setDatos] = useState();
+
+    const dispatch = useDispatch();
+    const obtenerposiciones = () =>dispatch(obtenerposicionesAction());
+    const posiciones = useSelector(state => state.resultado.posiciones);
+
+    // console.log(posiciones);
+
+    useEffect(() => {
+      obtenerposiciones();
+    }, [])
+
+
+    const detalleApuesta = (row) =>{
+      setDatos(row);
+      setOpenModal(true);
+    }
+
+    const handleCloseModal = () =>{
+      setOpenModal(false);
+    }
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -69,34 +81,59 @@ const Posiciones = () => {
         setPage(0);
     };
 
+    
+
     return ( 
       <>
+        {openModal &&
+          <Modal 
+          keepMounted
+          open={openModal}
+          onClose={handleCloseModal}
+          classes={{maxWidth:'900', maxHeight:'600' }}      
+          datos={datos}
+        />}
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 600 }} aria-label="customized table">
             <TableHead>
                 <TableRow>
                 <StyledTableCell>Posición</StyledTableCell>
-                <StyledTableCell align="right">Nombres y Apellidos</StyledTableCell>
-                <StyledTableCell align="right">Resultados Exactos</StyledTableCell>
-                <StyledTableCell align="right">Puntos</StyledTableCell>                
+                <StyledTableCell>Nombres y Apellidos</StyledTableCell>
+                <StyledTableCell>Puntos</StyledTableCell>
+                <StyledTableCell>Resultados Exactos</StyledTableCell> 
+                <StyledTableCell>Detalles</StyledTableCell>                                
                 </TableRow>
             </TableHead>
             <TableBody>
                 {
-                rows.length === 0 ?(
+                posiciones.length === 0 ?(
                     <TableRow>
-                        <StyledTableCell colSpan={5}>No hay datos</StyledTableCell>
+                        <StyledTableCell colSpan={4}>No hay registro aún</StyledTableCell>
                     </TableRow>
                 )
                 :
-                rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-                <StyledTableRow key={row.posicion}>
+                posiciones.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row,i) => (
+                <StyledTableRow key={i}>
                     <StyledTableCell component="th" scope="row">
-                    {row.posicion}
+                    {i + 1}
                     </StyledTableCell>
-                    <StyledTableCell align="right">{row.nombres}</StyledTableCell>
-                    <StyledTableCell align="right">{row.resultados}</StyledTableCell>
-                    <StyledTableCell align="right">{row.puntos}</StyledTableCell>
+                    <StyledTableCell>{row.nombres}</StyledTableCell>
+                    <StyledTableCell>{row.puntos}</StyledTableCell>
+                    <StyledTableCell>{row.aciertos}</StyledTableCell>
+                    <StyledTableCell>
+                          <FontAwesomeIcon
+                            style={{
+                              margin:  '0 5px',
+                              cursor: 'pointer'
+                            }}
+                            title="Detalle"
+                            name="detalle"
+                            icon={faEye}
+                            color="#363636"
+                            size="2x"
+                            onClick={()=>detalleApuesta(row)}
+                          />
+                    </StyledTableCell>
                 </StyledTableRow>
                 ))}
                 
@@ -106,7 +143,7 @@ const Posiciones = () => {
                     <TablePagination
                         rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
                         colSpan={5}
-                        count={rows.length === 0 ? 0 : rows.length}
+                        count={posiciones.length === 0 ? 0 : posiciones.length}
                         rowsPerPage={rowsPerPage}
                         page={page}
                         SelectProps={{

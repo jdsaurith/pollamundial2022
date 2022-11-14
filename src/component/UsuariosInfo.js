@@ -64,7 +64,7 @@ const UsuariosInfo = () => {
   return (
     <>
         <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 500 }} aria-label="customized table">
+            <Table sx={{ minWidth: 400 }} aria-label="customized table">
             <TableHead>
                 <TableRow>
                 <StyledTableCell >Nombres</StyledTableCell>

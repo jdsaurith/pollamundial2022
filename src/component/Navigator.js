@@ -11,7 +11,9 @@ import HomeIcon from '@mui/icons-material/Home';
 import PeopleIcon from '@mui/icons-material/People';
 
 //Icon //////
-import PermMediaOutlinedIcon from '@mui/icons-material/PhotoSizeSelectActual';
+import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
+import RuleIcon from '@mui/icons-material/Rule';
+import SportsIcon from '@mui/icons-material/Sports';
 import PublicIcon from '@mui/icons-material/Public';
 import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet';
 import SettingsInputComponentIcon from '@mui/icons-material/SettingsInputComponent';
@@ -37,24 +39,24 @@ const itemCategory = {
   };
 const categories = [
     {
-      id: 'Administración',
+      id: 'DATOS DEL JUEGO',
       children: [
         {
           id: 'Usuarios',
           icon: <PeopleIcon />,
           // active: true,
         },
-        { id: 'Reglas', icon: <DnsRoundedIcon /> },
-        { id: 'Posiciones', icon: <PermMediaOutlinedIcon /> },
-        { id: 'Resultados', icon: <PermMediaOutlinedIcon /> },
+        { id: 'Reglas', icon: <RuleIcon /> },        
+        { id: 'Resultados', icon: <SportsSoccerIcon /> },
+        { id: 'Posiciones', icon: <DnsRoundedIcon /> },
       ],
     },
     {
-      id: 'Partidos',
+      id: 'FECHAS FIFA',
       children: [
-        { id: 'FECHA 1', icon: <SettingsIcon /> },
-        { id: 'FECHA 2', icon: <TimerIcon /> },
-        { id: 'FECHA 3', icon: <PhonelinkSetupIcon /> },
+        { id: 'FECHA 1', icon: <SportsIcon /> },
+        { id: 'FECHA 2', icon: <SportsIcon /> },
+        { id: 'FECHA 3', icon: <SportsIcon /> },
       ],
     },
   ];
@@ -62,7 +64,8 @@ const categories = [
 const Navigator = (props) => {
     const { setComponente, ...other} = props;
     const usuarioadmin = useSelector(state => state.auth.usuario);
-    console.log(usuarioadmin);
+    
+    
     const btnListado = (id) => {
       return setComponente(id);
     }
@@ -78,12 +81,23 @@ const Navigator = (props) => {
                             <ListItemText sx={{ color: '#fff' }}>{id}</ListItemText>
                         </ListItem>
                         {children.map(({ id: childId, icon, active }) => (
-                          <ListItem  button onClick={() => btnListado(childId)} disablePadding key={childId} disabled={childId === 'Usuarios' ? usuarioadmin.tipousuario === 'ROOT' || usuarioadmin.tipousuario === 'ADMIN' ? false:true : false} >
+                          childId === 'Usuarios' ? usuarioadmin?.tipousuario === 'ROOT' || usuarioadmin?.tipousuario === 'ADMIN' 
+                          ? 
+                          <ListItem  button onClick={() => btnListado(childId)} disablePadding key={childId}>
                               <ListItemButton selected={active} sx={item}>
                               <ListItemIcon>{icon}</ListItemIcon>
                               <ListItemText>{childId}</ListItemText>
                               </ListItemButton>
-                          </ListItem>                          
+                          </ListItem>
+                          :null
+                          :
+                          <ListItem  button onClick={() => btnListado(childId)} disablePadding key={childId}>
+                            <ListItemButton selected={active} sx={item}>
+                            <ListItemIcon>{icon}</ListItemIcon>
+                            <ListItemText>{childId}</ListItemText>
+                            </ListItemButton>
+                          </ListItem>
+                            
                         ))}
 
                         <Divider sx={{ mt: 2 }} />

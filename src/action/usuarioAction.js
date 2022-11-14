@@ -20,9 +20,9 @@ export function verUsuariosAction(id){
     return async (dispatch) => {
         dispatch(verusuarios());
         try {
-            console.log(id);
+            // console.log(id);
             const res = await clienteAxios.get(`/usuarios/${id}`);
-            console.log(res.data);
+            // console.log(res.data);
             if(res.data.msg !== 'noregistros'){
                 dispatch(verusuariosExito(res.data));
             }            

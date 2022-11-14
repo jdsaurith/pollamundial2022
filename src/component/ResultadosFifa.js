@@ -19,7 +19,6 @@ import { Grid, TableBody, TableCell, TableRow, TextField } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { faIgloo } from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment/moment';
-import { formatearFechaDoshoras, formatearFechaValidacion } from '../helpers';
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -31,35 +30,29 @@ const ExpandMore = styled((props) => {
       duration: theme.transitions.duration.shortest,
     }),
   }));
-  
-  
 
-const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, idequipouno, equipo2, idequipodos, icon1, icon2, descripcion }) => {
+const ResultadosFifa = ({id_partido, datosapuesta, fecha, equipo1, equipo2, icon1, icon2, descripcion }) => {
+    
     const dispatch = useDispatch();
     let fechajuego = moment()
     .format('yyyy/MM/DD HH:mm:ss');
-    let fecha2 = new Date(fechavalidacion);
     const [expanded, setExpanded] = React.useState(false);
-    const [tiempo, setTiempo] = useState(Date.now()  >= formatearFechaDoshoras(fecha2, 2));
     const [resultadoapostador, setResultadoapostador] = useState();    
     const [input, setInput] = React.useState({
       retornandovalores: false
     });
     
     const usuario = useSelector(state => state.auth.usuario);
-    const resultadosapostados = useSelector(state => state.resultado.resultadosapostados);
+    const obtenerpartidos = useSelector(state => state.resultado.obtenerpartidos);
+    // const resultadosfifa = useSelector(state =>state.resultado.resultadosfifa);
+    const tipousuario = useSelector(state=> state.auth.tipousuario);
     const {retornandovalores} = input;
-
-
-    useEffect(() => {
-      setInterval(() => {
-        setTiempo(Date.now()  >= formatearFechaDoshoras(fecha2, 2));
-      }, 1200000);
-      
-    }, [tiempo]);
     
+    console.log(tipousuario);
+   
+    /// OBTENER LOS GOLES DE LOS EQUIPOS - RESULTADOS FIFA
     useEffect(() => {      
-      resultadosapostados.map((item) =>{
+      obtenerpartidos?.filter(r => r.estado === 'ACTIVO').map((item) =>{
         if(item.id_partido === id_partido){
           setInput({
             golesequipo1 : item.goles_equipo_uno,
@@ -70,28 +63,12 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, id
         
       })
       
-    }, [resultadosapostados])
+    }, [obtenerpartidos])
 
-    useEffect(() => {
-      const resultado = localStorage.getItem("resultado");  
-      const datos = JSON.parse(resultado);
-      if(datos){
-        datos.map((item) =>{
-          if(item.id_partido === id_partido){
-            setInput({
-              golesequipo1 : item.golesequipo1,
-              golesequipo2 : item.golesequipo2,
-              retornandovalores: true
-            })
-          }
-          
-        })
-      }
-    },[])
-
+    //// OBTENER LOS GOLES ESCRITOS POR EL ADMIN O ROOT 
     useEffect(() => {      
       if(retornandovalores === false && input.golesequipo1 && input.golesequipo2){
-        setResultadoapostador({...input, id_usuario: usuario.id_usuario, fecha: fechajuego, id_partido});
+        setResultadoapostador({...input, fecha_update: fechajuego, id_partido});
       }      
     }, [input])
 
@@ -99,9 +76,9 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, id
       if(retornandovalores === false && input.golesequipo1 && input.golesequipo2){
         console.log('guardando los valores de input');
         var ban = false;
-        const resultado = localStorage.getItem("resultado");  
+        const resultado = localStorage.getItem("resultadofifa");  
         const datos = JSON.parse(resultado); 
-        console.log(datos);
+        // console.log(datos);
           if(datos){ 
             console.log('entro Datos');
             datosapuesta = datos;
@@ -116,8 +93,8 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, id
                   element.golesequipo2 = input.golesequipo2
                   
                   const resultadofinal = JSON.stringify(datos);              
-                  localStorage.removeItem('resultado');
-                  localStorage.setItem('resultado', resultadofinal);
+                  localStorage.removeItem('resultadofifa');
+                  localStorage.setItem('resultadofifa', resultadofinal);
                                  
                   
                 }
@@ -129,7 +106,7 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, id
             console.log(resultadoapostador);
             datosapuesta.push(resultadoapostador);
             const resultado = JSON.stringify(datosapuesta);
-            localStorage.setItem('resultado', resultado);
+            localStorage.setItem('resultadofifa', resultado);
             
           }
 
@@ -140,60 +117,59 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, id
             datosapuesta.push(resultadoapostador);
             console.log(datosapuesta);
             console.log('removiendo resultado');
-            localStorage.removeItem('resultado');
+            localStorage.removeItem('resultadofifa');
             const resultado = JSON.stringify(datosapuesta);          
-            localStorage.setItem('resultado', resultado);
+            localStorage.setItem('resultadofifa', resultado);
             datosapuesta = [];             
           }    
       }   
         
       
-    }, [resultadoapostador])    
+    }, [resultadoapostador])
     
     const handleResultado = React.useCallback(e =>{      
-      setInput({
-        ...input,
-        [e.currentTarget.name]: e.currentTarget.value,
-        retornandovalores: false
-      })
-    },[input])
-
-    const onfocusEquipouno = () =>{ 
-      console.log('entro on focus')  
-      console.log(id_partido);
-      const resultado = localStorage.getItem("resultado");  
-      const datos = JSON.parse(resultado);
-      console.log(datos);
-      if(datos){
-        console.log('entro datos');
-        if(datos.length !== 0){        
-          datos.map( element => {
-            if(element.id_partido === id_partido){ 
-              console.log('encontro el idpartido en onfocus');  
-              console.log(input.golesequipo1);
-              console.log(input.golesequipo2);         
-              setInput({
-                golesequipo1 : element.golesequipo1,
-                golesequipo2 : element.golesequipo2,
-                retornandovalores: true
-              })            
-            }
-          })
-          
+        setInput({
+          ...input,
+          [e.currentTarget.name]: e.currentTarget.value,
+          retornandovalores: false
+        })
+      },[input])
+  
+      const onfocusEquipouno = () =>{ 
+        console.log('entro on focus')
+        const resultado = localStorage.getItem("resultadofifa");  
+        const datos = JSON.parse(resultado);
+        console.log(datos);
+        if(datos){
+          console.log('entro datos');
+          if(datos.length !== 0){        
+            datos.map( element => {
+              if(element.id_partido === id_partido){ 
+                console.log('encontro el idpartido en onfocus');  
+                console.log(input.golesequipo1);
+                console.log(input.golesequipo2);         
+                setInput({
+                  golesequipo1 : element.golesequipo1,
+                  golesequipo2 : element.golesequipo2,
+                  retornandovalores: true
+                })            
+              }
+            })
+            
+          }
         }
       }
-    }
-
-    const onblurEquipouno = () =>{  
-      // console.log('entro on focus');  
-      // console.log(id_partido);
-    }
-    
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-      };
-
-  return (
+  
+      const onblurEquipouno = () =>{  
+        // console.log('entro on focus');  
+        // console.log(id_partido);
+      }
+      
+      const handleExpandClick = () => {
+          setExpanded(!expanded);
+        };
+  
+    return (
     <Card sx={{ maxWidth: 430, margin: 1 }}>
       <CardHeader        
         title={ equipo1 +' vs '+ equipo2  }
@@ -208,21 +184,28 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, id
                     <Avatar src={`/imagenes/${icon1}.png`}  sx={{ width: 46, height: 46 }} alt={equipo1} />                    
                 </Grid>
                 <Grid item xs={6}>
-                  <TextField 
-                  required
-                  type="number"
-                  size="small"
-                  name='golesequipo1'
-                  label=""                  
-                  value={input.golesequipo1}
-                  onChange={handleResultado}
-                  onFocus={onfocusEquipouno}
-                  onBlur={onblurEquipouno}
-                  disabled={tiempo}
-                  // className={}
-                  color="secondary"
-                  InputProps={{ inputProps: { min: "0", max: 5, step: "1" } }}
-                  />
+                  {tipousuario === 'ROOT' || tipousuario === 'ADMIN' ?
+                    <TextField 
+                    required
+                    type="number"
+                    size="small"
+                    name='golesequipo1'
+                    label=""                  
+                    value={input.golesequipo1}
+                    onChange={handleResultado}
+                    onFocus={onfocusEquipouno}
+                    onBlur={onblurEquipouno}
+                    // className={}
+                    color="secondary"
+                    InputProps={{ inputProps: { min: "0", max: 5, step: "1" } }}
+                    />
+                    :
+                    <>
+                      <h1 style={{ display:'flex', justifyContent: 'center', alignContent: 'center'}}>
+                        {input.golesequipo1}
+                      </h1>
+                    </>                    
+                  }
                 </Grid>
               </Grid>                            
             </Grid>
@@ -230,20 +213,27 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, id
             <Grid item xs={6} md={6} lg={6}>
               <Grid container justifyContent='center' alignItems='center' >                  
                   <Grid item xs={6}>
-                    <TextField 
-                    required
-                    type="number"
-                    size="small"
-                    name='golesequipo2'
-                    label=""                  
-                    value={input.golesequipo2}
-                    onChange={handleResultado}
-                    onFocus={onfocusEquipouno}
-                    onBlur={onblurEquipouno}
-                    disabled={tiempo}
-                    color="secondary"
-                    InputProps={{ inputProps: { min: "0", max: "5", step: "1" } }}
-                    />
+                    {tipousuario === 'ROOT' || tipousuario === 'ADMIN' ? 
+                      <TextField 
+                      required
+                      type="number"
+                      size="small"
+                      name='golesequipo2'
+                      label=""                  
+                      value={input.golesequipo2}
+                      onChange={handleResultado}
+                      onFocus={onfocusEquipouno}
+                      onBlur={onblurEquipouno}
+                      color="secondary"
+                      InputProps={{ inputProps: { min: "0", max: "5", step: "1" } }}
+                      />
+                      :
+                      <>
+                        <h1 style={{ display:'flex', justifyContent: 'center', alignContent: 'center' }}>
+                          {input.golesequipo2}
+                        </h1>
+                      </>
+                    }
                   </Grid>
                   <Grid item xs={6} direction='row' display='flex' justifyContent='flex-end' alignItems='center' >
                     <Avatar src={`/imagenes/${icon2}.png`} sx={{ width: 46, height: 46 }} alt={equipo2} />
@@ -262,16 +252,16 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, id
           <ExpandMoreIcon />
         </ExpandMore>
       </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
+      {/* <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography paragraph>{equipo1 + ' VS ' + equipo2}</Typography>
           <Typography paragraph>
             { descripcion }
           </Typography>          
         </CardContent>
-      </Collapse>
+      </Collapse> */}
     </Card>
   )
 }
 
-export default Partidos
+export default ResultadosFifa

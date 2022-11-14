@@ -38,7 +38,7 @@ const rows2 = [
 
 const Reglas = () => {
   return (
-    <div>
+    <div style={{ padding: '1em' }}>
       <h2>¿Cómo pronosticar y hasta cuándo tengo tiempo?</h2>
       <Typography paragraph>
         Dentro del juego podrás comenzar a pronosticar los partidos de las fechas habilitadas del mundial.

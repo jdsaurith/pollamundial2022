@@ -23,7 +23,7 @@ export function iniciarSesionAction (datos){
         dispatch(iniciarSesion());
         try {
             const res = await clienteAxios.post('auth', datos);
-            console.log(res.data);
+            // console.log(res.data);
             //validacion de la base de datos
             if(res.data.msg === 'nousuario' || res.data.msg === 'passworderror'){
                //mensaje error con diseño
@@ -88,7 +88,7 @@ export function usuarioAutenticadoAction(){
             if(token !== "null"){
                 tokenAuth(token);
                 const result = await clienteAxios.get('auth');
-                console.log(result.data);
+                // console.log(result.data);
                 dispatch(usuarioautenticadoexitoso(result.data));
                 // dispatch(activoautenticadoexito(activo));
             }else{

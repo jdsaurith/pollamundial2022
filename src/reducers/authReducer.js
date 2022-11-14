@@ -20,6 +20,7 @@ const initialState = {
     cargando: true,
     nombreuser: null,
     cedula: null,
+    tipousuario: null
 }
 const authReducer = (state = initialState, action) =>{
 // export default function (state = initialState, action){
@@ -37,7 +38,8 @@ const authReducer = (state = initialState, action) =>{
                 ...state,
                 loading: false,
                 error: null,
-                usuario: action.payload.result,               
+                usuario: action.payload.result,
+                tipousuario: action.payload.tipousuario,               
                 conectado: true,
                 cargando: false
             }
@@ -48,10 +50,13 @@ const authReducer = (state = initialState, action) =>{
                 error: null,
                 conectado: true,
                 cargando: false,
+                usuario: action.payload,
             }
         case USUARIO_AUTENTICADO_ERROR:
         case CERRAR_SESION_EXITO:
             localStorage.removeItem('token');
+            localStorage.removeItem('resultado');
+            localStorage.removeItem('resultadofifa');
             return {
                 ...state,
                 loading: false,

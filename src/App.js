@@ -8,7 +8,7 @@ import {
 import Login from './page/Login';
 import Home from './page/Home';
 import TicketsUsuarios from './page/TicketsUsuarios';
-// <>
+
 
 
 //Redux
@@ -21,6 +21,7 @@ function App() {
 
   // //revisar si tenemos un token
   const token =  localStorage.getItem('token');
+  
   if(token){
     tokenAuth(token);
   }

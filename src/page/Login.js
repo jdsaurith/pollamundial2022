@@ -57,6 +57,15 @@ const Login  = ({history}) => {
   //mostrar los datos del state
   const conectado = useSelector(state => state.auth.conectado);
   const { usuario, password } = input;
+
+  useEffect(() => {
+    setInput({
+      usuario: '',
+      password: '',
+      error: false,
+    })
+  }, [])
+
     //efect para redireccionar al Home
   useEffect(() => {
     if(conectado){      

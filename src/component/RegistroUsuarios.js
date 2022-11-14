@@ -84,6 +84,7 @@ const RegistroUsuarios = () => {
           usuario: "",
           password: "",
         })
+      
       }
   return (
     <view style={{ display:'flex', padding: 2, marginLeft: 5}}>      
