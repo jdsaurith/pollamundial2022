@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Typography from '@mui/material/Typography';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -7,6 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { Avatar, Grid } from '@mui/material';
 
 function createData(id, metodo, puntos) {
   return { id, metodo, puntos };
@@ -41,7 +42,7 @@ const Reglas = () => {
       <h2>¿Cómo pronosticar y hasta cuándo tengo tiempo?</h2>
       <Typography paragraph>
         Dentro del juego podrás comenzar a pronosticar los partidos de las fechas habilitadas del mundial.
-        Tendrás hasta una hora antes que comience el partido para pronosticar o modificar tu pronóstico,
+        Tendrás <strong style={{backgroundColor: '#C8EDF3'}}>hasta dos(2) horas antes</strong> que comience el partido para pronosticar o modificar tu pronóstico,
         de lo contrario, una vez cumplida la hora, no podrás colocar resultados y por lo tanto no obtendrás puntos.
         Los puntos que se obtienen una vez finalizado el partido estarán dados de la siguiente forma:
       </Typography>
@@ -67,9 +68,19 @@ const Reglas = () => {
       </Table>
       </TableContainer>
       <h2>Ejemplo de cómo sumar puntos</h2>
-      <Typography paragraph>
-        IMAGEN del resultado QATAR 3 - 1 ECUADOR
-      </Typography>
+      <Grid container style={{marginBottom: '1em'}}>
+            <Grid item xs={5} bgcolor="transparent" display="flex" justifyContent="flex-end" alignItems="center">
+              <img src='/imagenes/qat.png' alt='Qatar' loading='Qatar'/>
+              <h2 style={{margin: 'auto 0.5em'}}>QATAR</h2>
+            </Grid>
+            <Grid item xs={2} bgcolor="transparent" display="flex" justifyContent="center" alignItems="center">
+              <h1>3 - 1</h1>
+            </Grid>
+            <Grid item xs={5} bgcolor="transparent" display="flex" justifyContent="flex-start" alignItems="center">
+              <h2 style={{margin: 'auto 0.5em'}}>ECUADOR</h2>
+              <img src='/imagenes/ecu.png' alt='Ecuador' loading='Ecuador'/>
+            </Grid>
+      </Grid>
       <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
@@ -87,9 +98,19 @@ const Reglas = () => {
               key={row.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell align="center">{row.local}</TableCell>
+              <TableCell align="center">
+                <Grid xs={12} direction="column" display="flex" justifyContent="space-evenly" alignItems="center">
+                <img src='/imagenes/qat.png' alt='Qatar' loading='Qatar' width="45" height="30"/>
+                <span style={{marginTop: '0.2em'}}>{row.local}</span>
+              </Grid>
+              </TableCell>
               <TableCell align="center">{row.pronostico}</TableCell>
-              <TableCell align="center">{row.visitante}</TableCell>
+              <TableCell align="center">
+                <Grid xs={12} direction="column" display="flex" justifyContent="space-evenly" alignItems="center">
+                <img src='/imagenes/ecu.png' alt='Ecuador' loading='Ecuador' width="45" height="30"/>
+                <span style={{marginTop: '0.2em'}}>{row.visitante}</span>
+                </Grid>
+              </TableCell>
               <TableCell align="center">{row.obtenido}</TableCell>
               <TableCell >{row.detalle}</TableCell>
             </TableRow>
@@ -97,7 +118,10 @@ const Reglas = () => {
         </TableBody>
       </Table>
       </TableContainer>
-    </div>
+      <Typography paragraph style={{marginTop: '1em'}}>
+        <i>*Recuerda que tienes <strong style={{backgroundColor: '#C8EDF3'}}>hasta dos(2) horas antes</strong> que comience el partido para pronosticar o modificar tu pronóstico </i>
+      </Typography>
+      </div>
   )
 }
 
