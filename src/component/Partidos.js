@@ -34,7 +34,7 @@ const ExpandMore = styled((props) => {
   
   
 
-const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, idequipouno, equipo2, idequipodos, icon1, icon2, descripcion }) => {
+const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, equipo2, icon1, icon2, descripcion }) => {
     const dispatch = useDispatch();
     let fechajuego = moment()
     .format('yyyy/MM/DD HH:mm:ss');

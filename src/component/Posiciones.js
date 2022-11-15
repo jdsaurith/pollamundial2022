@@ -108,16 +108,16 @@ const Posiciones = () => {
         <Grid container direction='row' display='flex' spacing={4}>
           <Grid item xs={12} md={12} lg={12} display='flex'>
             <Grid xs={12} md={6} lg={8}  display='flex' justifyContent='flex-end'>
-              <Card sx={{ display: 'flex', bgcolor: '#006db3' }}>
+              <Card sx={{ display: 'flex', bgcolor: '#009be5' }}>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                   <CardContent sx={{ flex: '1 0 auto' }}>
                     <Typography component="div" variant="h6">
                       PREMIOS
                     </Typography>
                     <Typography variant="h6" component="div">
-                      Primer Puesto : { formatearDinero(100000 * 0.6) } <br />
-                      Segundo Puesto: { formatearDinero(100000 * 0.2) }<br />
-                      Tercer Puesto : { formatearDinero(10000) }
+                      P. Puesto : { formatearDinero(100000 * 0.6) } <br />
+                      S. Puesto : { formatearDinero(100000 * 0.2) }<br />
+                      T. Puesto : { formatearDinero(10000) }
                     </Typography>
                   </CardContent>                
                 </Box>              

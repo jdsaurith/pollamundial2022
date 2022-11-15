@@ -28,6 +28,7 @@ import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch  } from 'react-redux'
 import {  obtenerResultadosAction, resultadopartidosAction, obtenerPartidosAction } from '../action/resultadoAction';
 import { formatearFecha, formatearFechaValidacion } from '../helpers';
+import Conteo from '../component/layouts/Conteo';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -243,7 +244,7 @@ const Home = () => {
               variant="temporary"
               open={mobileOpen}
               onClose={handleDrawerToggle}
-              
+              setComponente={setComponente}
             />
           )}
           <Navigator
@@ -302,8 +303,6 @@ const Home = () => {
                                   fecha={formatearFecha(row.fecha)}
                                   fechavalidacion={row.fecha}
                                   equipo1={row.equipouno}
-                                  idequipouno={row.equipo_uno}
-                                  idequipodos={row.equipo_dos}
                                   icon1={row.iconuno}
                                   equipo2={row.equipodos}
                                   icon2={row.icondos}

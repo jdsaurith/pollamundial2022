@@ -202,7 +202,7 @@ const ResultadosFifa = ({id_partido, datosapuesta, fecha, equipo1, equipo2, icon
                     :
                     <>
                       <h1 style={{ display:'flex', justifyContent: 'center', alignContent: 'center'}}>
-                        {input.golesequipo1}
+                        {input?.golesequipo1 || '-'}
                       </h1>
                     </>                    
                   }
@@ -230,7 +230,7 @@ const ResultadosFifa = ({id_partido, datosapuesta, fecha, equipo1, equipo2, icon
                       :
                       <>
                         <h1 style={{ display:'flex', justifyContent: 'center', alignContent: 'center' }}>
-                          {input.golesequipo2}
+                          {input.golesequipo2 || '-'}
                         </h1>
                       </>
                     }
