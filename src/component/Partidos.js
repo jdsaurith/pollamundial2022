@@ -36,8 +36,7 @@ const ExpandMore = styled((props) => {
 
 const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, equipo2, icon1, icon2, descripcion }) => {
     const dispatch = useDispatch();
-    let fechajuego = moment()
-    .format('yyyy/MM/DD HH:mm:ss');
+    let fechajuego = moment().format('yyyy/MM/DD HH:mm:ss');
     let fecha2 = new Date(fechavalidacion);
     const [expanded, setExpanded] = React.useState(false);
     const [tiempo, setTiempo] = useState(Date.now()  >= formatearFechaDoshoras(fecha2, 2));

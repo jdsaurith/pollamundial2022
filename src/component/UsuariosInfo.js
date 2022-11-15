@@ -85,7 +85,8 @@ const UsuariosInfo = () => {
                 <StyledTableRow key={row.usuario}>
                     <StyledTableCell component="th" scope="row" >{row.nombres}</StyledTableCell>
                     <StyledTableCell >{row.usuario}</StyledTableCell>
-                    <StyledTableCell >{row.password}</StyledTableCell>
+                    {/* <StyledTableCell >{row.password}</StyledTableCell> */}
+                    <StyledTableCell >**********</StyledTableCell>
                     <StyledTableCell >
                     <FontAwesomeIcon
                       style={{

@@ -44,7 +44,7 @@ const Reglas = () => {
       <Typography paragraph>
         Dentro del juego podrás comenzar a pronosticar los partidos de las fechas habilitadas del mundial.
         Tendrás <strong style={{backgroundColor: '#C8EDF3'}}>hasta dos(2) horas antes</strong> que comience el partido para pronosticar o modificar tu pronóstico,
-        de lo contrario, una vez cumplida las dos hora, no podrás colocar resultados y por lo tanto no obtendrás puntos.
+        de lo contrario, pasadas las dos horas previas, no podrás cambiar tu pronóstico del partido.
         Los puntos que se obtienen una vez finalizado el partido estarán dados de la siguiente forma:
       </Typography>
       <TableContainer component={Paper}>
@@ -120,7 +120,8 @@ const Reglas = () => {
       </Table>
       </TableContainer>
       <Typography paragraph variant="body2"  style={{marginTop: '1em'}}>
-        <i>*Recuerda que tienes <strong style={{backgroundColor: '#C8EDF3'}}>hasta dos(2) horas antes</strong> que comience el partido para pronosticar o modificar tu pronóstico </i> <br />
+        <i>*Recuerda que tienes <strong style={{backgroundColor: '#C8EDF3'}}>hasta dos(2) horas antes</strong> que comience el partido para pronosticar o modificar tu pronóstico </i> <br /><br />
+        <i>*El costo de participación es de: <strong style={{backgroundColor: '#C8EDF3'}}>{formatearDinero(10000)}</strong> pesos.</i> <br />
         <i>*El primer (1) lugar obtendra <strong style={{backgroundColor: '#C8EDF3'}}>un 60% de lo recaudado</strong> por ejemplo si el total de lo recaudado es {formatearDinero(1000000)} el 60% corresponde a {formatearDinero(600000)} mil pesos. </i><br />
         <i>*El segundo (2) lugar obtendra <strong style={{backgroundColor: '#C8EDF3'}}>un 20% de lo recaudado</strong> por ejemplo si el total de lo recaudado es {formatearDinero(1000000)} el 20% corresponde a {formatearDinero(200000)} mil pesos. </i><br />
         <i>*El procentaje restante sera para gastos de administracion y servicios de la plataforma.</i><br />

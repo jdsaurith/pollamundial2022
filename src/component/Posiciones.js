@@ -106,29 +106,13 @@ const Posiciones = () => {
           datos={datos}
         />}
         <Grid container direction='row' display='flex' spacing={4}>
-          <Grid item xs={12} md={12} lg={12} display='flex'>
-            <Grid xs={12} md={6} lg={8}  display='flex' justifyContent='flex-end'>
-              <Card sx={{ display: 'flex', bgcolor: '#009be5' }}>
+          <Grid item xs={12} md={12} lg={12} display='flex' >
+          <Grid xs={12} md={6} lg={4} display='flex' justifyContent='flex-end'>
+              <Card sx={{ display: 'flex', bgcolor: 'transparent'}}>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                   <CardContent sx={{ flex: '1 0 auto' }}>
                     <Typography component="div" variant="h6">
-                      PREMIOS
-                    </Typography>
-                    <Typography variant="h6" component="div">
-                      P. Puesto : { formatearDinero(100000 * 0.6) } <br />
-                      S. Puesto : { formatearDinero(100000 * 0.2) }<br />
-                      T. Puesto : { formatearDinero(10000) }
-                    </Typography>
-                  </CardContent>                
-                </Box>              
-              </Card>
-            </Grid>
-            <Grid xs={12} md={6} lg={4} display='flex' justifyContent='flex-end'>
-              <Card sx={{ display: 'flex', bgcolor: '#009be5'}}>
-                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                  <CardContent sx={{ flex: '1 0 auto' }}>
-                    <Typography component="div" variant="h6">
-                      RECAUDADO
+                      RECAUDO <span style={{fontSize: "2em"}}>&#x1F4B0;</span>
                     </Typography>
                     <Typography variant="h5" component="div">
                       { formatearDinero(10*10000) }
@@ -143,7 +127,23 @@ const Posiciones = () => {
                 />
               </Card>
             </Grid>
-            
+            <Grid xs={12} md={6} lg={8}  display='flex' justifyContent='flex-end'>
+              <Card sx={{ display: 'flex', bgcolor: 'transparent' }}>
+                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                  <CardContent sx={{ flex: '1 0 auto' }}>
+                    <Typography component="div" variant="h6">
+                      PREMIOS <span style={{fontSize: "2em"}}>&#x1F3C6;</span>
+                    </Typography>
+                    <Typography variant="h6" component="div">
+                      <span>&#x1F947;</span> Puesto : { formatearDinero(100000 * 0.6) } <br />
+                      <span>&#x1F948;</span> Puesto : { formatearDinero(100000 * 0.2) }<br />
+                      <span>&#x1F949;</span> Puesto : { formatearDinero(10000) }
+                    </Typography>
+                  </CardContent>                
+                </Box>              
+              </Card>
+            </Grid>
+
           </Grid>
           <Grid item xs={12} md={12} lg={12}>
             <TableContainer component={Paper}>
@@ -167,8 +167,8 @@ const Posiciones = () => {
                   :
                   posiciones.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row,i) => (
                   <StyledTableRow key={i}>
-                      <StyledTableCell component="th" scope="row">
-                      {i + 1}
+                      <StyledTableCell component="th" scope="row" align="center">
+                      {(i + 1) === 1 ? <span style={{fontSize: "2em"}}>&#x1F451; {i+1}</span> : (i + 1) === 2 ? <span style={{fontSize: "1.6em"}}>&#x1F948; {i+1}</span> :  (i + 1) === 3 ? <span style={{fontSize: "1.3em"}}>&#x1F949; {i+1}</span> : i+1}
                       </StyledTableCell>
                       <StyledTableCell>{row.nombres}</StyledTableCell>
                       <StyledTableCell>{row.puntos}</StyledTableCell>

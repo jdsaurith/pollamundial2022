@@ -84,7 +84,15 @@ const RegistroUsuarios = () => {
           usuario: "",
           password: "",
         })
-      
+      }
+
+      const limpiar = ()=>{
+        setInput({
+          id: 0,
+          nombres: "",
+          usuario: "",
+          password: "",
+        })
       }
   return (
     <view style={{ display:'flex', padding: 2, marginLeft: 5}}>      
@@ -170,7 +178,7 @@ const RegistroUsuarios = () => {
                       color="primary"
                       fullWidth
                       // className={classes.limpiar}
-                      // onClick={limpiarF}
+                      onClick={limpiar}
                     >
                       Limpiar
                     </Button>
