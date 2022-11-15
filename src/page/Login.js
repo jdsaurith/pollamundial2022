@@ -96,7 +96,7 @@ const Login  = ({history}) => {
         return;
       }
       //enviar los datos 
-      //console.log(input);
+      console.log(input);
       iniciarSesion({usuario, password});
 
         

@@ -256,7 +256,7 @@ const Home = () => {
 
         <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
           <Header onDrawerToggle={handleDrawerToggle} nombre={usuario?.nombres || ''} vista="home"/>
-          <Box component="main" sx={{ flex: 1, py: 6, px: componente === 'Usuarios' ? 3 : 1, bgcolor: '#eaeff1' }}>
+          <Box component="main" sx={{ flex: 1, py: componente === 'Reglas' ? 3 : 6, px: componente === 'Usuarios' ? 3 : 1, bgcolor: '#eaeff1' }}>
            <Contenedor>
                  {componente === 'Usuarios' ? usuario?.tipousuario === 'ROOT' || usuario?.tipousuario === 'ADMIN' ? <Usuarios  /> : <Reglas  /> : null}
                  {componente === 'Reglas' && <Reglas  />}

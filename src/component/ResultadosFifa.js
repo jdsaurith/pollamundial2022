@@ -48,7 +48,7 @@ const ResultadosFifa = ({id_partido, datosapuesta, fecha, equipo1, equipo2, icon
     const tipousuario = useSelector(state=> state.auth.tipousuario);
     const {retornandovalores} = input;
     
-    console.log(tipousuario);
+    
    
     /// OBTENER LOS GOLES DE LOS EQUIPOS - RESULTADOS FIFA
     useEffect(() => {      
