@@ -105,29 +105,29 @@ const Posiciones = () => {
           classes={{maxWidth:'900', maxHeight:'600' }}      
           datos={datos}
         />}
-        <Grid container direction='row' display='flex' spacing={4}>
-          <Grid item xs={12} md={12} lg={12} display='flex' >
-          <Grid xs={12} md={6} lg={4} display='flex' justifyContent='flex-end'>
-              <Card sx={{ display: 'flex', bgcolor: 'transparent'}}>
-                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                  <CardContent sx={{ flex: '1 0 auto' }}>
-                    <Typography component="div" variant="h6">
-                      RECAUDO <span style={{fontSize: "2em"}}>&#x1F4B0;</span>
-                    </Typography>
-                    <Typography variant="h5" component="div">
-                      { formatearDinero(10*10000) }
-                    </Typography>
-                  </CardContent>                
-                </Box>
-                <CardMedia
-                  component="img"
-                  sx={{ width: 170 }}
-                  image="/imagenes/fondo2.jpg"
-                  alt="POLLA QATAR 2022"
-                />
-              </Card>
-            </Grid>
-            <Grid xs={12} md={6} lg={8}  display='flex' justifyContent='flex-end'>
+        <Grid container direction='row' display='flex' spacing={4} >
+          <Grid container xs={12} md={12} lg={12} display='flex' justifyContent='center' alignItems='center'>
+            <Grid xs={12} md={6} lg={6} display='flex' justifyContent='center' >
+                <Card sx={{ display: 'flex', bgcolor: 'transparent'}} >
+                  <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                    <CardContent sx={{ flex: '1 0 auto' }}>
+                      <Typography component="div" variant="h6">
+                        RECAUDO <span style={{fontSize: "2em"}}>&#x1F4B0;</span>
+                      </Typography>
+                      <Typography variant="h5" component="div">
+                        { formatearDinero(10*10000) }
+                      </Typography>
+                    </CardContent>                
+                  </Box>
+                  <CardMedia
+                    component="img"
+                    sx={{ width: 170 }}
+                    image="/imagenes/fondo2.jpg"
+                    alt="POLLA QATAR 2022"
+                  />
+                </Card>
+             </Grid>
+            <Grid xs={12} md={6} lg={6}  display='flex' justifyContent='flex-start'>
               <Card sx={{ display: 'flex', bgcolor: 'transparent' }}>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                   <CardContent sx={{ flex: '1 0 auto' }}>

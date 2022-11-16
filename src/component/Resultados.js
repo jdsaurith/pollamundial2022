@@ -65,7 +65,7 @@ const Resultados = () => {
           <AccordionDetails>       
             <Grid container spacing={2} display='flex' justifyContent='center' alignItems='center'>
                 {obtenerpartidos.filter(f => f.jornada === 'FECHA1').map(row =>(
-                  <Grid item>
+                  <Grid item >
                   <TableContainer>
                     <Table sx={{ minWidth: 430 }} aria-label="simple table">
                         <TableHead>
@@ -104,10 +104,17 @@ const Resultados = () => {
                   </TableContainer>
                   </Grid>
                 ))}
+                <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
+                  <Button
+                    type='button'
+                    variant='contained'
+                    color='primary'
+                    onClick={() => btnResultados()}
+                  >
+                    GUARDAR RESULTADOS
+                  </Button>
+                </Grid>
             </Grid>
-            
-            
-          
         </AccordionDetails>
         </Accordion>
         {/* /////// FECHA 2 */}
@@ -161,6 +168,16 @@ const Resultados = () => {
                 </TableContainer>
                 </Grid>
               ))}
+               <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
+                  <Button
+                    type='button'
+                    variant='contained'
+                    color='primary'
+                    onClick={() => btnResultados()}
+                  >
+                    GUARDAR RESULTADOS
+                  </Button>
+                </Grid>
             </Grid>
           </AccordionDetails>
         </Accordion>
@@ -215,6 +232,16 @@ const Resultados = () => {
                 </TableContainer>
                 </Grid>
               ))}
+              <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
+                  <Button
+                    type='button'
+                    variant='contained'
+                    color='primary'
+                    onClick={() => btnResultados()}
+                  >
+                    GUARDAR RESULTADOS
+                  </Button>
+                </Grid>
             </Grid>
           </AccordionDetails>
         </Accordion>

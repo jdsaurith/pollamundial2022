@@ -14,7 +14,8 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { Grid, TableBody, TableCell, TableRow, TextField } from '@mui/material';
+import { Fab, Grid, TableBody, TableCell, TableRow, TextField } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { faIgloo } from '@fortawesome/free-solid-svg-icons';
@@ -192,7 +193,7 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, eq
         setExpanded(!expanded);
       };
 
-  return (
+  return (    
     <Card sx={{ maxWidth: 430, margin: 1 }}>
       <CardHeader        
         title={ equipo1 +' vs '+ equipo2  }
@@ -200,13 +201,13 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, eq
       />
       
       <CardContent>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} ddisplay='flex' justifyContent='center' alignItems='center'>
             <Grid item xs={6} md={6} lg={6} spacing={2} >
               <Grid container justifyContent='center' alignItems='center' >
-                <Grid item xs={6}>
+                <Grid item xs={6} md={6} lg={6}>
                     <Avatar src={`/imagenes/${icon1}.png`}  sx={{ width: 46, height: 46 }} alt={equipo1} />                    
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={6} md={6} lg={6}>
                   <TextField 
                   required
                   type="number"
@@ -220,7 +221,7 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, eq
                   disabled={tiempo}
                   // className={}
                   color="secondary"
-                  InputProps={{ inputProps: { min: "0", max: 5, step: "1" } }}
+                  InputProps={{ inputProps: { min: "0", max: "100", step: "1" } }}
                   />
                 </Grid>
               </Grid>                            
@@ -228,7 +229,7 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, eq
 
             <Grid item xs={6} md={6} lg={6}>
               <Grid container justifyContent='center' alignItems='center' >                  
-                  <Grid item xs={6}>
+                  <Grid item xs={6} md={6} lg={6}>
                     <TextField 
                     required
                     type="number"
@@ -244,7 +245,7 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, eq
                     InputProps={{ inputProps: { min: "0", max: "5", step: "1" } }}
                     />
                   </Grid>
-                  <Grid item xs={6} direction='row' display='flex' justifyContent='flex-end' alignItems='center' >
+                  <Grid item xs={6} md={6} lg={6}  direction='row' display='flex' justifyContent='flex-end' alignItems='center' >
                     <Avatar src={`/imagenes/${icon2}.png`} sx={{ width: 46, height: 46 }} alt={equipo2} />
                   </Grid>
               </Grid>

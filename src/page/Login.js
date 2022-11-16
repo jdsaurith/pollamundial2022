@@ -103,7 +103,16 @@ const Login  = ({history}) => {
     };
 
     return ( 
+      <div style={{ 
+        display: 'flex',
+        justifyContent:'center',
+        backgroundImage: 'url("/imagenes/background1.png")',
+        backgroundRepeat: 'repeat',
+        width:'100vw',
+        height: '100vh'
+      }}>
         <ThemeProvider theme={theme}>
+          
             <Container component="main" maxWidth="xs" >
                 <CssBaseline />
                 {/* sx={{ minWidth: 275 , maxWidth: 900}} */}
@@ -159,7 +168,9 @@ const Login  = ({history}) => {
                     </CardContent>
                 </Card>
             </Container>
+          
         </ThemeProvider>
+     </div>
     );
 }
  

@@ -6,15 +6,16 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
-import { Badge, Button, Grid, IconButton, Paper, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Fab, Badge, Button, Grid, IconButton, Paper, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableHead, TableRow } from '@mui/material';
 import styled from '@emotion/styled';
+import SaveIcon from '@mui/icons-material/Save';
 
 import NotificationsIcon from '@mui/icons-material/Notifications'
 
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'; //no tiene resultado
 import AnnouncementIcon from '@mui/icons-material/Announcement'; // localStorage
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'; //guardado
-
+import Zoom from '@mui/material/Zoom';
 import Header from '../component/Header';
 import Navigator from '../component/Navigator';
 import Contenedor from '../component/Contenedor';
@@ -187,6 +188,7 @@ const drawerWidth = 250;
 var datosapuesta = [];
 
 
+
 const Home = () => {  
   const history = useHistory();
   const dispatch = useDispatch();
@@ -224,11 +226,12 @@ const Home = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  const btnResultados = () => {    
+  const btnResultados = () => { 
     const datos = JSON.parse(localStorage.getItem('resultado'));    
     resultadopartidos(datos);
     datosapuesta = [];    
   }
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -264,19 +267,19 @@ const Home = () => {
                  {componente === 'Posiciones' && <Posiciones  />}
                  {componente === 'Resultados' && <Resultados  />}
                  {componente === 'FECHA 1' && 
+                  <>
                   <Grid container spacing={2} display='flex' justifyContent='center' alignItems='center'>
                     {obtenerpartidos.filter(f => f.jornada === 'FECHA1').map((row) =>( 
-                        <Grid item xs={5}>               
+                        <Grid item xs={12} md={12} lg={5}>               
                           <TableContainer> 
-                            <Table sx={{ minWidth: 430 }} aria-label="simple table">
+                            <Table sx={{ minWidth: 230, maxWidth: 430 }} aria-label="simple table">
                               <TableHead>
-                                <TableRow key={row.id_partido}>
-                                  
+                                <TableRow key={row.id_partido}>                                  
                                   <StyledTableCell style={{ display: 'flex' }}>
-                                    <Grid xs={10}>
+                                    <Grid xs={10} md={10} lg={10}>
                                       GRUPO { row.grupo }                          
                                     </Grid>                                                                         
-                                    <Grid xs={2}>                               
+                                    <Grid xs={2} md={2} lg={2}>                               
                                       {resultadosapostados.map(r =>(
                                         r.id_partido === row.id_partido ?
                                         <IconButton
@@ -290,9 +293,7 @@ const Home = () => {
                                         null
                                       ))}
                                     </Grid>                                     
-                                  </StyledTableCell>                                  
-                                  
-                                                                             
+                                  </StyledTableCell>                              
                                 </TableRow>                                
                               </TableHead>
                               <TableBody>                              
@@ -313,7 +314,7 @@ const Home = () => {
                           </TableContainer>
                         </Grid>                
                     ))}
-                    <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
+                    {/* <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
                       <Button
                         type='button'
                         variant='contained'
@@ -322,18 +323,46 @@ const Home = () => {
                       >
                         GUARDAR RESULTADOS
                       </Button>
-                    </Grid>
-                  </Grid> 
+                      
+                    </Grid> */}
+                   
+                  </Grid>
+                  <Box style={{ bottom:'30px', right:'30px', position:'fixed' }} >
+                      <Fab color='primary' aria-label="add" onClick={() => btnResultados()}>
+                        <SaveIcon />
+                      </Fab>
+                  </Box>
+                  
+                  </>
                  }
-                 {componente === 'FECHA 2' &&                
+                 {componente === 'FECHA 2' &&
+                 <>                
                  <Grid container spacing={2} display='flex' justifyContent='center' alignItems='center'>
                     {obtenerpartidos.filter(f => f.jornada === 'FECHA2').map((row) =>( 
-                        <Grid item xs={5}>               
+                        <Grid item xs={12} md={12} lg={5}>               
                           <TableContainer> 
-                            <Table sx={{ minWidth: 430 }} aria-label="simple table">
+                            <Table sx={{ minWidth: 230, maxWidth: 430 }} aria-label="simple table">
                               <TableHead>
                                 <TableRow key={row.id_partido}>
-                                  <StyledTableCell>GRUPO { row.grupo }</StyledTableCell>                                            
+                                  <StyledTableCell style={{ display: 'flex' }}>
+                                    <Grid xs={10} md={10} lg={10}>
+                                      GRUPO { row.grupo }                          
+                                    </Grid>                                                                         
+                                    <Grid xs={2} md={2} lg={2}>                               
+                                      {resultadosapostados.map(r =>(
+                                        r.id_partido === row.id_partido ?
+                                        <IconButton
+                                        size="large"
+                                        aria-label="show 17 new notifications"
+                                        color="inherit"
+                                        >
+                                          <CheckCircleIcon /> 
+                                        </IconButton>
+                                        :
+                                        null
+                                      ))}
+                                    </Grid>                                     
+                                  </StyledTableCell>                                            
                                 </TableRow>
                               </TableHead>
                               <TableBody>                              
@@ -354,7 +383,7 @@ const Home = () => {
                           </TableContainer>
                         </Grid>                
                     ))}
-                    <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
+                    {/* <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
                       <Button
                         type='button'
                         variant='contained'
@@ -363,18 +392,43 @@ const Home = () => {
                       >
                         GUARDAR RESULTADOS
                       </Button>
-                    </Grid>
-                  </Grid> 
+                    </Grid> */}
+                  </Grid>
+                  <Box style={{ bottom:'30px', right:'30px', position:'fixed' }} >
+                      <Fab color='primary' aria-label="add" onClick={() => btnResultados()}>
+                        <SaveIcon />
+                      </Fab>
+                  </Box>
+                  </> 
                  }
                  {componente === 'FECHA 3' && 
+                 <>
                  <Grid container spacing={2} display='flex' justifyContent='center' alignItems='center'>
                   {obtenerpartidos.filter(f => f.jornada === 'FECHA3').map((row) =>( 
-                      <Grid item xs={5}>               
+                      <Grid item xs={12} md={12} lg={5}>               
                         <TableContainer> 
-                          <Table sx={{ minWidth: 430 }} aria-label="simple table">
+                          <Table sx={{ minWidth: 230, maxWidth: 430 }} aria-label="simple table">
                             <TableHead>
                               <TableRow key={row.id_partido}>
-                                <StyledTableCell>GRUPO { row.grupo }</StyledTableCell>                                            
+                              <StyledTableCell style={{ display: 'flex' }}>
+                                    <Grid xs={10} md={10} lg={10}>
+                                      GRUPO { row.grupo }                          
+                                    </Grid>                                                                         
+                                    <Grid xs={2} md={2} lg={2}>                               
+                                      {resultadosapostados.map(r =>(
+                                        r.id_partido === row.id_partido ?
+                                        <IconButton
+                                        size="large"
+                                        aria-label="show 17 new notifications"
+                                        color="inherit"
+                                        >
+                                          <CheckCircleIcon /> 
+                                        </IconButton>
+                                        :
+                                        null
+                                      ))}
+                                    </Grid>                                     
+                                  </StyledTableCell>                                            
                               </TableRow>
                             </TableHead>
                             <TableBody>                              
@@ -395,7 +449,7 @@ const Home = () => {
                         </TableContainer>
                       </Grid>                
                   ))}
-                  <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
+                  {/* <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
                     <Button
                       type='button'
                       variant='contained'
@@ -404,8 +458,14 @@ const Home = () => {
                     >
                       GUARDAR RESULTADOS
                     </Button>
-                  </Grid>
+                  </Grid> */}
                  </Grid> 
+                 <Box style={{ bottom:'30px', right:'30px', position:'fixed' }} >
+                      <Fab color='primary' aria-label="add" onClick={() => btnResultados()}>
+                        <SaveIcon />
+                      </Fab>
+                  </Box>
+                  </>
                 }
             </Contenedor> 
           </Box>
