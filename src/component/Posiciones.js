@@ -172,7 +172,7 @@ const Posiciones = () => {
                   posiciones.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row,i) => (                   
                   <StyledTableRow key={i}>                      
                       <StyledTableCell component="th" scope="row" align="center">
-                      {(row.orden === 1 && row.puntos)  ? <span style={{fontSize: "2em"}}>&#x1F451; {row.orden}</span> : (row.orden === 2 && row.puntos) ? <span style={{fontSize: "1.6em"}}>&#x1F948; {row.orden }</span> :  (row.orden === 3 && row.puntos) ? <span style={{fontSize: "1.3em"}}>&#x1F949; {row.orden}</span> : row.orden }
+                      {(row.orden === 1 && (row.puntos && row.puntos != 0))  ? <span style={{fontSize: "2em"}}>&#x1F451; {row.orden}</span> : (row.orden === 2 && (row.puntos && row.puntos != 0)) ? <span style={{fontSize: "1.6em"}}>&#x1F948; {row.orden }</span> :  (row.orden === 3 && (row.puntos && row.puntos != 0)) ? <span style={{fontSize: "1.3em"}}>&#x1F949; {row.orden}</span> : row.orden }
                       
                       </StyledTableCell>
                       <StyledTableCell>{row.nombres}</StyledTableCell>
