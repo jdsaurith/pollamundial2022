@@ -206,8 +206,7 @@ const Home = () => {
   const obtenerpartidos = useSelector(state => state.resultado.obtenerpartidos);
   const consultarresultados = useSelector(state => state.resultado.consultarresultados);
   const resultadosapostados = useSelector(state => state.resultado.resultadosapostados);
-  
-  
+
   useEffect(() => {
     if(!conectado) history.push("/");
   }, [conectado]);
@@ -274,16 +273,16 @@ const Home = () => {
                   <>
                   <Grid container spacing={2} display='flex' justifyContent='center' alignItems='center'>
                     {obtenerpartidos.filter(f => f.jornada === 'FECHA1').map((row) =>( 
-                        <Grid item xs={12} md={12} lg={5}>               
+                        <Grid item xs={12} md={12} lg={5}>
                           <TableContainer> 
                             <Table sx={{ minWidth: 230, maxWidth: 430 }} aria-label="simple table">
                               <TableHead>
-                                <TableRow key={row.id_partido}>                                  
+                                <TableRow key={row.id_partido}>
                                   <StyledTableCell style={{ display: 'flex' }}>
                                     <Grid xs={10} md={10} lg={10}>
-                                      GRUPO { row.grupo }                          
-                                    </Grid>                                                                         
-                                    <Grid xs={2} md={2} lg={2}>                               
+                                      GRUPO { row.grupo }
+                                    </Grid>
+                                    <Grid xs={2} md={2} lg={2}>
                                       {resultadosapostados.map(r =>(
                                         r.id_partido === row.id_partido ?
                                         <IconButton
@@ -296,12 +295,12 @@ const Home = () => {
                                         :
                                         null
                                       ))}
-                                    </Grid>                                     
-                                  </StyledTableCell>                              
-                                </TableRow>                                
+                                    </Grid>
+                                  </StyledTableCell>
+                                </TableRow>
                               </TableHead>
-                              <TableBody>                              
-                                <Partidos                                  
+                              <TableBody>
+                                <Partidos
                                   key={row.id_partido}
                                   datosapuesta={datosapuesta}
                                   id_partido={row.id_partido}
@@ -311,12 +310,13 @@ const Home = () => {
                                   icon1={row.iconuno}
                                   equipo2={row.equipodos}
                                   icon2={row.icondos}
-                                  descripcion = 'MUNDIAL QATAR 2022' 
-                                />                             
-                              </TableBody>                                            
-                            </Table>                                        
+                                  descripcion = 'MUNDIAL QATAR 2022'
+                                  estado={row.estado}
+                                />
+                              </TableBody>
+                            </Table>
                           </TableContainer>
-                        </Grid>                
+                        </Grid>
                     ))}
                     {/* <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
                       <Button
@@ -346,19 +346,19 @@ const Home = () => {
                   </>
                  }
                  {componente === 'FECHA 2' &&
-                 <>                
+                 <>
                  <Grid container spacing={2} display='flex' justifyContent='center' alignItems='center'>
                     {obtenerpartidos.filter(f => f.jornada === 'FECHA2').map((row) =>( 
-                        <Grid item xs={12} md={12} lg={5}>               
+                        <Grid item xs={12} md={12} lg={5}>
                           <TableContainer> 
                             <Table sx={{ minWidth: 230, maxWidth: 430 }} aria-label="simple table">
                               <TableHead>
                                 <TableRow key={row.id_partido}>
                                   <StyledTableCell style={{ display: 'flex' }}>
                                     <Grid xs={10} md={10} lg={10}>
-                                      GRUPO { row.grupo }                          
-                                    </Grid>                                                                         
-                                    <Grid xs={2} md={2} lg={2}>                               
+                                      GRUPO { row.grupo }
+                                    </Grid>
+                                    <Grid xs={2} md={2} lg={2}>
                                       {resultadosapostados.map(r =>(
                                         r.id_partido === row.id_partido ?
                                         <IconButton
@@ -371,11 +371,11 @@ const Home = () => {
                                         :
                                         null
                                       ))}
-                                    </Grid>                                     
-                                  </StyledTableCell>                                            
+                                    </Grid>
+                                  </StyledTableCell>
                                 </TableRow>
                               </TableHead>
-                              <TableBody>                              
+                              <TableBody>
                                 <Partidos
                                   key={row.id_partido}
                                   datosapuesta={datosapuesta}
@@ -386,12 +386,13 @@ const Home = () => {
                                   icon1={row.iconuno}
                                   equipo2={row.equipodos}
                                   icon2={row.icondos}
-                                  descripcion = 'MUNDIAL QATAR 2022 FECHA 2' 
-                                />                             
-                              </TableBody>                                            
-                            </Table>                                        
+                                  descripcion = 'MUNDIAL QATAR 2022 FECHA 2'
+                                  estado={row.estado}
+                                />
+                              </TableBody>
+                            </Table>
                           </TableContainer>
-                        </Grid>                
+                        </Grid>
                     ))}
                     {/* <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
                       <Button
@@ -421,16 +422,16 @@ const Home = () => {
                  <>
                  <Grid container spacing={2} display='flex' justifyContent='center' alignItems='center'>
                   {obtenerpartidos.filter(f => f.jornada === 'FECHA3').map((row) =>( 
-                      <Grid item xs={12} md={12} lg={5}>               
+                      <Grid item xs={12} md={12} lg={5}>
                         <TableContainer> 
                           <Table sx={{ minWidth: 230, maxWidth: 430 }} aria-label="simple table">
                             <TableHead>
                               <TableRow key={row.id_partido}>
                               <StyledTableCell style={{ display: 'flex' }}>
                                     <Grid xs={10} md={10} lg={10}>
-                                      GRUPO { row.grupo }                          
-                                    </Grid>                                                                         
-                                    <Grid xs={2} md={2} lg={2}>                               
+                                      GRUPO { row.grupo }
+                                    </Grid>
+                                    <Grid xs={2} md={2} lg={2}>
                                       {resultadosapostados.map(r =>(
                                         r.id_partido === row.id_partido ?
                                         <IconButton
@@ -443,11 +444,11 @@ const Home = () => {
                                         :
                                         null
                                       ))}
-                                    </Grid>                                     
-                                  </StyledTableCell>                                            
+                                    </Grid>
+                                  </StyledTableCell>
                               </TableRow>
                             </TableHead>
-                            <TableBody>                              
+                            <TableBody>
                               <Partidos
                                 key={row.id_partido}
                                 datosapuesta={datosapuesta}
@@ -458,12 +459,13 @@ const Home = () => {
                                 icon1={row.iconuno}
                                 equipo2={row.equipodos}
                                 icon2={row.icondos}
-                                descripcion = 'MUNDIAL QATAR 2022 FECHA 3' 
-                              />                             
-                            </TableBody>                                            
-                          </Table>                                        
+                                descripcion = 'MUNDIAL QATAR 2022 FECHA 3'
+                                estado={row.estado}
+                              />
+                            </TableBody>
+                          </Table>
                         </TableContainer>
-                      </Grid>                
+                      </Grid>
                   ))}
                   {/* <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
                     <Button

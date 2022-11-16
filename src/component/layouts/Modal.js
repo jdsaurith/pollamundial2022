@@ -60,7 +60,7 @@ const Modal = (props) => {
               <TableHead>
                 <TableRow>
                   <StyledTableCell> PARTIDO </StyledTableCell>
-                  <StyledTableCell> RESULTADO APOSTADO </StyledTableCell>
+                  <StyledTableCell> APUESTA </StyledTableCell>
                   <StyledTableCell> RESULTADO FIFA </StyledTableCell>
                   <StyledTableCell> PUNTOS </StyledTableCell>
                   <StyledTableCell> ACIERTOS </StyledTableCell>
@@ -78,7 +78,7 @@ const Modal = (props) => {
                   detallesposiciones.map((row) =>(
                   <StyledTableRow key={ row.id_partido }>
                     <StyledTableCell >{  row.equipouno +' vs '+ row.equipodos }</StyledTableCell>
-                    <StyledTableCell align='center'>{  row.golesuno +" vs "+ row.golesdos }</StyledTableCell>
+                    <StyledTableCell align='center'>{  row.golesuno +" - "+ row.golesdos }</StyledTableCell>
                     <StyledTableCell align='center'>{  row.goles_equipo_uno +" - "+ row.goles_equipo_dos }</StyledTableCell>
                     <StyledTableCell align='center'>{ row.puntos }</StyledTableCell>
                     <StyledTableCell align='center'>{ row.acierto }</StyledTableCell>                    

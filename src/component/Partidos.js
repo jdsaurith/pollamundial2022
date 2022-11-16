@@ -36,7 +36,7 @@ const ExpandMore = styled((props) => {
   
   
 
-const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, equipo2, icon1, icon2, descripcion }) => {
+const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, equipo2, icon1, icon2, descripcion,estado }) => {
     const dispatch = useDispatch();
     let fechajuego = moment().format('yyyy/MM/DD HH:mm:ss');
     let fecha2 = new Date(fechavalidacion);
@@ -46,6 +46,7 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, eq
     const [input, setInput] = React.useState({
       retornandovalores: false
     });
+
     
     const usuario = useSelector(state => state.auth.usuario);
     const obtenerResultados = (id) =>dispatch(obtenerResultadosAction(id));
@@ -69,6 +70,8 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, eq
           setInput({
             golesequipo1 : item.goles_equipo_uno,
             golesequipo2 : item.goles_equipo_dos,
+            puntos: item.puntos,
+            aciertos: item.acierto,
             retornandovalores: true
           })
         }
@@ -269,10 +272,13 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, eq
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>{equipo1 + ' VS ' + equipo2}</Typography>
+          {/* <Typography paragraph>{equipo1 + ' VS ' + equipo2}</Typography> */}
           <Typography paragraph>
             { descripcion }
-          </Typography>          
+          </Typography>
+          {estado === 'ACTIVO' ? 
+          <Typography paragraph>Obtuviste  <strong>{input.puntos}</strong>  pts con este partido</Typography> :
+          <Typography paragraph>Esperando resultados FIFA...</Typography>}
         </CardContent>
       </Collapse>
     </Card>
