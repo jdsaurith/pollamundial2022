@@ -14,7 +14,7 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline'; //no tiene result
 import AnnouncementIcon from '@mui/icons-material/Announcement'; // localStorage
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'; //guardado
 
-import { obtenerResultadosFifaAction, resultadopartidosfifaAction } from '../action/resultadoAction';
+import { obtenerResultadosFifaAction, resultadopartidosfifaAction, obtenerPartidosAction } from '../action/resultadoAction';
 import Conteo from './layouts/Conteo';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -32,7 +32,8 @@ var datosapuesta = [];
 const Resultados = () => {
   const dispatch = useDispatch();  
   const [viewconteo, setViewconteo] = useState(true); 
-  const obtenerResultadosFifa = () => dispatch(obtenerResultadosFifaAction());
+  const obtenerPartidos = () =>dispatch(obtenerPartidosAction());
+  // const obtenerResultadosFifa = () => dispatch(obtenerResultadosFifaAction());
   const resultadopartidosfifa = (f) => dispatch(resultadopartidosfifaAction(f));
   const obtenerpartidos = useSelector(state => state.resultado.obtenerpartidos);
   const usuario = useSelector(state => state.auth.usuario);
@@ -41,6 +42,7 @@ const Resultados = () => {
 
   useEffect(() => {
     // obtenerResultadosFifa();
+    obtenerPartidos();
   }, [])
   
   const btnResultados = () =>{
