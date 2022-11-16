@@ -21,6 +21,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { faIgloo } from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment/moment';
 import { formatearFechaDoshoras, formatearFechaValidacion } from '../helpers';
+import { obtenerResultadosAction } from '../action/resultadoAction';
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -47,9 +48,13 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, eq
     });
     
     const usuario = useSelector(state => state.auth.usuario);
+    const obtenerResultados = (id) =>dispatch(obtenerResultadosAction(id));
     const resultadosapostados = useSelector(state => state.resultado.resultadosapostados);
     const {retornandovalores} = input;
 
+    useEffect(() => {
+      obtenerResultados(usuario?.id_usuario);
+    },[]);
 
     useEffect(() => {
       setInterval(() => {
