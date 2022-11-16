@@ -42,7 +42,7 @@ const RegistroUsuarios = () => {
       if(usuarioeditar !== null){
         setActualizar(true);
         setInput({
-          id: usuarioeditar.id,
+          id: usuarioeditar.id_usuario,
           nombres: usuarioeditar.nombres,
           usuario: usuarioeditar.usuario,
           password: usuarioeditar.password
