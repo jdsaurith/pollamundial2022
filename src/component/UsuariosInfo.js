@@ -6,11 +6,11 @@ import Paginacion from './layouts/Paginacion';
 
 //fortawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faToggleOff, faToggleOn } from '@fortawesome/free-solid-svg-icons';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { verUsuariosAction, guardaUsuarioEditarAction } from '../action/usuarioAction';
+import { verUsuariosAction, guardaUsuarioEditarAction, EditarPagoUsuarioAction } from '../action/usuarioAction';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -39,6 +39,7 @@ const UsuariosInfo = () => {
     const dispatch = useDispatch();
     const verUsuarios = (tipo) => dispatch(verUsuariosAction(tipo));
     const obtenerEditarUsuario = (u) => dispatch(guardaUsuarioEditarAction(u));
+    const EditarPagoUsuario = (u) => dispatch(EditarPagoUsuarioAction(u));
 
     const usuarios = useSelector(state => state.usuario.usuarios);
     const usuarioadmin = useSelector(state => state.auth.usuario);
@@ -58,8 +59,10 @@ const UsuariosInfo = () => {
     };
 
     const editarUsuario = (usuario) =>{
-      console.log(usuario);
       obtenerEditarUsuario(usuario);
+    }
+    const editarPago = (usuario,pago) =>{
+      EditarPagoUsuario({usuario, pago});
     }
   return (
     <>
@@ -88,18 +91,30 @@ const UsuariosInfo = () => {
                     {/* <StyledTableCell >{row.password}</StyledTableCell> */}
                     <StyledTableCell >**********</StyledTableCell>
                     <StyledTableCell >
-                    <FontAwesomeIcon
-                      style={{
-                        margin:  '1px',
-                        cursor: 'pointer'
-                      }}
-                      title="Editar"
-                      name="editar"
-                      icon={faEdit}
-                      color="#363636"
-                      size="2x"
-                      onClick={()=>editarUsuario(row)}
-                    />
+                      <FontAwesomeIcon
+                        style={{
+                          margin:  '1px',
+                          cursor: 'pointer'
+                        }}
+                        title="Editar"
+                        name="editar"
+                        icon={faEdit}
+                        color="#363636"
+                        size="2x"
+                        onClick={()=>editarUsuario(row)}
+                      />
+                        <FontAwesomeIcon
+                        style={{
+                          margin:  '1px',
+                          cursor: 'pointer'
+                        }}
+                        title={row.estado==='PAGO'?"Inactivar":"Activar"}
+                        name= {row.estado==='PAGO'?"activo":"inactivo"}
+                        icon= {row.estado==='PAGO'?faToggleOn:faToggleOff}                        
+                        color={row.estado==='PAGO'?"#04BB3C":"#DD0000"}
+                        size="2x"
+                        onClick={()=>editarPago(row, row.estado==='PAGO' ? false:true)}
+                      />
                     </StyledTableCell>
                 </StyledTableRow>
                 ))}

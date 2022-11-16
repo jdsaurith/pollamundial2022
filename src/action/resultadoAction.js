@@ -33,25 +33,36 @@ export function resultadopartidosAction(result){
         dispatch(resultadopartidos());
         try {
             console.log(result);
-            const res = await clienteAxios.post('/resultados',result);
-            // console.log(res.data);
-            if(res.data.msg === 'exito'){                
+            if(!result){
                 Swal.fire({
-                    icon: 'success',
-                    title: 'Los Partidos se guardaron correctamente!',
-                    showConfirmButton: false,
-                    timer: 1500
-                })                
-                dispatch(resultadopartidosExito());
-            } else if(res.data.msg === 'noexito'){
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Hubo un Error',
-                    text: 'Intenta de nuevo o comunicate con el ADMIN.',
+                    icon: 'info',
+                    title: 'Ingresa tu pronóstico',
+                    text: 'Debes ingresar por lo menos un resultado',
                     showConfirmButton: true
                     //timer: 1500
                 })
-            }          
+            }else{
+                const res = await clienteAxios.post('/resultados',result);
+                // console.log(res.data);
+                if(res.data.msg === 'exito'){                
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Los Partidos se guardaron correctamente!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })                
+                    dispatch(resultadopartidosExito());
+                } else if(res.data.msg === 'noexito'){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Hubo un Error',
+                        text: 'Intenta de nuevo o comunicate con el ADMIN.',
+                        showConfirmButton: true
+                        //timer: 1500
+                    })
+                } 
+            }
+                     
             
         } catch (error) {
             console.log(error);

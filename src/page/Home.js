@@ -207,7 +207,7 @@ const Home = () => {
   const consultarresultados = useSelector(state => state.resultado.consultarresultados);
   const resultadosapostados = useSelector(state => state.resultado.resultadosapostados);
   
-
+  
   useEffect(() => {
     if(!conectado) history.push("/");
   }, [conectado]);
@@ -227,9 +227,13 @@ const Home = () => {
   };
 
   const btnResultados = () => { 
-    const datos = JSON.parse(localStorage.getItem('resultado'));    
+    const datos = JSON.parse(localStorage.getItem('resultado'));
+    console.log(datos);
+    
     resultadopartidos(datos);
-    datosapuesta = [];    
+    datosapuesta = [];
+      
+       
   }
 
 
@@ -328,9 +332,15 @@ const Home = () => {
                    
                   </Grid>
                   <Box style={{ bottom:'30px', right:'30px', position:'fixed' }} >
-                      <Fab color='primary' aria-label="add" onClick={() => btnResultados()}>
+                      {usuario.estado === 'DEBE' ?
+                        <>
+                        <Typography style={{ fontSize:'1em' }} color='red'>CANCELA LA CUOTA PARA PARTICIPAR</Typography>
+                        
+                        </> 
+                       :
+                       <Fab color='primary' aria-label="add"  onClick={() => btnResultados()}>
                         <SaveIcon />
-                      </Fab>
+                       </Fab> }
                   </Box>
                   
                   </>
@@ -395,9 +405,15 @@ const Home = () => {
                     </Grid> */}
                   </Grid>
                   <Box style={{ bottom:'30px', right:'30px', position:'fixed' }} >
-                      <Fab color='primary' aria-label="add" onClick={() => btnResultados()}>
+                      {usuario.estado === 'DEBE' ?
+                        <>
+                        <Typography style={{ fontSize:'1em' }} color='red'>CANCELA LA CUOTA PARA PARTICIPAR</Typography>
+                        
+                        </> 
+                       :
+                       <Fab color='primary' aria-label="add"  onClick={() => btnResultados()}>
                         <SaveIcon />
-                      </Fab>
+                       </Fab> }
                   </Box>
                   </> 
                  }
@@ -461,9 +477,15 @@ const Home = () => {
                   </Grid> */}
                  </Grid> 
                  <Box style={{ bottom:'30px', right:'30px', position:'fixed' }} >
-                      <Fab color='primary' aria-label="add" onClick={() => btnResultados()}>
+                      {usuario.estado === 'DEBE' ?
+                        <>
+                        <Typography style={{ fontSize:'1em' }} color='red'>CANCELA LA CUOTA PARA PARTICIPAR</Typography>
+                        
+                        </> 
+                       :
+                       <Fab color='primary' aria-label="add"  onClick={() => btnResultados()}>
                         <SaveIcon />
-                      </Fab>
+                       </Fab> }
                   </Box>
                   </>
                 }

@@ -60,9 +60,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const Posiciones = () => {
   const theme = useTheme();
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
     const [openModal, setOpenModal] = useState(false);
     const [datos, setDatos] = useState();
+    const [bolsa, setBolsa] = useState(0);
 
     const dispatch = useDispatch();
     const obtenerposiciones = () =>dispatch(obtenerposicionesAction());
@@ -74,6 +75,9 @@ const Posiciones = () => {
       obtenerposiciones();
     }, [])
 
+    useEffect(() => {
+      setBolsa(posiciones.length * 10000)
+    }, [bolsa, posiciones])
 
     const detalleApuesta = (row) =>{
       setDatos(row);
@@ -89,8 +93,8 @@ const Posiciones = () => {
     };
 
     const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
+      setRowsPerPage(parseInt(event.target.value, 10));
+      setPage(0);
     };
 
     
@@ -115,7 +119,7 @@ const Posiciones = () => {
                         RECAUDO <span style={{fontSize: "2em"}}>&#x1F4B0;</span>
                       </Typography>
                       <Typography variant="h5" component="div">
-                        { formatearDinero(10*10000) }
+                        { formatearDinero(bolsa) }
                       </Typography>
                     </CardContent>                
                   </Box>
@@ -127,7 +131,7 @@ const Posiciones = () => {
                   />
                 </Card>
              </Grid>
-            <Grid xs={12} md={6} lg={6}  display='flex' justifyContent='flex-start'>
+            <Grid xs={12} md={6} lg={6}  display='flex' justifyContent='center'>
               <Card sx={{ display: 'flex', bgcolor: 'transparent' }}>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                   <CardContent sx={{ flex: '1 0 auto' }}>
@@ -135,9 +139,9 @@ const Posiciones = () => {
                       PREMIOS <span style={{fontSize: "2em"}}>&#x1F3C6;</span>
                     </Typography>
                     <Typography variant="h6" component="div">
-                      <span>&#x1F947;</span> Puesto : { formatearDinero(100000 * 0.6) } <br />
-                      <span>&#x1F948;</span> Puesto : { formatearDinero(100000 * 0.2) }<br />
-                      <span>&#x1F949;</span> Puesto : { formatearDinero(10000) }
+                      <span>&#x1F947;</span> Puesto : { formatearDinero(bolsa * 0.6) } <br />
+                      <span>&#x1F948;</span> Puesto : { formatearDinero(bolsa * 0.2) }<br />
+                      <span>&#x1F949;</span> Puesto : { formatearDinero(bolsa * 0.05) }
                     </Typography>
                   </CardContent>                
                 </Box>              
@@ -165,10 +169,11 @@ const Posiciones = () => {
                       </TableRow>
                   )
                   :
-                  posiciones.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row,i) => (
-                  <StyledTableRow key={i}>
+                  posiciones.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row,i) => (                   
+                  <StyledTableRow key={i}>                      
                       <StyledTableCell component="th" scope="row" align="center">
-                      {(i + 1) === 1 ? <span style={{fontSize: "2em"}}>&#x1F451; {i+1}</span> : (i + 1) === 2 ? <span style={{fontSize: "1.6em"}}>&#x1F948; {i+1}</span> :  (i + 1) === 3 ? <span style={{fontSize: "1.3em"}}>&#x1F949; {i+1}</span> : i+1}
+                      {(row.orden === 1 && row.puntos)  ? <span style={{fontSize: "2em"}}>&#x1F451; {row.orden}</span> : (row.orden === 2 && row.puntos) ? <span style={{fontSize: "1.6em"}}>&#x1F948; {row.orden }</span> :  (row.orden === 3 && row.puntos) ? <span style={{fontSize: "1.3em"}}>&#x1F949; {row.orden}</span> : row.orden }
+                      
                       </StyledTableCell>
                       <StyledTableCell>{row.nombres}</StyledTableCell>
                       <StyledTableCell>{row.puntos}</StyledTableCell>

@@ -13,6 +13,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { iniciarSesionAction } from '../action/authAction';
 
 let theme = createTheme({
+  body:{
+    margin: 0
+  },
     palette: {
       primary: {
         light: '#63ccff',
@@ -105,18 +108,19 @@ const Login  = ({history}) => {
     return ( 
       <div style={{ 
         display: 'flex',
+        margin: '0',
         justifyContent:'center',
-        backgroundImage: 'url("/imagenes/background1.png")',
-        backgroundRepeat: 'repeat',
-        width:'100vw',
-        height: '100vh'
+        // backgroundImage: 'url("/imagenes/Harvey.jpg")',
+        // // backgroundRepeat: 'repeat-y',
+        // width:'100vw',
+        // height: '100vh'
       }}>
-        <ThemeProvider theme={theme}>
+        {/* <ThemeProvider theme={theme}> */}
           
-            <Container component="main" maxWidth="xs" >
-                <CssBaseline />
+            {/* <Container component="main" maxWidth="lg" > */}
+                {/* <CssBaseline /> */}
                 {/* sx={{ minWidth: 275 , maxWidth: 900}} */}
-                <Card sx={{ minWidth: 400, margin: 2 }}>
+                <Card sx={{minWidth: 275 , maxWidth: 400, maxHeight: 500, margin: 2 }}>
                     <CardContent>                  
                         <Box
                             sx={{
@@ -167,9 +171,9 @@ const Login  = ({history}) => {
                         </Box>                    
                     </CardContent>
                 </Card>
-            </Container>
+            {/* </Container> */}
           
-        </ThemeProvider>
+        {/* </ThemeProvider> */}
      </div>
     );
 }
