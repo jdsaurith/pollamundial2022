@@ -7,6 +7,7 @@ import {
 
 import Login from './page/Login';
 import Home from './page/Home';
+import RegistroUser from './page/RegistroUser';
 import TicketsUsuarios from './page/TicketsUsuarios';
 
 
@@ -31,6 +32,7 @@ function App() {
       <Provider store={store}>
         <Switch>
           <Route exact path="/" component={Login}/>
+          <Route exact path="/registro" component={RegistroUser}/>
           <Rutaprivada exact path="/home" component={Home}/>
           {/* <Route exact path="/ticketusuario" component={TicketsUsuarios}/> */}
         </Switch>

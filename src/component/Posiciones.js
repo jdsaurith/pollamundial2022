@@ -68,6 +68,7 @@ const Posiciones = () => {
     const dispatch = useDispatch();
     const obtenerposiciones = () =>dispatch(obtenerposicionesAction());
     const posiciones = useSelector(state => state.resultado.posiciones);
+    const usuario = useSelector(state => state.auth.usuario);
 
     // console.log(posiciones);
 
@@ -106,7 +107,7 @@ const Posiciones = () => {
           keepMounted
           open={openModal}
           onClose={handleCloseModal}
-          classes={{maxWidth:'900', maxHeight:'600' }}      
+          classes={{maxWidth:'900', maxHeight:'600' }}
           datos={datos}
         />}
         <Grid container direction='row' display='flex' spacing={4} >
@@ -121,7 +122,7 @@ const Posiciones = () => {
                       <Typography variant="h5" component="div">
                         { formatearDinero(bolsa) }
                       </Typography>
-                    </CardContent>                
+                    </CardContent>
                   </Box>
                   <CardMedia
                     component="img"
@@ -130,7 +131,7 @@ const Posiciones = () => {
                     alt="POLLA QATAR 2022"
                   />
                 </Card>
-             </Grid>
+            </Grid>
             <Grid xs={12} md={6} lg={6}  display='flex' justifyContent='center'>
               <Card sx={{ display: 'flex', bgcolor: 'transparent' }}>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -141,10 +142,10 @@ const Posiciones = () => {
                     <Typography variant="h6" component="div">
                       <span>&#x1F947;</span> Puesto : { formatearDinero(bolsa * 0.6) } <br />
                       <span>&#x1F948;</span> Puesto : { formatearDinero(bolsa * 0.2) }<br />
-                      <span>&#x1F949;</span> Puesto : { formatearDinero(bolsa * 0.05) }
+                      <span>&#x1F949;</span> Puesto : { formatearDinero(bolsa * 0.05 < 10000 ? bolsa * 0.05 : 10000) }
                     </Typography>
-                  </CardContent>                
-                </Box>              
+                  </CardContent>
+                </Box>
               </Card>
             </Grid>
 
@@ -157,8 +158,8 @@ const Posiciones = () => {
                   <StyledTableCell>Posición</StyledTableCell>
                   <StyledTableCell>Nombres y Apellidos</StyledTableCell>
                   <StyledTableCell>Puntos</StyledTableCell>
-                  <StyledTableCell>Resultados Exactos</StyledTableCell> 
-                  <StyledTableCell>Detalles</StyledTableCell>                                
+                  <StyledTableCell>Resultados Exactos</StyledTableCell>
+                  <StyledTableCell>Detalles</StyledTableCell>
                   </TableRow>
               </TableHead>
               <TableBody>
@@ -169,32 +170,32 @@ const Posiciones = () => {
                       </TableRow>
                   )
                   :
-                  posiciones.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row,i) => (                   
-                  <StyledTableRow key={i}>                      
+                  posiciones.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row,i) => (
+                  <StyledTableRow key={i}>
                       <StyledTableCell component="th" scope="row" align="center">
-                      {(row.orden === 1 && (row.puntos && row.puntos != 0))  ? <span style={{fontSize: "2em"}}>&#x1F451; {row.orden}</span> : (row.orden === 2 && (row.puntos && row.puntos != 0)) ? <span style={{fontSize: "1.6em"}}>&#x1F948; {row.orden }</span> :  (row.orden === 3 && (row.puntos && row.puntos != 0)) ? <span style={{fontSize: "1.3em"}}>&#x1F949; {row.orden}</span> : row.orden }
-                      
+                      {/* {(row.orden === 1 && (row.puntos && row.puntos != 0))  ? <span style={{fontSize: "2em"}}>&#x1F451; {row.orden}</span> : (row.orden === 2 && (row.puntos && row.puntos != 0)) ? <span style={{fontSize: "1.6em"}}>&#x1F948; {row.orden }</span> :  (row.orden === 3 && (row.puntos && row.puntos != 0)) ? <span style={{fontSize: "1.3em"}}>&#x1F949; {row.orden}</span> : row.orden } */}
                       </StyledTableCell>
                       <StyledTableCell>{row.nombres}</StyledTableCell>
                       <StyledTableCell>{row.puntos}</StyledTableCell>
                       <StyledTableCell>{row.aciertos}</StyledTableCell>
                       <StyledTableCell>
+                        {usuario.estado === 'PAGO'}
                             <FontAwesomeIcon
                               style={{
-                                margin:  '0 5px',
-                                cursor: 'pointer'
+                                margin:  '0 5px'
                               }}
                               title="Detalle"
                               name="detalle"
+                              cursor={usuario.estado === 'PAGO' ? 'pointer' :'not-allowed'}
                               icon={faEye}
                               color="#363636"
+                              opacity={usuario.estado !== 'PAGO' && "50%"}
                               size="2x"
-                              onClick={()=>detalleApuesta(row)}
+                              onClick={usuario.estado === 'PAGO' ? ()=>detalleApuesta(row) : null}
                             />
                       </StyledTableCell>
                   </StyledTableRow>
                   ))}
-                  
               </TableBody>
               <TableFooter>
                   <TableRow>
@@ -221,7 +222,7 @@ const Posiciones = () => {
           </Grid>
         </Grid>
       </>
-     );
+    );
 }
  
 export default Posiciones;

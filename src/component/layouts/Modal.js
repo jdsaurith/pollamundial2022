@@ -81,7 +81,7 @@ const Modal = (props) => {
                     <StyledTableCell align='center'>{  row.golesuno +" - "+ row.golesdos }</StyledTableCell>
                     <StyledTableCell align='center'>{  row.goles_equipo_uno +" - "+ row.goles_equipo_dos }</StyledTableCell>
                     <StyledTableCell align='center'>{ row.puntos }</StyledTableCell>
-                    <StyledTableCell align='center'>{ row.acierto }</StyledTableCell>                    
+                    <StyledTableCell align='center'>{ row.acierto }</StyledTableCell>
                   </StyledTableRow>
                   ))}
               </TableBody>
@@ -89,8 +89,8 @@ const Modal = (props) => {
         </DialogContent>
         <DialogActions>
           <Button 
-           onClick={handleClose}
-           color="primary">
+            onClick={handleClose}
+            color="primary">
             Cerrar
           </Button>
         </DialogActions>

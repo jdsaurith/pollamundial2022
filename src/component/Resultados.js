@@ -48,7 +48,7 @@ const Resultados = () => {
   const btnResultados = () =>{
     console.log('click en enviar resultados a BD');
     const datos = JSON.parse(localStorage.getItem('resultadofifa'));
-    // console.log(datos);    
+    // console.log(datos);
     resultadopartidosfifa(datos);
     datosapuesta = [];
   }
@@ -64,7 +64,7 @@ const Resultados = () => {
           >
             <Typography>FECHA 1</Typography>
           </AccordionSummary>
-          <AccordionDetails>       
+          <AccordionDetails>
             <Grid container spacing={2} display='flex' justifyContent='center' alignItems='center'>
                 {obtenerpartidos.filter(f => f.jornada === 'FECHA1').map(row =>(
                   <Grid item >
@@ -74,9 +74,9 @@ const Resultados = () => {
                           <TableRow>
                             <StyledTableCell style={{ display: 'flex' }}>
                             <Grid xs={10}>
-                              GRUPO { row.grupo }                          
-                            </Grid>                                                                         
-                            <Grid xs={2}>                               
+                              GRUPO { row.grupo }
+                            </Grid>
+                            <Grid xs={2}>
                               <IconButton
                               size="large"
                               aria-label="show 17 new notifications"
@@ -88,33 +88,33 @@ const Resultados = () => {
                             </StyledTableCell>
                           </TableRow>
                         </TableHead>
-                        <TableBody>                    
+                        <TableBody>
                           <ResultadosFifa 
                             key={row.id_partido}
                             id_partido={row.id_partido}
-                            datosapuesta={datosapuesta}                        
+                            datosapuesta={datosapuesta}
                             fecha={formatearFecha(row.fecha)}
                             equipo1={row.equipouno}
                             icon1={row.iconuno}
                             equipo2={row.equipodos}
                             icon2={row.icondos}
                             descripcion = 'MUNDIAL QATAR 2022 FECHA 1'
-                            />                      
+                            />
                         </TableBody>
-                        
                       </Table>
                   </TableContainer>
                   </Grid>
                 ))}
                 <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
-                  <Button
-                    type='button'
-                    variant='contained'
-                    color='primary'
-                    onClick={() => btnResultados()}
-                  >
-                    GUARDAR RESULTADOS
-                  </Button>
+                  {(tipousuario === 'ROOT' || tipousuario === 'ADMIN') &&
+                    <Button
+                      type='button'
+                      variant='contained'
+                      color='primary'
+                      onClick={() => btnResultados()}
+                    >
+                      GUARDAR RESULTADOS
+                    </Button>}
                 </Grid>
             </Grid>
         </AccordionDetails>
@@ -138,9 +138,9 @@ const Resultados = () => {
                         <TableRow>
                           <StyledTableCell style={{ display: 'flex' }}>
                           <Grid xs={10}>
-                            GRUPO { row.grupo }                          
-                          </Grid>                                                                         
-                          <Grid xs={2}>                               
+                            GRUPO { row.grupo }
+                          </Grid>
+                          <Grid xs={2}>
                             <IconButton
                             size="large"
                             aria-label="show 17 new notifications"
@@ -152,7 +152,7 @@ const Resultados = () => {
                           </StyledTableCell>
                         </TableRow>
                       </TableHead>
-                      <TableBody>                    
+                      <TableBody>
                         <ResultadosFifa 
                           key={row.id_partido}
                           id_partido={row.id_partido}
@@ -163,22 +163,22 @@ const Resultados = () => {
                           equipo2={row.equipodos}
                           icon2={row.icondos}
                           descripcion = 'MUNDIAL QATAR 2022 FECHA 2'
-                          />                      
+                          />
                       </TableBody>
-                      
                     </Table>
                 </TableContainer>
                 </Grid>
               ))}
-               <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
-                  <Button
-                    type='button'
-                    variant='contained'
-                    color='primary'
-                    onClick={() => btnResultados()}
-                  >
-                    GUARDAR RESULTADOS
-                  </Button>
+                <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
+                {(tipousuario === 'ROOT' || tipousuario === 'ADMIN') &&
+                    <Button
+                      type='button'
+                      variant='contained'
+                      color='primary'
+                      onClick={() => btnResultados()}
+                    >
+                      GUARDAR RESULTADOS
+                    </Button>}
                 </Grid>
             </Grid>
           </AccordionDetails>
@@ -202,22 +202,22 @@ const Resultados = () => {
                         <TableRow>
                           <StyledTableCell style={{ display: 'flex' }}>
                           <Grid xs={10}>
-                            GRUPO { row.grupo }                          
-                          </Grid>                                                                         
-                          <Grid xs={2}>                               
+                            GRUPO { row.grupo }
+                          </Grid>
+                          <Grid xs={2}>
                             <IconButton
                             size="large"
                             aria-label="show 17 new notifications"
                             color="inherit"
                             >
-                              <CheckCircleIcon /> 
+                              <CheckCircleIcon />
                             </IconButton>
                           </Grid>
                           </StyledTableCell>
                         </TableRow>
                       </TableHead>
-                      <TableBody>                    
-                        <ResultadosFifa 
+                      <TableBody>
+                        <ResultadosFifa
                           key={row.id_partido}
                           id_partido={row.id_partido}
                           datosapuesta={datosapuesta}
@@ -227,22 +227,22 @@ const Resultados = () => {
                           equipo2={row.equipodos}
                           icon2={row.icondos}
                           descripcion = 'MUNDIAL QATAR 2022 FECHA 3'
-                          />                      
+                          />
                       </TableBody>
-                      
                     </Table>
                 </TableContainer>
                 </Grid>
               ))}
               <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
-                  <Button
-                    type='button'
-                    variant='contained'
-                    color='primary'
-                    onClick={() => btnResultados()}
-                  >
-                    GUARDAR RESULTADOS
-                  </Button>
+              {(tipousuario === 'ROOT' || tipousuario === 'ADMIN') &&
+                    <Button
+                      type='button'
+                      variant='contained'
+                      color='primary'
+                      onClick={() => btnResultados()}
+                    >
+                      GUARDAR RESULTADOS
+                    </Button>}
                 </Grid>
             </Grid>
           </AccordionDetails>

@@ -102,8 +102,11 @@ const Login  = ({history}) => {
       // console.log(input);
       iniciarSesion({usuario, password});
 
-        
     };
+
+    const aRegistro = () =>{
+      history.push('/registro');
+    }
 
     return ( 
       <div style={{ 
@@ -121,7 +124,7 @@ const Login  = ({history}) => {
                 {/* <CssBaseline /> */}
                 {/* sx={{ minWidth: 275 , maxWidth: 900}} */}
                 <Card sx={{minWidth: 275 , maxWidth: 400, maxHeight: 500, margin: 2 }}>
-                    <CardContent>                  
+                    <CardContent>
                         <Box
                             sx={{
                                 marginTop: 4,
@@ -168,6 +171,15 @@ const Login  = ({history}) => {
                                 Ingresar
                                 </Button>
                             </Box>   
+                        <Link
+                          component="button"
+                          variant="body2"
+                          onClick={() => {
+                            aRegistro();
+                          }}
+                        >
+                          Crear cuenta
+                        </Link>
                         </Box>                    
                     </CardContent>
                 </Card>

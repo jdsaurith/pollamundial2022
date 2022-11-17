@@ -119,3 +119,43 @@ const usuarioautenticadoexitoso = datos => ({
 const usuarioautenticadoerror = ()=> ({
     type: USUARIO_AUTENTICADO_ERROR
 });
+
+/////funcion para agregar nuevo cliente
+export function agregarUsuarioPageAction(c){
+    return async dispatch =>{
+        dispatch(iniciarSesion());
+        try {
+            const res = await clienteAxios.post('/usuarios/registro', c);
+            console.log(res.data);
+            if(res.data.msg === 'guardado'){
+                dispatch(iniciarSesionExito(res.data));
+                Swal.fire({
+                    icon: 'success',
+                    title: 'El Usuario se guardo correctamente!',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                //refrescar los datos
+            }
+            if(res.data.msg === "existe"){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'El Usuario ya EXISTE!',
+                    showConfirmButton: true,
+                    //timer: 1500
+                })
+            }
+        } catch (error) {
+            console.log(error);
+            dispatch(iniciarSesionError());
+            //error del lado servidor
+            Swal.fire({
+                icon: 'error',
+                title: 'Hubo un Error',
+                text: 'Hubo un error, Intenta de nuevo',
+                showConfirmButton: true
+                //timer: 1500
+            })
+        }
+    }
+}

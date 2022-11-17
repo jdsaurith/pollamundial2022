@@ -277,7 +277,7 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, eq
             { descripcion }
           </Typography>
           {estado === 'ACTIVO' ? 
-          <Typography paragraph>Obtuviste  <strong>{input.puntos}</strong>  pts con este partido</Typography> :
+          <Typography paragraph>Obtuviste  <strong>{input.puntos} pts </strong> con este partido</Typography> :
           <Typography paragraph>Esperando resultados FIFA...</Typography>}
         </CardContent>
       </Collapse>
