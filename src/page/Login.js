@@ -3,7 +3,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { 
     Card, CardContent, Container, Box, 
     TextField, Button, FormControlLabel,
-    Typography, Checkbox, Link, Grid 
+    Typography, Checkbox, Link, Grid, Paper 
 } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import Avatar from '@mui/material/Avatar';
@@ -123,7 +123,7 @@ const Login  = ({history}) => {
             {/* <Container component="main" maxWidth="lg" > */}
                 {/* <CssBaseline /> */}
                 {/* sx={{ minWidth: 275 , maxWidth: 900}} */}
-                <Card sx={{minWidth: 275 , maxWidth: 400, maxHeight: 500, margin: 2 }}>
+                <Paper sx={{minWidth: 275 , maxWidth: 400, maxHeight: 500, margin: 2 }} elevation={6}>
                     <CardContent>
                         <Box
                             sx={{
@@ -182,7 +182,7 @@ const Login  = ({history}) => {
                         </Link>
                         </Box>                    
                     </CardContent>
-                </Card>
+                </Paper>
             {/* </Container> */}
           
         {/* </ThemeProvider> */}
