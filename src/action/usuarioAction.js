@@ -149,7 +149,7 @@ export function EditarPagoUsuarioAction(c){
 export function agregarUsuarioAction(c){
     return async dispatch =>{
         dispatch(guardarUsuario());
-        try {            
+        try {
             const res = await clienteAxios.post('/usuarios', c);
             // console.log(res.data);
             if(res.data.msg === 'guardado'){
@@ -196,6 +196,4 @@ const guardarUsuarioExito = (c) =>({
 const guardarUsuarioError = () =>({
     type: GUARDAR_USUARIO_ERROR
 })
-
-
 

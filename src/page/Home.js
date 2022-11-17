@@ -265,11 +265,11 @@ const Home = () => {
           <Header onDrawerToggle={handleDrawerToggle} nombre={usuario?.nombres || ''} vista="home"/>
           <Box component="main" sx={{ flex: 1, py: componente === 'Reglas' ? 3 : 6, px: componente === 'Usuarios' ? 3 : 1, bgcolor: '#eaeff1' }}>
            <Contenedor>
-                 {componente === 'Usuarios' ? usuario?.tipousuario === 'ROOT' || usuario?.tipousuario === 'ADMIN' ? <Usuarios  /> : <Reglas  /> : null}
-                 {componente === 'Reglas' && <Reglas  />}
-                 {componente === 'Posiciones' && <Posiciones  />}
-                 {componente === 'Resultados' && <Resultados  />}
-                 {componente === 'FECHA 1' && 
+                  {componente === 'Usuarios' ? usuario?.tipousuario === 'ROOT' || usuario?.tipousuario === 'ADMIN' ? <Usuarios  /> : <Reglas  /> : null}
+                  {componente === 'Reglas' && <Reglas  />}
+                  {componente === 'Posiciones' && <Posiciones  />}
+                  {componente === 'Resultados' && <Resultados  />}
+                  {componente === 'FECHA 1' && 
                   <>
                   <Grid container spacing={2} display='flex' justifyContent='center' alignItems='center'>
                     {obtenerpartidos.filter(f => f.jornada === 'FECHA1').map((row) =>( 

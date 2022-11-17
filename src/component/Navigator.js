@@ -97,7 +97,6 @@ const Navigator = (props) => {
                             <ListItemText>{childId}</ListItemText>
                             </ListItemButton>
                           </ListItem>
-                            
                         ))}
 
                         <Divider sx={{ mt: 2 }} />

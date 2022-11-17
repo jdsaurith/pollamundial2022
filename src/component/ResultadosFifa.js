@@ -171,7 +171,7 @@ const ResultadosFifa = ({id_partido, datosapuesta, fecha, equipo1, equipo2, icon
   
     return (
     <Card sx={{ maxWidth: 430, margin: 1 }}>
-      <CardHeader        
+      <CardHeader
         title={ equipo1 +' vs '+ equipo2  }
         subheader={fecha}
       />
@@ -181,7 +181,7 @@ const ResultadosFifa = ({id_partido, datosapuesta, fecha, equipo1, equipo2, icon
             <Grid item xs={6} md={6} lg={6} spacing={2} >
               <Grid container justifyContent='center' alignItems='center' >
                 <Grid item xs={6}>
-                    <Avatar src={`/imagenes/${icon1}.png`}  sx={{ width: 46, height: 46 }} alt={equipo1} />                    
+                    <Avatar src={`/imagenes/${icon1}.png`}  sx={{ width: 46, height: 46 }} alt={equipo1} />
                 </Grid>
                 <Grid item xs={6}>
                   {tipousuario === 'ROOT' || tipousuario === 'ADMIN' ?
@@ -190,7 +190,7 @@ const ResultadosFifa = ({id_partido, datosapuesta, fecha, equipo1, equipo2, icon
                     type="number"
                     size="small"
                     name='golesequipo1'
-                    label=""                  
+                    label=""
                     value={input.golesequipo1}
                     onChange={handleResultado}
                     onFocus={onfocusEquipouno}
@@ -204,14 +204,14 @@ const ResultadosFifa = ({id_partido, datosapuesta, fecha, equipo1, equipo2, icon
                       <h1 style={{ display:'flex', justifyContent: 'center', alignContent: 'center'}}>
                         {input?.golesequipo1 || '-'}
                       </h1>
-                    </>                    
+                    </>
                   }
                 </Grid>
-              </Grid>                            
+              </Grid>
             </Grid>
 
             <Grid item xs={6} md={6} lg={6}>
-              <Grid container justifyContent='center' alignItems='center' >                  
+              <Grid container justifyContent='center' alignItems='center' >
                   <Grid item xs={6}>
                     {tipousuario === 'ROOT' || tipousuario === 'ADMIN' ? 
                       <TextField 
@@ -219,7 +219,7 @@ const ResultadosFifa = ({id_partido, datosapuesta, fecha, equipo1, equipo2, icon
                       type="number"
                       size="small"
                       name='golesequipo2'
-                      label=""                  
+                      label=""
                       value={input.golesequipo2}
                       onChange={handleResultado}
                       onFocus={onfocusEquipouno}
@@ -257,7 +257,7 @@ const ResultadosFifa = ({id_partido, datosapuesta, fecha, equipo1, equipo2, icon
           <Typography paragraph>{equipo1 + ' VS ' + equipo2}</Typography>
           <Typography paragraph>
             { descripcion }
-          </Typography>          
+          </Typography>
         </CardContent>
       </Collapse> */}
     </Card>

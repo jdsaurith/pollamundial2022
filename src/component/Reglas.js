@@ -37,6 +37,8 @@ const rows2 = [
   createData2(8, 'Qatar', '0 - 0', 'Ecuador', '0', 'No hay ningún acierto')
 ];
 
+const ejemploBolsa = 1000000;
+
 const Reglas = () => {
   return (
     <div style={{ padding: '1em' }}>
@@ -122,8 +124,9 @@ const Reglas = () => {
       <Typography paragraph variant="body2"  style={{marginTop: '1em'}}>
         <i>*Recuerda que tienes <strong style={{backgroundColor: '#C8EDF3'}}>hasta dos(2) horas antes</strong> que comience el partido para pronosticar o modificar tu pronóstico </i> <br /><br />
         <i>*El costo de participación es de: <strong style={{backgroundColor: '#C8EDF3'}}>{formatearDinero(10000)}</strong> pesos.</i> <br />
-        <i>*El primer (1) lugar obtendra <strong style={{backgroundColor: '#C8EDF3'}}>un 60% de lo recaudado</strong> por ejemplo si el total de lo recaudado es {formatearDinero(1000000)} el 60% corresponde a {formatearDinero(600000)} mil pesos. </i><br />
-        <i>*El segundo (2) lugar obtendra <strong style={{backgroundColor: '#C8EDF3'}}>un 20% de lo recaudado</strong> por ejemplo si el total de lo recaudado es {formatearDinero(1000000)} el 20% corresponde a {formatearDinero(200000)} mil pesos. </i><br />
+        <i>*El primer (1) lugar obtendra <strong style={{backgroundColor: '#C8EDF3'}}>un 60% de lo recaudado</strong> por ejemplo si el total de lo recaudado es {formatearDinero(ejemploBolsa)} el 60% corresponde a {formatearDinero(ejemploBolsa*0.6)} mil pesos. </i><br />
+        <i>*El segundo (2) lugar obtendra <strong style={{backgroundColor: '#C8EDF3'}}>un 20% de lo recaudado</strong> por ejemplo si el total de lo recaudado es {formatearDinero(ejemploBolsa)} el 20% corresponde a {formatearDinero(ejemploBolsa*0.2)} mil pesos. </i><br />
+        <i>*El tercer (3) lugar <strong style={{backgroundColor: '#C8EDF3'}}>libra el case</strong> correspondiente a {formatearDinero(10000)} mil pesos. </i><br />
         <i>*El procentaje restante sera para gastos de administracion y servicios de la plataforma.</i><br />
 
       </Typography>
