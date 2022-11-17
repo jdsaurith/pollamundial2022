@@ -8,8 +8,12 @@ import {
     GUARDAR_USUARIO_EXITO,
     GUARDAR_USUARIO_ERROR,
     EDITAR_USUARIO_EXITO,
-    EDITAR_USUARIO_ERROR
+    EDITAR_USUARIO_ERROR,
+    EDITAR_PAGO_USUARIO_EXITO,
+    EDITAR_PAGO_USUARIO_ERROR
 } from '../types';
+
+import { obtenerposicionesAction } from './resultadoAction';
 
 import clienteAxios from '../config/axios';
 //////diseño de alerta
@@ -100,6 +104,47 @@ export function editarUsuarioAction(c){
      type: EDITAR_USUARIO_ERROR
  });
 
+ //////funcion para editar los datos del cliente
+export function EditarPagoUsuarioAction(c){
+    return async dispatch =>{
+        // dispatch(EditarPagoUsuario());
+     try {
+        console.log(c);
+         const res = await clienteAxios.put('/usuarios/pago',c);
+        //  console.log(res.data);
+         if(res.data.msg === 'actualizado'){
+             dispatch(EditarPagoUsuarioExito());
+             Swal.fire({
+                 icon: 'success',
+                 title: 'El usuario se actualizo correctamente!',
+                 showConfirmButton: false,
+                 timer: 1500
+             })
+             //refrescar los datos
+         dispatch(verUsuariosAction('COL'));
+        }
+ 
+     } catch (error) {
+         console.log(error);
+         dispatch(EditarPagoUsuarioError());
+         //error del lado servidor
+         Swal.fire({
+             icon: 'error',
+             title: 'Hubo un Error',
+             text: 'Hubo un error, Intenta de nuevo',
+             showConfirmButton: true
+             //timer: 1500
+         })
+     }
+    }
+ }
+ const EditarPagoUsuarioExito = (c) =>({
+     type: EDITAR_PAGO_USUARIO_EXITO,
+ });
+ const EditarPagoUsuarioError = () =>({
+     type: EDITAR_PAGO_USUARIO_ERROR
+ });
+
 /////funcion para agregar nuevo cliente
 export function agregarUsuarioAction(c){
     return async dispatch =>{
@@ -117,6 +162,7 @@ export function agregarUsuarioAction(c){
                 })
                 //refrescar los datos
                 dispatch(verUsuariosAction(c.pais));
+                dispatch(obtenerposicionesAction());
             }
             if(res.data.msg === "existe"){
                 Swal.fire({
@@ -150,3 +196,6 @@ const guardarUsuarioExito = (c) =>({
 const guardarUsuarioError = () =>({
     type: GUARDAR_USUARIO_ERROR
 })
+
+
+

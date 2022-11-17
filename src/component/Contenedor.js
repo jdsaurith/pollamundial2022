@@ -24,6 +24,7 @@ const Contenedor = (props) => {
                         display: 'flex',
                         flex: '1 1 auto',
                         flexDirection: 'row',
+                        justifyContent: 'center',
                         width: '100%',
                     }}
                 >

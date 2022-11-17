@@ -8,7 +8,9 @@ import {
     EDITAR_USUARIO_ERROR,
     GUARDAR_USUARIO,
     GUARDAR_USUARIO_EXITO,
-    GUARDAR_USUARIO_ERROR,    
+    GUARDAR_USUARIO_ERROR,
+    EDITAR_PAGO_USUARIO_EXITO,
+    EDITAR_PAGO_USUARIO_ERROR    
 } from '../types';
 
 const initialState = {
@@ -68,7 +70,7 @@ const usuarioReducer = (state = initialState, action) =>{
                    : c),
                 usuarioeditar: null
             }
-        
+
         case GUARDAR_USUARIO_ERROR:
         case EDITAR_USUARIO_ERROR:
         case VER_USUARIOS_ERROR:

@@ -6,15 +6,16 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
-import { Badge, Button, Grid, IconButton, Paper, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Fab, Badge, Button, Grid, IconButton, Paper, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableHead, TableRow } from '@mui/material';
 import styled from '@emotion/styled';
+import SaveIcon from '@mui/icons-material/Save';
 
 import NotificationsIcon from '@mui/icons-material/Notifications'
 
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'; //no tiene resultado
 import AnnouncementIcon from '@mui/icons-material/Announcement'; // localStorage
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'; //guardado
-
+import Zoom from '@mui/material/Zoom';
 import Header from '../component/Header';
 import Navigator from '../component/Navigator';
 import Contenedor from '../component/Contenedor';
@@ -28,6 +29,7 @@ import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch  } from 'react-redux'
 import {  obtenerResultadosAction, resultadopartidosAction, obtenerPartidosAction } from '../action/resultadoAction';
 import { formatearFecha, formatearFechaValidacion } from '../helpers';
+import Conteo from '../component/layouts/Conteo';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -186,6 +188,7 @@ const drawerWidth = 250;
 var datosapuesta = [];
 
 
+
 const Home = () => {  
   const history = useHistory();
   const dispatch = useDispatch();
@@ -203,7 +206,6 @@ const Home = () => {
   const obtenerpartidos = useSelector(state => state.resultado.obtenerpartidos);
   const consultarresultados = useSelector(state => state.resultado.consultarresultados);
   const resultadosapostados = useSelector(state => state.resultado.resultadosapostados);
-  
 
   useEffect(() => {
     if(!conectado) history.push("/");
@@ -223,11 +225,16 @@ const Home = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  const btnResultados = () => {    
-    const datos = JSON.parse(localStorage.getItem('resultado'));    
+  const btnResultados = () => { 
+    const datos = JSON.parse(localStorage.getItem('resultado'));
+    console.log(datos);
+    
     resultadopartidos(datos);
-    datosapuesta = [];    
+    datosapuesta = [];
+      
+       
   }
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -243,7 +250,7 @@ const Home = () => {
               variant="temporary"
               open={mobileOpen}
               onClose={handleDrawerToggle}
-              
+              setComponente={setComponente}
             />
           )}
           <Navigator
@@ -256,26 +263,26 @@ const Home = () => {
 
         <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
           <Header onDrawerToggle={handleDrawerToggle} nombre={usuario?.nombres || ''} vista="home"/>
-          <Box component="main" sx={{ flex: 1, py: 6, px: componente === 'Usuarios' ? 3 : 1, bgcolor: '#eaeff1' }}>
+          <Box component="main" sx={{ flex: 1, py: componente === 'Reglas' ? 3 : 6, px: componente === 'Usuarios' ? 3 : 1, bgcolor: '#eaeff1' }}>
            <Contenedor>
                  {componente === 'Usuarios' ? usuario?.tipousuario === 'ROOT' || usuario?.tipousuario === 'ADMIN' ? <Usuarios  /> : <Reglas  /> : null}
                  {componente === 'Reglas' && <Reglas  />}
                  {componente === 'Posiciones' && <Posiciones  />}
                  {componente === 'Resultados' && <Resultados  />}
                  {componente === 'FECHA 1' && 
+                  <>
                   <Grid container spacing={2} display='flex' justifyContent='center' alignItems='center'>
                     {obtenerpartidos.filter(f => f.jornada === 'FECHA1').map((row) =>( 
-                        <Grid item xs={5}>               
+                        <Grid item xs={12} md={12} lg={5}>
                           <TableContainer> 
-                            <Table sx={{ minWidth: 430 }} aria-label="simple table">
+                            <Table sx={{ minWidth: 230, maxWidth: 430 }} aria-label="simple table">
                               <TableHead>
                                 <TableRow key={row.id_partido}>
-                                  
                                   <StyledTableCell style={{ display: 'flex' }}>
-                                    <Grid xs={10}>
-                                      GRUPO { row.grupo }                          
-                                    </Grid>                                                                         
-                                    <Grid xs={2}>                               
+                                    <Grid xs={10} md={10} lg={10}>
+                                      GRUPO { row.grupo }
+                                    </Grid>
+                                    <Grid xs={2} md={2} lg={2}>
                                       {resultadosapostados.map(r =>(
                                         r.id_partido === row.id_partido ?
                                         <IconButton
@@ -288,33 +295,30 @@ const Home = () => {
                                         :
                                         null
                                       ))}
-                                    </Grid>                                     
-                                  </StyledTableCell>                                  
-                                  
-                                                                             
-                                </TableRow>                                
+                                    </Grid>
+                                  </StyledTableCell>
+                                </TableRow>
                               </TableHead>
-                              <TableBody>                              
-                                <Partidos                                  
+                              <TableBody>
+                                <Partidos
                                   key={row.id_partido}
                                   datosapuesta={datosapuesta}
                                   id_partido={row.id_partido}
                                   fecha={formatearFecha(row.fecha)}
                                   fechavalidacion={row.fecha}
                                   equipo1={row.equipouno}
-                                  idequipouno={row.equipo_uno}
-                                  idequipodos={row.equipo_dos}
                                   icon1={row.iconuno}
                                   equipo2={row.equipodos}
                                   icon2={row.icondos}
-                                  descripcion = 'MUNDIAL QATAR 2022' 
-                                />                             
-                              </TableBody>                                            
-                            </Table>                                        
+                                  descripcion = 'MUNDIAL QATAR 2022'
+                                  estado={row.estado}
+                                />
+                              </TableBody>
+                            </Table>
                           </TableContainer>
-                        </Grid>                
+                        </Grid>
                     ))}
-                    <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
+                    {/* <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
                       <Button
                         type='button'
                         variant='contained'
@@ -323,21 +327,55 @@ const Home = () => {
                       >
                         GUARDAR RESULTADOS
                       </Button>
-                    </Grid>
-                  </Grid> 
+                      
+                    </Grid> */}
+                   
+                  </Grid>
+                  <Box style={{ bottom:'30px', right:'30px', position:'fixed' }} >
+                      {usuario.estado === 'DEBE' ?
+                        <>
+                        <Typography style={{ fontSize:'1em' }} color='red'>CANCELA LA CUOTA PARA PARTICIPAR</Typography>
+                        
+                        </> 
+                       :
+                       <Fab color='primary' aria-label="add"  onClick={() => btnResultados()}>
+                        <SaveIcon />
+                       </Fab> }
+                  </Box>
+                  
+                  </>
                  }
-                 {componente === 'FECHA 2' &&                
+                 {componente === 'FECHA 2' &&
+                 <>
                  <Grid container spacing={2} display='flex' justifyContent='center' alignItems='center'>
                     {obtenerpartidos.filter(f => f.jornada === 'FECHA2').map((row) =>( 
-                        <Grid item xs={5}>               
+                        <Grid item xs={12} md={12} lg={5}>
                           <TableContainer> 
-                            <Table sx={{ minWidth: 430 }} aria-label="simple table">
+                            <Table sx={{ minWidth: 230, maxWidth: 430 }} aria-label="simple table">
                               <TableHead>
                                 <TableRow key={row.id_partido}>
-                                  <StyledTableCell>GRUPO { row.grupo }</StyledTableCell>                                            
+                                  <StyledTableCell style={{ display: 'flex' }}>
+                                    <Grid xs={10} md={10} lg={10}>
+                                      GRUPO { row.grupo }
+                                    </Grid>
+                                    <Grid xs={2} md={2} lg={2}>
+                                      {resultadosapostados.map(r =>(
+                                        r.id_partido === row.id_partido ?
+                                        <IconButton
+                                        size="large"
+                                        aria-label="show 17 new notifications"
+                                        color="inherit"
+                                        >
+                                          <CheckCircleIcon /> 
+                                        </IconButton>
+                                        :
+                                        null
+                                      ))}
+                                    </Grid>
+                                  </StyledTableCell>
                                 </TableRow>
                               </TableHead>
-                              <TableBody>                              
+                              <TableBody>
                                 <Partidos
                                   key={row.id_partido}
                                   datosapuesta={datosapuesta}
@@ -348,14 +386,15 @@ const Home = () => {
                                   icon1={row.iconuno}
                                   equipo2={row.equipodos}
                                   icon2={row.icondos}
-                                  descripcion = 'MUNDIAL QATAR 2022 FECHA 2' 
-                                />                             
-                              </TableBody>                                            
-                            </Table>                                        
+                                  descripcion = 'MUNDIAL QATAR 2022 FECHA 2'
+                                  estado={row.estado}
+                                />
+                              </TableBody>
+                            </Table>
                           </TableContainer>
-                        </Grid>                
+                        </Grid>
                     ))}
-                    <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
+                    {/* <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
                       <Button
                         type='button'
                         variant='contained'
@@ -364,21 +403,52 @@ const Home = () => {
                       >
                         GUARDAR RESULTADOS
                       </Button>
-                    </Grid>
-                  </Grid> 
+                    </Grid> */}
+                  </Grid>
+                  <Box style={{ bottom:'30px', right:'30px', position:'fixed' }} >
+                      {usuario.estado === 'DEBE' ?
+                        <>
+                        <Typography style={{ fontSize:'1em' }} color='red'>CANCELA LA CUOTA PARA PARTICIPAR</Typography>
+                        
+                        </> 
+                       :
+                       <Fab color='primary' aria-label="add"  onClick={() => btnResultados()}>
+                        <SaveIcon />
+                       </Fab> }
+                  </Box>
+                  </> 
                  }
                  {componente === 'FECHA 3' && 
+                 <>
                  <Grid container spacing={2} display='flex' justifyContent='center' alignItems='center'>
                   {obtenerpartidos.filter(f => f.jornada === 'FECHA3').map((row) =>( 
-                      <Grid item xs={5}>               
+                      <Grid item xs={12} md={12} lg={5}>
                         <TableContainer> 
-                          <Table sx={{ minWidth: 430 }} aria-label="simple table">
+                          <Table sx={{ minWidth: 230, maxWidth: 430 }} aria-label="simple table">
                             <TableHead>
                               <TableRow key={row.id_partido}>
-                                <StyledTableCell>GRUPO { row.grupo }</StyledTableCell>                                            
+                              <StyledTableCell style={{ display: 'flex' }}>
+                                    <Grid xs={10} md={10} lg={10}>
+                                      GRUPO { row.grupo }
+                                    </Grid>
+                                    <Grid xs={2} md={2} lg={2}>
+                                      {resultadosapostados.map(r =>(
+                                        r.id_partido === row.id_partido ?
+                                        <IconButton
+                                        size="large"
+                                        aria-label="show 17 new notifications"
+                                        color="inherit"
+                                        >
+                                          <CheckCircleIcon /> 
+                                        </IconButton>
+                                        :
+                                        null
+                                      ))}
+                                    </Grid>
+                                  </StyledTableCell>
                               </TableRow>
                             </TableHead>
-                            <TableBody>                              
+                            <TableBody>
                               <Partidos
                                 key={row.id_partido}
                                 datosapuesta={datosapuesta}
@@ -389,14 +459,15 @@ const Home = () => {
                                 icon1={row.iconuno}
                                 equipo2={row.equipodos}
                                 icon2={row.icondos}
-                                descripcion = 'MUNDIAL QATAR 2022 FECHA 3' 
-                              />                             
-                            </TableBody>                                            
-                          </Table>                                        
+                                descripcion = 'MUNDIAL QATAR 2022 FECHA 3'
+                                estado={row.estado}
+                              />
+                            </TableBody>
+                          </Table>
                         </TableContainer>
-                      </Grid>                
+                      </Grid>
                   ))}
-                  <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
+                  {/* <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
                     <Button
                       type='button'
                       variant='contained'
@@ -405,8 +476,20 @@ const Home = () => {
                     >
                       GUARDAR RESULTADOS
                     </Button>
-                  </Grid>
+                  </Grid> */}
                  </Grid> 
+                 <Box style={{ bottom:'30px', right:'30px', position:'fixed' }} >
+                      {usuario.estado === 'DEBE' ?
+                        <>
+                        <Typography style={{ fontSize:'1em' }} color='red'>CANCELA LA CUOTA PARA PARTICIPAR</Typography>
+                        
+                        </> 
+                       :
+                       <Fab color='primary' aria-label="add"  onClick={() => btnResultados()}>
+                        <SaveIcon />
+                       </Fab> }
+                  </Box>
+                  </>
                 }
             </Contenedor> 
           </Box>

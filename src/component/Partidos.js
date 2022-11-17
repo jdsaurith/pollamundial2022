@@ -14,12 +14,14 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { Grid, TableBody, TableCell, TableRow, TextField } from '@mui/material';
+import { Fab, Grid, TableBody, TableCell, TableRow, TextField } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { faIgloo } from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment/moment';
 import { formatearFechaDoshoras, formatearFechaValidacion } from '../helpers';
+import { obtenerResultadosAction } from '../action/resultadoAction';
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -34,10 +36,9 @@ const ExpandMore = styled((props) => {
   
   
 
-const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, idequipouno, equipo2, idequipodos, icon1, icon2, descripcion }) => {
+const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, equipo2, icon1, icon2, descripcion,estado }) => {
     const dispatch = useDispatch();
-    let fechajuego = moment()
-    .format('yyyy/MM/DD HH:mm:ss');
+    let fechajuego = moment().format('yyyy/MM/DD HH:mm:ss');
     let fecha2 = new Date(fechavalidacion);
     const [expanded, setExpanded] = React.useState(false);
     const [tiempo, setTiempo] = useState(Date.now()  >= formatearFechaDoshoras(fecha2, 2));
@@ -45,11 +46,16 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, id
     const [input, setInput] = React.useState({
       retornandovalores: false
     });
+
     
     const usuario = useSelector(state => state.auth.usuario);
+    const obtenerResultados = (id) =>dispatch(obtenerResultadosAction(id));
     const resultadosapostados = useSelector(state => state.resultado.resultadosapostados);
     const {retornandovalores} = input;
 
+    useEffect(() => {
+      obtenerResultados(usuario?.id_usuario);
+    },[]);
 
     useEffect(() => {
       setInterval(() => {
@@ -64,6 +70,8 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, id
           setInput({
             golesequipo1 : item.goles_equipo_uno,
             golesequipo2 : item.goles_equipo_dos,
+            puntos: item.puntos,
+            aciertos: item.acierto,
             retornandovalores: true
           })
         }
@@ -193,7 +201,7 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, id
         setExpanded(!expanded);
       };
 
-  return (
+  return (    
     <Card sx={{ maxWidth: 430, margin: 1 }}>
       <CardHeader        
         title={ equipo1 +' vs '+ equipo2  }
@@ -201,13 +209,13 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, id
       />
       
       <CardContent>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} ddisplay='flex' justifyContent='center' alignItems='center'>
             <Grid item xs={6} md={6} lg={6} spacing={2} >
               <Grid container justifyContent='center' alignItems='center' >
-                <Grid item xs={6}>
+                <Grid item xs={6} md={6} lg={6}>
                     <Avatar src={`/imagenes/${icon1}.png`}  sx={{ width: 46, height: 46 }} alt={equipo1} />                    
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={6} md={6} lg={6}>
                   <TextField 
                   required
                   type="number"
@@ -221,7 +229,7 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, id
                   disabled={tiempo}
                   // className={}
                   color="secondary"
-                  InputProps={{ inputProps: { min: "0", max: 5, step: "1" } }}
+                  InputProps={{ inputProps: { min: "0", max: "100", step: "1" } }}
                   />
                 </Grid>
               </Grid>                            
@@ -229,7 +237,7 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, id
 
             <Grid item xs={6} md={6} lg={6}>
               <Grid container justifyContent='center' alignItems='center' >                  
-                  <Grid item xs={6}>
+                  <Grid item xs={6} md={6} lg={6}>
                     <TextField 
                     required
                     type="number"
@@ -245,7 +253,7 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, id
                     InputProps={{ inputProps: { min: "0", max: "5", step: "1" } }}
                     />
                   </Grid>
-                  <Grid item xs={6} direction='row' display='flex' justifyContent='flex-end' alignItems='center' >
+                  <Grid item xs={6} md={6} lg={6}  direction='row' display='flex' justifyContent='flex-end' alignItems='center' >
                     <Avatar src={`/imagenes/${icon2}.png`} sx={{ width: 46, height: 46 }} alt={equipo2} />
                   </Grid>
               </Grid>
@@ -264,10 +272,13 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, id
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>{equipo1 + ' VS ' + equipo2}</Typography>
+          {/* <Typography paragraph>{equipo1 + ' VS ' + equipo2}</Typography> */}
           <Typography paragraph>
             { descripcion }
-          </Typography>          
+          </Typography>
+          {estado === 'ACTIVO' ? 
+          <Typography paragraph>Obtuviste  <strong>{input.puntos}</strong>  pts con este partido</Typography> :
+          <Typography paragraph>Esperando resultados FIFA...</Typography>}
         </CardContent>
       </Collapse>
     </Card>

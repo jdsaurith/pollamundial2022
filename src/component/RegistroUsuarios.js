@@ -42,7 +42,7 @@ const RegistroUsuarios = () => {
       if(usuarioeditar !== null){
         setActualizar(true);
         setInput({
-          id: usuarioeditar.id,
+          id: usuarioeditar.id_usuario,
           nombres: usuarioeditar.nombres,
           usuario: usuarioeditar.usuario,
           password: usuarioeditar.password
@@ -84,7 +84,15 @@ const RegistroUsuarios = () => {
           usuario: "",
           password: "",
         })
-      
+      }
+
+      const limpiar = ()=>{
+        setInput({
+          id: 0,
+          nombres: "",
+          usuario: "",
+          password: "",
+        })
       }
   return (
     <view style={{ display:'flex', padding: 2, marginLeft: 5}}>      
@@ -170,7 +178,7 @@ const RegistroUsuarios = () => {
                       color="primary"
                       fullWidth
                       // className={classes.limpiar}
-                      // onClick={limpiarF}
+                      onClick={limpiar}
                     >
                       Limpiar
                     </Button>
