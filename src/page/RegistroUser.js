@@ -3,7 +3,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { 
     Card, CardContent, Container, Box, 
     TextField, Button, FormControlLabel,
-    Typography, Checkbox, Link, Grid , Alert
+    Typography, Checkbox, Link, Grid , Alert, Paper
 } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import Avatar from '@mui/material/Avatar';
@@ -156,18 +156,18 @@ let theme = createTheme({
             {/* <Container component="main" maxWidth="lg" > */}
                 {/* <CssBaseline /> */}
                 {/* sx={{ minWidth: 275 , maxWidth: 900}} */}
-                <Card sx={{minWidth: 275 , maxWidth: 400, maxHeight: 'auto', margin: 2 }}>
+                <Paper sx={{minWidth: 275 , maxWidth: 400, maxHeight: '300' }} elevation={6}>
                     <CardContent>
                         <Box
                             sx={{
-                                marginTop: 4,
+                                marginTop: 1,
                                 display: 'flex',
                                 flexDirection: 'column',
                                 alignItems: 'center',
                             }}
                         >
-                            <Avatar sx={{ width: 100, height: 98, bgcolor: 'white' }}>
-                                <img width={200} height={140} src={'/imagenes/logo.png'} />
+                            <Avatar sx={{ width: 100, height: 94, bgcolor: 'white' }}>
+                                <img width={200} height={120} src={'/imagenes/logo.png'} />
                             </Avatar>
                             <Typography component="h1" variant="h5">
                                 {error ? (
@@ -242,7 +242,7 @@ let theme = createTheme({
                         </Link>
                         </Box>
                     </CardContent>
-                </Card>
+                </Paper>
             {/* </Container> */}
 
         {/* </ThemeProvider> */}
