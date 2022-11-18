@@ -30,6 +30,7 @@ import { useSelector, useDispatch  } from 'react-redux'
 import {  obtenerResultadosAction, resultadopartidosAction, obtenerPartidosAction } from '../action/resultadoAction';
 import { formatearFecha, formatearFechaValidacion } from '../helpers';
 import Conteo from '../component/layouts/Conteo';
+import Perfil from '../component/Perfil';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -207,6 +208,7 @@ const Home = () => {
   const consultarresultados = useSelector(state => state.resultado.consultarresultados);
   const resultadosapostados = useSelector(state => state.resultado.resultadosapostados);
 
+  
   useEffect(() => {
     if(!conectado) history.push("/");
   }, [conectado]);
@@ -227,7 +229,7 @@ const Home = () => {
 
   const btnResultados = () => { 
     const datos = JSON.parse(localStorage.getItem('resultado'));
-    console.log(datos);
+    // console.log(datos);
     
     resultadopartidos(datos);
     datosapuesta = [];
@@ -265,7 +267,7 @@ const Home = () => {
           <Header onDrawerToggle={handleDrawerToggle} nombre={usuario?.nombres || ''} vista="home"/>
           <Box component="main" sx={{ flex: 1, py: componente === 'Reglas' ? 3 : 6, px: componente === 'Usuarios' ? 3 : 1, bgcolor: '#eaeff1' }}>
            <Contenedor>
-                  {componente === 'Usuarios' ? usuario?.tipousuario === 'ROOT' || usuario?.tipousuario === 'ADMIN' ? <Usuarios  /> : <Reglas  /> : null}
+                  {componente === 'Usuarios' ? usuario?.tipousuario === 'ROOT' || usuario?.tipousuario === 'ADMIN' ? <Usuarios  perfil={false} /> : <Usuarios perfil={true} /> : null}
                   {componente === 'Reglas' && <Reglas  />}
                   {componente === 'Posiciones' && <Posiciones  />}
                   {componente === 'Resultados' && <Resultados  />}

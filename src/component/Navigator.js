@@ -69,6 +69,10 @@ const Navigator = (props) => {
     const btnListado = (id) => {
       return setComponente(id);
     }
+
+    const btnPerfil = () => {
+      return setComponente('Perfil');
+    }
     return ( 
         <Drawer variant="permanent" {...other}>
             <List disablePadding>
@@ -81,15 +85,14 @@ const Navigator = (props) => {
                             <ListItemText sx={{ color: '#fff' }}>{id}</ListItemText>
                         </ListItem>
                         {children.map(({ id: childId, icon, active }) => (
-                          childId === 'Usuarios' ? usuarioadmin?.tipousuario === 'ROOT' || usuarioadmin?.tipousuario === 'ADMIN' 
+                          childId === 'Usuarios' 
                           ? 
                           <ListItem  button onClick={() => btnListado(childId)} disablePadding key={childId}>
                               <ListItemButton selected={active} sx={item}>
                               <ListItemIcon>{icon}</ListItemIcon>
-                              <ListItemText>{childId}</ListItemText>
+                              <ListItemText>{usuarioadmin?.tipousuario === 'ROOT' || usuarioadmin?.tipousuario === 'ADMIN' ? childId : 'Perfil'}</ListItemText>
                               </ListItemButton>
                           </ListItem>
-                          :null
                           :
                           <ListItem  button onClick={() => btnListado(childId)} disablePadding key={childId}>
                             <ListItemButton selected={active} sx={item}>

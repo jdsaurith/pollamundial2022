@@ -32,7 +32,7 @@ export function resultadopartidosAction(result){
     return async (dispatch) =>{
         dispatch(resultadopartidos());
         try {
-            console.log(result);
+            // console.log(result);
             if(!result){
                 Swal.fire({
                     icon: 'info',
@@ -93,8 +93,7 @@ const resultadopartidosError = () => ({
 export function obtenerResultadosAction(id){
     return async (dispatch) =>{
         dispatch(obtenerresultados());
-        try {
-            
+        try {            
             const res = await clienteAxios.get(`/resultados/${id}`);
             // console.log(res.data);
             if(res.data.msg === 'exito'){                

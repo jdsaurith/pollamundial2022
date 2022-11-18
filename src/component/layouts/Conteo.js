@@ -6,7 +6,7 @@ import { getRemainingTime } from '../../helpers';
 const Conteo = (props) => {
     const {setViewconteo} = props;
     const [tiempo, setTiempo] = useState({});   
-    console.log(getRemainingTime('Nov 20 2022 12:00:00 GMT-0300'));
+ // console.log(getRemainingTime('Nov 20 2022 12:00:00 GMT-0300'));
 
     useEffect(() => {
         const timerUpdate = setInterval( () => {

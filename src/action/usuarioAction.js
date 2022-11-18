@@ -14,6 +14,7 @@ import {
 } from '../types';
 
 import { obtenerposicionesAction } from './resultadoAction';
+import { actualizarUsuarioColombia } from './authAction';
 
 import clienteAxios from '../config/axios';
 //////diseño de alerta
@@ -50,6 +51,7 @@ const verusuariosError = () =>({
 //////funcion action para guardar cliente a editar
 export function guardaUsuarioEditarAction (c){
     return dispatch =>{
+        // console.log(c);
         dispatch(usuarioEditar());
         dispatch(guardaUsuarioEditar(c));
     }
@@ -67,20 +69,25 @@ export function editarUsuarioAction(c){
     return async dispatch =>{
         dispatch(usuarioEditar());
      try {
-        console.log(c.pais);
-         const res = await clienteAxios.put('/usuarios',c);
+        // console.log(c);
+        const res = await clienteAxios.put('/usuarios',c);
         //  console.log(res.data);
-         if(res.data.msg === 'actualizado'){
-             dispatch(editarUsuarioExito(c));
-             Swal.fire({
-                 icon: 'success',
-                 title: 'El usuario se actualizo correctamente!',
-                 showConfirmButton: false,
-                 timer: 1500
-             })
-             //refrescar los datos
-         dispatch(verUsuariosAction(c.pais));
-     }
+        if(res.data.msg === 'actualizado'){
+            console.log(res.data.user);
+            dispatch(editarUsuarioExito(res.data.user));
+            Swal.fire({
+                icon: 'success',
+                title: 'El usuario se actualizo correctamente!',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            //refrescar los datos
+            if(c.tipousuario === 'COLOMBIA'){
+            dispatch(actualizarUsuarioColombia(res.data.user));
+            }else{                
+            dispatch(verUsuariosAction(c.pais));
+            }
+        }
  
      } catch (error) {
          console.log(error);
