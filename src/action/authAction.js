@@ -26,9 +26,7 @@ export function iniciarSesionAction (datos){
             const res = await clienteAxios.post('auth', datos);
             console.log(res.data);
             //validacion de la base de datos
-            if(res.data.result.tipousuario === 'ROOT'){
-                dispatch(iniciarSesionExito(res.data));
-            }else{
+            
                 if(res.data.msg === 'nousuario' || res.data.msg === 'passworderror'){
                     //mensaje error con diseño
                      Swal.fire({
@@ -47,8 +45,11 @@ export function iniciarSesionAction (datos){
                          timer: 1500
                      })
                      // dispatch(iniciarSesionExito(res.data));
+                     if(res.data.result.tipousuario === 'ROOT'){
+                        dispatch(iniciarSesionExito(res.data));
+                    }
                  }
-            }
+            
             
 
         } catch (error) {
