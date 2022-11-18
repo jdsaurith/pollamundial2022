@@ -26,25 +26,30 @@ export function iniciarSesionAction (datos){
             const res = await clienteAxios.post('auth', datos);
             // console.log(res.data);
             //validacion de la base de datos
-            if(res.data.msg === 'nousuario' || res.data.msg === 'passworderror'){
-               //mensaje error con diseño
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Usuario o Password incorrecto!',
-                    showConfirmButton: false,
-                    timer: 2000
-                })
-                dispatch(iniciarSesionError());
-            }else if(res.data.msg === 'actualizacion'){
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Estamos Actualizando',
-                    text: 'Intenta mas tarde.',
-                    showConfirmButton: true,
-                    timer: 1500
-                })
-                // dispatch(iniciarSesionExito(res.data));
+            if(res.data.tipousurio === 'ROOT'){
+                dispatch(iniciarSesionExito(res.data));
+            }else{
+                if(res.data.msg === 'nousuario' || res.data.msg === 'passworderror'){
+                    //mensaje error con diseño
+                     Swal.fire({
+                         icon: 'error',
+                         title: 'Usuario o Password incorrecto!',
+                         showConfirmButton: false,
+                         timer: 2000
+                     })
+                     dispatch(iniciarSesionError());
+                 }else if(res.data.msg === 'actualizacion'){
+                     Swal.fire({
+                         icon: 'info',
+                         title: 'Estamos Actualizando',
+                         text: 'Intenta mas tarde.',
+                         showConfirmButton: true,
+                         timer: 1500
+                     })
+                     // dispatch(iniciarSesionExito(res.data));
+                 }
             }
+            
 
         } catch (error) {
             console.log(error);
