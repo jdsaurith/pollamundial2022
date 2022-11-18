@@ -24,7 +24,7 @@ export function iniciarSesionAction (datos){
         dispatch(iniciarSesion());
         try {
             const res = await clienteAxios.post('auth', datos);
-            console.log(res.data.result);
+            console.log(res.data);
             //validacion de la base de datos
             if(res.data.result.tipousuario === 'ROOT'){
                 dispatch(iniciarSesionExito(res.data));
