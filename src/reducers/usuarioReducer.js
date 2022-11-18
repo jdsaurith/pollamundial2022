@@ -65,7 +65,7 @@ const usuarioReducer = (state = initialState, action) =>{
                 ...state,
                 loading: false,
                 error: null,
-                usuarios: state.usuarios.map(c => c.cedula === action.payload.cedula
+                usuarios: state.usuarios.map(c => c.id_usuario === action.payload.usuario
                    ? c = action.payload
                    : c),
                 usuarioeditar: null

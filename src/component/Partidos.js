@@ -167,19 +167,19 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, eq
     },[input])
 
     const onfocusEquipouno = () =>{ 
-      console.log('entro on focus')  
-      console.log(id_partido);
+      // console.log('entro on focus')  
+      // console.log(id_partido);
       const resultado = localStorage.getItem("resultado");  
       const datos = JSON.parse(resultado);
-      console.log(datos);
+      // console.log(datos);
       if(datos){
-        console.log('entro datos');
+        // console.log('entro datos');
         if(datos.length !== 0){        
           datos.map( element => {
             if(element.id_partido === id_partido){ 
-              console.log('encontro el idpartido en onfocus');  
-              console.log(input.golesequipo1);
-              console.log(input.golesequipo2);         
+              // console.log('encontro el idpartido en onfocus');  
+              // console.log(input.golesequipo1);
+              // console.log(input.golesequipo2);         
               setInput({
                 golesequipo1 : element.golesequipo1,
                 golesequipo2 : element.golesequipo2,

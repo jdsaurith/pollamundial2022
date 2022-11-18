@@ -10,7 +10,7 @@ import { faEdit, faToggleOff, faToggleOn } from '@fortawesome/free-solid-svg-ico
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { verUsuariosAction, guardaUsuarioEditarAction, EditarPagoUsuarioAction } from '../action/usuarioAction';
+import { guardaUsuarioEditarAction } from '../action/usuarioAction';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -32,38 +32,17 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
-const UsuariosInfo = () => {
+const Perfil = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
     const dispatch = useDispatch();
-    const verUsuarios = (tipo) => dispatch(verUsuariosAction(tipo));
     const obtenerEditarUsuario = (u) => dispatch(guardaUsuarioEditarAction(u));
-    const EditarPagoUsuario = (u) => dispatch(EditarPagoUsuarioAction(u));
-    
+
     const usuario = useSelector(state => state.auth.usuario);
-    const usuarios = useSelector(state => state.usuario.usuarios);
-    const usuarioadmin = useSelector(state => state.auth.usuario);
-    console.log(usuarioadmin);
-    useEffect(() => {
-      if(usuarioadmin !== null){
-        verUsuarios(usuarioadmin.tipousuario === 'ADMIN' ? 'ARG' : 'COL');
-      }      
-    }, [usuarioadmin])
-
-    const handleChangePage = (event, newPage) => {
-      setPage(newPage);
-    };
-    const handleChangeRowsPerPage = (event) => {
-      setRowsPerPage(parseInt(event.target.value, 10));
-      setPage(0);
-    };
-
-    const editarUsuario = (u) =>{
-      obtenerEditarUsuario({...u, tipousuario:usuario.tipousuario});
-    }
-    const editarPago = (usuario,pago) =>{
-      EditarPagoUsuario({usuario, pago});
+    
+    const editarUsuario = (usuario) =>{        
+      obtenerEditarUsuario(usuario);
     }
   return (
     <>
@@ -78,17 +57,14 @@ const UsuariosInfo = () => {
                 </TableRow>
             </TableHead>
             <TableBody>
-                {
-                usuarios.length === 0 ?(
+            {usuario === null ? (
                     <TableRow>
-                        <StyledTableCell colSpan={4}>No hay datos</StyledTableCell>
+                        <StyledTableCell colSpan={4}>Cargando datos..</StyledTableCell>
                     </TableRow>
-                )
-                :
-                usuarios.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-                <StyledTableRow key={row.usuario}>
-                    <StyledTableCell component="th" scope="row" >{row.nombres}</StyledTableCell>
-                    <StyledTableCell >{row.usuario}</StyledTableCell>
+                ):
+                <StyledTableRow key={usuario?.idusuario}>
+                    <StyledTableCell component="th" scope="row" >{usuario?.nombres}</StyledTableCell>
+                    <StyledTableCell >{usuario?.usuario}</StyledTableCell>
                     {/* <StyledTableCell >{row.password}</StyledTableCell> */}
                     <StyledTableCell >**********</StyledTableCell>
                     <StyledTableCell >
@@ -102,26 +78,13 @@ const UsuariosInfo = () => {
                         icon={faEdit}
                         color="#363636"
                         size="2x"
-                        onClick={()=>editarUsuario(row)}
-                      />
-                        <FontAwesomeIcon
-                        style={{
-                          margin:  '1px',
-                          cursor: 'pointer'
-                        }}
-                        title={row.estado==='PAGO'?"Inactivar":"Activar"}
-                        name= {row.estado==='PAGO'?"activo":"inactivo"}
-                        icon= {row.estado==='PAGO'?faToggleOn:faToggleOff}                        
-                        color={row.estado==='PAGO'?"#04BB3C":"#DD0000"}
-                        size="2x"
-                        onClick={()=>editarPago(row, row.estado==='PAGO' ? false:true)}
-                      />
+                        onClick={()=>editarUsuario(usuario)}
+                      />                       
                     </StyledTableCell>
                 </StyledTableRow>
-                ))}
-                
+            }
             </TableBody>
-            <TableFooter>
+            {/* <TableFooter>
                 <TableRow>
                     <TablePagination
                         rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
@@ -140,11 +103,11 @@ const UsuariosInfo = () => {
                         ActionsComponent={Paginacion}
                     />
                 </TableRow>
-            </TableFooter>
+            </TableFooter> */}
             </Table>
         </TableContainer>        
     </>
   )
 }
 
-export default UsuariosInfo
+export default Perfil

@@ -9,6 +9,7 @@ import {
     USUARIO_AUTENTICADO_EXITO,
     USUARIO_AUTENTICADO_ERROR,
     ACTUALIZAR_PERMISOS_AUTH,
+    ACTUALIZAR_USUARIO_COLOMBIA
 } from '../types';
 
 import clienteAxios from '../config/axios';
@@ -159,3 +160,15 @@ export function agregarUsuarioPageAction(c){
         }
     }
 }
+
+///cuando actualizo el usuario (colombia) llamo esta funcion de UsuarioAction, si estoy en AuthAction
+export function actualizarUsuarioColombia(c){
+    return dispatch =>{
+        dispatch(actualizarusuarioColombia(c));
+    }
+}
+
+const actualizarusuarioColombia = (u) =>({
+    type: ACTUALIZAR_USUARIO_COLOMBIA,
+    payload: u
+})

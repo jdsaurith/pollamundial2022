@@ -8,6 +8,7 @@ import {
     ACTIVO_AUTENTICADO,
     USUARIO_AUTENTICADO_EXITO,
     USUARIO_AUTENTICADO_ERROR,
+    ACTUALIZAR_USUARIO_COLOMBIA
 } from '../types';
 
 
@@ -64,6 +65,11 @@ const authReducer = (state = initialState, action) =>{
                 usuario: null,
                 conectado: false,
                 cargando: false,
+            }
+        case ACTUALIZAR_USUARIO_COLOMBIA:
+            return{
+                ...state,
+                usuario: action.payload
             }
         case INICIO_SESION_ERROR:
         case CERRAR_SESION:

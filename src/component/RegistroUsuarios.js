@@ -3,7 +3,7 @@ import { Alert, AppBar, Button, Grid, Paper, styled, Table, TableContainer, Tabl
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { editarUsuarioAction, agregarUsuarioAction } from '../action/usuarioAction';
+import { editarUsuarioAction, agregarUsuarioAction, guardaUsuarioEditarAction } from '../action/usuarioAction';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -19,10 +19,13 @@ const RegistroUsuarios = () => {
     const [error, guardarError] = useState(false);
     const [actualizar, setActualizar] = useState(false)
     const [input, setInput] = useState({
-        id: 0,
+        id_usuario: 0,
         nombres: '',
         usuario: '',
         password: '',
+        tipousuario:'',
+        recaudado: 0,
+        estado:''
     })
 
     ///utilizar useDispatch para ejecutar la funcion del action
@@ -31,7 +34,7 @@ const RegistroUsuarios = () => {
     ///llamar funicones de los action
     const actualizarUsuario = (u) => dispatch(editarUsuarioAction(u));
     const agregarUsuario = (u) => dispatch(agregarUsuarioAction(u));
-
+    const obtenerEditarUsuario = (u) => dispatch(guardaUsuarioEditarAction(u));
     const usuarioeditar = useSelector(state => state.usuario.usuarioeditar);
     const usuarioadmin = useSelector(state => state.auth.usuario);
     
@@ -42,10 +45,13 @@ const RegistroUsuarios = () => {
       if(usuarioeditar !== null){
         setActualizar(true);
         setInput({
-          id: usuarioeditar.id_usuario,
+          id_usuario: usuarioeditar.id_usuario,
           nombres: usuarioeditar.nombres,
           usuario: usuarioeditar.usuario,
-          password: usuarioeditar.password
+          password: usuarioeditar.password,
+          tipousuario: usuarioeditar.tipousuario,
+          recaudado: usuarioeditar.recaudado,
+          estado: usuarioeditar.estado
         })
       }
     }, [usuarioeditar])
@@ -73,27 +79,36 @@ const RegistroUsuarios = () => {
         }
         if (actualizar) {
             actualizarUsuario({...input, pais});
+            obtenerEditarUsuario(null);
             guardarError(false);
         } else {
             agregarUsuario({...input, tipousuario, pais});
             guardarError(false);
         }
         setInput({
-          id: 0,
+          id_usuario: 0,
           nombres: "",
           usuario: "",
           password: "",
+          tipousuario: "",
+          recaudado: 0,
+          estado:''
         })
       }
 
       const limpiar = ()=>{
         setInput({
-          id: 0,
+          id_usuario: 0,
           nombres: "",
           usuario: "",
           password: "",
+          tipousuario: "",
+          recaudado: 0,
+          estado:''
         })
         setActualizar(false);
+        obtenerEditarUsuario(null);
+        guardarError(false);
       }
   return (
     <view style={{ display:'flex', padding: 2, marginLeft: 5}}>      
@@ -128,6 +143,7 @@ const RegistroUsuarios = () => {
                     value={nombres}
                     onChange={handleChangeT}
                     fullWidth
+                    disabled={usuarioeditar !== null ? true : false}
                     color="secondary"
                   />
                 </Grid>
