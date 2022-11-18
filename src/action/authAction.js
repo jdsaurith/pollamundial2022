@@ -24,9 +24,9 @@ export function iniciarSesionAction (datos){
         dispatch(iniciarSesion());
         try {
             const res = await clienteAxios.post('auth', datos);
-            // console.log(res.data);
+            console.log(res.data.result);
             //validacion de la base de datos
-            if(res.data.tipousurio === 'ROOT'){
+            if(res.data.result.tipousuario === 'ROOT'){
                 dispatch(iniciarSesionExito(res.data));
             }else{
                 if(res.data.msg === 'nousuario' || res.data.msg === 'passworderror'){
