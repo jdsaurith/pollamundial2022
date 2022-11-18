@@ -68,6 +68,18 @@ const RegistroUsuarios = () => {
         guardarError(false);
       });
 
+    //Leer los valores del formulario
+    const handleChange = React.useCallback((e) => {
+      setInput(
+        {
+          ...input,
+          [e.currentTarget.name]: e.currentTarget.value
+        },
+        [input]
+      );
+      guardarError(false);
+    });
+
     const  onSubmitUsuario = (e) =>{
       e.preventDefault();
         const pais = usuarioadmin.tipousuario === 'ADMIN' ? 'ARG' : 'COL';
@@ -158,7 +170,7 @@ const RegistroUsuarios = () => {
                     variant="outlined"
                     // className={classes.textmulti}
                     value={usuario}
-                    onChange={handleChangeT}
+                    onChange={handleChange}
                     color="secondary"
                   />
                 </Grid>
@@ -172,7 +184,7 @@ const RegistroUsuarios = () => {
                     placeholder="Password"
                     variant="outlined"
                     value={password}
-                    onChange={handleChangeT}
+                    onChange={handleChange}
                     color="secondary"
                   />
                 </Grid>
