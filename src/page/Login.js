@@ -139,7 +139,7 @@ const Login  = ({history}) => {
                             <Typography component="h1" variant="h5">
                                 POLLA MUNDIALISTA
                             </Typography>
-                            {/* <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                            <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                                 <TextField
                                 margin="normal"
                                 required
@@ -170,10 +170,7 @@ const Login  = ({history}) => {
                                 >
                                 Ingresar
                                 </Button>
-                            </Box>    */}
-                            <Typography component="h1" variant="h5" style={{ margin: 10 }}>
-                                Estamos trabajando en una actualización, INTENTA MAS TARDE.
-                            </Typography>
+                            </Box>
                         {/* <Link
                           component="button"
                           variant="body2"
