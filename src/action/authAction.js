@@ -35,8 +35,15 @@ export function iniciarSesionAction (datos){
                     timer: 2000
                 })
                 dispatch(iniciarSesionError());
-            }else {
-                dispatch(iniciarSesionExito(res.data));
+            }else if(res.data.msg === 'actualizacion'){
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Estamos Actualizando',
+                    text: 'Intenta mas tarde.',
+                    showConfirmButton: true,
+                    timer: 1500
+                })
+                // dispatch(iniciarSesionExito(res.data));
             }
 
         } catch (error) {
