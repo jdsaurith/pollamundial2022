@@ -25,31 +25,32 @@ export function iniciarSesionAction (datos){
         try {
             const res = await clienteAxios.post('auth', datos);
             console.log(res.data);
-            //validacion de la base de datos
+        //validacion de la base de datos
             
-                if(res.data.msg === 'nousuario' || res.data.msg === 'passworderror'){
-                    //mensaje error con diseño
-                     Swal.fire({
-                         icon: 'error',
-                         title: 'Usuario o Password incorrecto!',
-                         showConfirmButton: false,
-                         timer: 2000
-                     })
-                     dispatch(iniciarSesionError());
-                 }else if(res.data.msg === 'actualizacion'){
-                     Swal.fire({
-                         icon: 'info',
-                         title: 'Estamos Actualizando',
-                         text: 'Intenta mas tarde.',
-                         showConfirmButton: true,
-                         timer: 1500
-                     })
-                     // dispatch(iniciarSesionExito(res.data));
-                     if(res.data.result.tipousuario === 'ROOT'){
-                        dispatch(iniciarSesionExito(res.data));
-                    }
-                 }
-            
+            if(res.data.msg === 'nousuario' || res.data.msg === 'passworderror'){
+                //mensaje error con diseño
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Usuario o Password incorrecto!',
+                        showConfirmButton: false,
+                        timer: 2000
+                    })
+                    dispatch(iniciarSesionError());
+            } 
+            if(res.data.msg === 'actualizacion'){
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Estamos Actualizando',
+                        text: 'Intenta mas tarde.',
+                        showConfirmButton: true,
+                        timer: 1500
+                    }) 
+                // dispatch(iniciarSesionExito(res.data));
+                if(res.data.result.tipousuario === 'ROOT'){
+                    dispatch(iniciarSesionExito(res.data));
+                }                  
+            }
+        
             
 
         } catch (error) {
