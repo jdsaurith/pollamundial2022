@@ -25,7 +25,11 @@ export function iniciarSesionAction (datos){
         try {
             const res = await clienteAxios.post('auth', datos);
             // console.log(res.data);
-            //validacion de la base de datos            
+            //validacion de la base de datos 
+            if(res.data.msg === 'exito'){ 
+                tokenAuth(res?.data.token);                   
+                dispatch(iniciarSesionExito(res.data));                                 
+            }           
             if(res.data.msg === 'nousuario' || res.data.msg === 'passworderror'){
                 //mensaje error con diseño
                 Swal.fire({
@@ -36,9 +40,7 @@ export function iniciarSesionAction (datos){
                 })
                 dispatch(iniciarSesionError());
             } 
-            if(res.data.msg === 'exito'){                    
-                dispatch(iniciarSesionExito(res.data));                                 
-            }
+            
 
         } catch (error) {
             console.log(error);
