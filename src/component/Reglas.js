@@ -126,7 +126,7 @@ const Reglas = () => {
         <i>*El costo de participación es de: <strong style={{backgroundColor: '#C8EDF3'}}>{formatearDinero(10000)}</strong> pesos.</i> <br />
         <i>*El primer (1) lugar obtendra <strong style={{backgroundColor: '#C8EDF3'}}>un 60% de lo recaudado</strong> por ejemplo si el total de lo recaudado es {formatearDinero(ejemploBolsa)} el 60% corresponde a {formatearDinero(ejemploBolsa*0.6)} mil pesos. </i><br />
         <i>*El segundo (2) lugar obtendra <strong style={{backgroundColor: '#C8EDF3'}}>un 20% de lo recaudado</strong> por ejemplo si el total de lo recaudado es {formatearDinero(ejemploBolsa)} el 20% corresponde a {formatearDinero(ejemploBolsa*0.2)} mil pesos. </i><br />
-        <i>*El tercer (3) lugar <strong style={{backgroundColor: '#C8EDF3'}}>libra el case</strong> correspondiente a {formatearDinero(10000)} mil pesos. </i><br />
+        <i>*El tercer (3) lugar obtendra <strong style={{backgroundColor: '#C8EDF3'}}>un 5% de lo recaudado</strong> por ejemplo si el total de lo recaudado es {formatearDinero(ejemploBolsa)} el 5% corresponde a {formatearDinero(ejemploBolsa*0.05)} mil pesos. </i><br />
         <i>*El procentaje restante sera para gastos de administracion y servicios de la plataforma.</i><br />
 
       </Typography>

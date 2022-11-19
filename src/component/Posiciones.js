@@ -55,12 +55,28 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 // background: -webkit-linear-gradient(to right, #99f2c8, #1f4037);  /* Chrome 10-25, Safari 5.1-6 */
 // background: linear-gradient(to right, #99f2c8, #1f4037); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
+function returnPosi(arr) {
+  let i = 1;
+  let posant = 1;
+  let sumatoria = 0;
+  arr.forEach(us => {
+      if((us.puntos + us.aciertos) == sumatoria){
+          us.orden = posant;
+      }else{
+        us.orden = i;
+        posant = i;
+      }
+      i+=1;
+      sumatoria = us.puntos + us.aciertos;
+  })
+  return arr;
+}
 
 
 const Posiciones = () => {
   const theme = useTheme();
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
     const [openModal, setOpenModal] = useState(false);
     const [datos, setDatos] = useState();
     const [bolsa, setBolsa] = useState(0);
@@ -76,8 +92,10 @@ const Posiciones = () => {
       obtenerposiciones();
     }, [])
 
+
     useEffect(() => {
       setBolsa(posiciones.length * 10000)
+      console.log(posiciones)
     }, [bolsa, posiciones])
 
     const detalleApuesta = (row) =>{
@@ -94,11 +112,9 @@ const Posiciones = () => {
     };
 
     const handleChangeRowsPerPage = (event) => {
-      setRowsPerPage(parseInt(event.target.value, 10));
+      setRowsPerPage(parseInt(event.target.value, 5));
       setPage(0);
     };
-
-    
 
     return ( 
       <>
@@ -117,7 +133,7 @@ const Posiciones = () => {
                   <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <CardContent sx={{ flex: '1 0 auto' }}>
                       <Typography component="div" variant="h6">
-                        RECAUDO <span style={{fontSize: "2em"}}>&#x1F4B0;</span>
+                        <strong> RECAUDO <span style={{fontSize: "2em"}}>&#x1F4B0;</span></strong>
                       </Typography>
                       <Typography variant="h5" component="div">
                         { formatearDinero(bolsa) }
@@ -137,12 +153,13 @@ const Posiciones = () => {
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                   <CardContent sx={{ flex: '1 0 auto' }}>
                     <Typography component="div" variant="h6">
-                      PREMIOS <span style={{fontSize: "2em"}}>&#x1F3C6;</span>
+                      <strong> PREMIOS <span style={{fontSize: "2em"}}>&#x1F3C6;</span></strong>
                     </Typography>
                     <Typography variant="h6" component="div">
                       <span>&#x1F947;</span> Puesto : { formatearDinero(bolsa * 0.6) } <br />
                       <span>&#x1F948;</span> Puesto : { formatearDinero(bolsa * 0.2) }<br />
-                      <span>&#x1F949;</span> Puesto : { formatearDinero(bolsa * 0.05 < 10000 ? bolsa * 0.05 : 10000) }
+                      <span>&#x1F949;</span> Puesto : { formatearDinero(bolsa * 0.05) }
+                      {/* <span>&#x1F949;</span> Puesto : { formatearDinero(bolsa * 0.05 < 10000 ? bolsa * 0.05 : 10000) } */}
                     </Typography>
                   </CardContent>
                 </Box>
@@ -155,10 +172,10 @@ const Posiciones = () => {
               <Table sx={{ minWidth: 600 }} aria-label="customized table">
               <TableHead>
                   <TableRow>
-                  <StyledTableCell>Posición</StyledTableCell>
+                  <StyledTableCell align="center">Posición</StyledTableCell>
                   <StyledTableCell>Nombres y Apellidos</StyledTableCell>
-                  <StyledTableCell>Puntos</StyledTableCell>
-                  <StyledTableCell>Resultados Exactos</StyledTableCell>
+                  <StyledTableCell align="center">Puntos</StyledTableCell>
+                  <StyledTableCell align="center">Resultados Exactos</StyledTableCell>
                   <StyledTableCell>Detalles</StyledTableCell>
                   </TableRow>
               </TableHead>
@@ -170,14 +187,21 @@ const Posiciones = () => {
                       </TableRow>
                   )
                   :
-                  posiciones.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row,i) => (
+                  returnPosi(posiciones).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row,i) => (
                   <StyledTableRow key={i}>
                       <StyledTableCell component="th" scope="row" align="center">
-                      {/* {(row.orden === 1 && (row.puntos && row.puntos != 0))  ? <span style={{fontSize: "2em"}}>&#x1F451; {row.orden}</span> : (row.orden === 2 && (row.puntos && row.puntos != 0)) ? <span style={{fontSize: "1.6em"}}>&#x1F948; {row.orden }</span> :  (row.orden === 3 && (row.puntos && row.puntos != 0)) ? <span style={{fontSize: "1.3em"}}>&#x1F949; {row.orden}</span> : row.orden } */}
+                        {(row.orden == 1 && (row.puntos && row.puntos != 0))  ? 
+                        <span style={{fontSize: "2em"}}>&#x1F947; {row.orden}</span> : 
+                        (row.orden == 2 && (row.puntos && row.puntos != 0)) ? 
+                        <span style={{fontSize: "1.6em"}}>&#x1F948; {row.orden }</span> : 
+                        (row.orden == 3 && (row.puntos && row.puntos != 0)) ? 
+                        <span style={{fontSize: "1.3em"}}>&#x1F949; {row.orden}</span> : 
+                        (row.puntos && row.puntos != 0) ? row.orden : row.orden}
                       </StyledTableCell>
-                      <StyledTableCell>{row.nombres}</StyledTableCell>
-                      <StyledTableCell>{row.puntos}</StyledTableCell>
-                      <StyledTableCell>{row.aciertos}</StyledTableCell>
+                      <StyledTableCell>{(row.orden == 1 && (row.puntos && row.puntos != 0))  ? 
+                        <><span style={{fontSize: "1.6em"}}>&#x1F451;</span> {row.nombres}</> : row.nombres}</StyledTableCell>
+                      <StyledTableCell align="center">{row.puntos}</StyledTableCell>
+                      <StyledTableCell align="center">{row.aciertos}</StyledTableCell>
                       <StyledTableCell>
                         {usuario.estado === 'PAGO'}
                             <FontAwesomeIcon
@@ -200,8 +224,8 @@ const Posiciones = () => {
               <TableFooter>
                   <TableRow>
                       <TablePagination
-                          rowsPerPageOptions={[10, 15, 30, { label: 'All', value: -1 }]}
-                          colSpan={10}
+                          rowsPerPageOptions={[5, 15, 25, { label: 'All', value: -1 }]}
+                          colSpan={5}
                           count={posiciones.length === 0 ? 0 : posiciones.length}
                           rowsPerPage={rowsPerPage}
                           page={page}

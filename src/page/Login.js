@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { 
     Card, CardContent, Container, Box, 
-    TextField, Button, FormControlLabel,
+    TextField, Button, FormControlLabel, Alert,
     Typography, Checkbox, Link, Grid, Paper 
 } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -53,19 +53,21 @@ const Login  = ({history}) => {
       usuario: '',
       password: '',
       error: false,
+      msgError: ''
   });
 
   //Manda a llamar el action por medio de dispatch de authAction
   const iniciarSesion = (datos) => dispatch(iniciarSesionAction(datos));
   //mostrar los datos del state
   const conectado = useSelector(state => state.auth.conectado);
-  const { usuario, password } = input;
+  const { usuario, password, error, msgError } = input;
 
   useEffect(() => {
     setInput({
       usuario: '',
       password: '',
       error: false,
+      msgError: ''
     })
   }, [])
 
@@ -94,7 +96,8 @@ const Login  = ({history}) => {
       if(usuario.trim() === '' ||  password.trim() === ''){
         setInput({
           ...input,
-          error: true
+          error: true,
+          msgError: 'No deben tener campos vacios!'
         })
         return;
       }
@@ -137,7 +140,11 @@ const Login  = ({history}) => {
                                 <img width={200} height={140} src={'/imagenes/logo.png'} />
                             </Avatar>
                             <Typography component="h1" variant="h5">
-                                POLLA MUNDIALISTA
+                                {error ? (
+                                <Alert variant="filled" severity="error">
+                                    {msgError}
+                                </Alert>
+                                ) :'POLLA MUNDIALISTA'}
                             </Typography>
                             <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                                 <TextField

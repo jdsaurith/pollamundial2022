@@ -37,9 +37,13 @@ const RegistroUsuarios = () => {
     const obtenerEditarUsuario = (u) => dispatch(guardaUsuarioEditarAction(u));
     const usuarioeditar = useSelector(state => state.usuario.usuarioeditar);
     const usuarioadmin = useSelector(state => state.auth.usuario);
-    
+
     ///destructuring del state
     const {nombres, usuario, password } = input;
+
+    useEffect(()=>{
+      limpiar();
+    },[usuarioadmin])
 
     useEffect(() => {
       if(usuarioeditar !== null){
@@ -91,22 +95,10 @@ const RegistroUsuarios = () => {
         }
         if (actualizar) {
             actualizarUsuario({...input, pais});
-            obtenerEditarUsuario(null);
-            guardarError(false);
+        }else if(usuarioadmin.tipousuario ==='ROOT'){
+            agregarUsuario({...input, tipousuario, pais});
         }
-        // } else {
-        //     agregarUsuario({...input, tipousuario, pais});
-        //     guardarError(false);
-        // }
-        setInput({
-          id_usuario: 0,
-          nombres: "",
-          usuario: "",
-          password: "",
-          tipousuario: "",
-          recaudado: 0,
-          estado:''
-        })
+        limpiar();
       }
 
       const limpiar = ()=>{
@@ -124,8 +116,8 @@ const RegistroUsuarios = () => {
         guardarError(false);
       }
   return (
-    <view style={{ display:'flex', padding: 2, marginLeft: 5}}>      
-      <TableContainer component={Paper}>            
+    <view style={{ display:'flex', padding: 2, marginLeft: 5}}>
+      <TableContainer component={Paper}>
             {error && (
               <Alert variant="filled" severity="error">
                 Todos los campos son obligatorios
@@ -134,7 +126,7 @@ const RegistroUsuarios = () => {
           <Table sx={{ minWidth: 400 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <StyledTableCell>ACTUALIZAR PERFIL</StyledTableCell>                
+                <StyledTableCell>{(usuarioadmin.tipousuario ==='ROOT' && actualizar) ? 'ACTUALIZAR USUARIO' : usuarioadmin.tipousuario !=='ROOT' ? 'ACTUALIZAR PERFIL' :  'REGISTAR USUARIO'}</StyledTableCell>
               </TableRow>
             </TableHead>
           </Table>
@@ -196,9 +188,10 @@ const RegistroUsuarios = () => {
                       variant="contained"
                       color="primary"
                       fullWidth
+                      disabled={usuarioadmin.tipousuario !=='ROOT' && !actualizar ? true : false}
                       // className={classes.submit}
                     >
-                      {actualizar ? "Actualizar" : "Actualizar"}
+                      {actualizar ? "Actualizar" : usuarioadmin.tipousuario ==='ROOT' ? "Registrar" : "Actualizar" }
                     </Button>
                   </Grid>
                   <Grid item xs={4} >
@@ -207,13 +200,14 @@ const RegistroUsuarios = () => {
                       variant="contained"
                       color="primary"
                       fullWidth
+                      disabled={usuarioadmin.tipousuario !=='ROOT' && !actualizar ? true : false}
                       // className={classes.limpiar}
                       onClick={limpiar}
                     >
                       Limpiar
                     </Button>
                   </Grid>
-                </Grid>             
+                </Grid>
               </Grid>
             </form>
         </TableContainer>

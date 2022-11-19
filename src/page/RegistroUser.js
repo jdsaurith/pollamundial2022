@@ -55,14 +55,14 @@ let theme = createTheme({
         password: '',
         password2: '',
         error: false,
-        error2: false,
+        msgError: '',
     });
 
     //Manda a llamar el action por medio de dispatch de authAction
     const agregarUsuario = (u) => dispatch(agregarUsuarioPageAction(u));
     //mostrar los datos del state
     const conectado = useSelector(state => state.auth.conectado);
-    const { nombres, usuario, password, password2, error, error2 } = input;
+    const { nombres, usuario, password, password2, error, msgError } = input;
 
     useEffect(() => {
         setInput({
@@ -71,7 +71,7 @@ let theme = createTheme({
         password: '',
         password2: '',
         error: false,
-        error2: false,
+        msgError: '',
         })
     }, [])
 
@@ -90,7 +90,6 @@ let theme = createTheme({
     setInput({
         ...input,
         error: false,
-        error2: false,
         [e.target.name] : e.target.value
         })
     }
@@ -101,7 +100,6 @@ let theme = createTheme({
             {
             ...input,
             error: false,
-            error2: false,
             [e.currentTarget.name]: e.currentTarget.value.toUpperCase()
             },
             [input]
@@ -115,16 +113,18 @@ let theme = createTheme({
         const tipousuario = 'COLOMBIA';
         //validar los campos
         if(nombres.trim() === '' || usuario.trim() === '' ||  password.trim() === ''){
-        setInput({
-            ...input,
-            error: true
-        })
-        return;
+            setInput({
+                ...input,
+                error: true,
+                msgError: 'Todos los campos son obligatorios!'
+            })
+            return;
         }
         if(password.trim() !== password2.trim()){
             setInput({
                 ...input,
-                error2: true
+                error: true,
+                msgError: 'Los password no coinciden!'
             })
             return;
         }
@@ -137,7 +137,7 @@ let theme = createTheme({
             password: '',
             password2: '',
             error: false,
-            error2: false,
+            msgError: '',
             })
     };
 
@@ -172,13 +172,9 @@ let theme = createTheme({
                             <Typography component="h1" variant="h5">
                                 {error ? (
                                 <Alert variant="filled" severity="error">
-                                    Todos los campos son obligatorios
+                                    {msgError}
                                 </Alert>
-                                ) : error2 ? (
-                                <Alert variant="filled" severity="error">
-                                    Los password no coinciden
-                                </Alert>
-                                ) : 'REGISTRO USUARIO'}
+                                ) :'REGISTRO USUARIO'}
                             </Typography>
                             <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                                 <TextField

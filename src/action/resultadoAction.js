@@ -227,6 +227,28 @@ const resultadopartidosfifaError = () => ({
     type: ENVIAR_RESULTADOS_FIFA_ERROR
 })
 
+////actualizar estado partido inactivo a enjuego
+export function updateStatePartidoAction(id){
+    return async (dispatch) =>{
+        dispatch(resultadopartidosfifa());
+        try {
+            console.log(id);
+            const res = await clienteAxios.put(`/resultados/updatestate/${id}`);
+            // console.log(res.data);
+            if(res.data.msg === 'exito'){
+                dispatch(resultadopartidosfifaExito());
+                dispatch(obtenerPartidosAction());
+            }else if(res.data.msg === 'noexito'){
+                dispatch(resultadopartidosfifaExito([]));
+            }
+
+        } catch (error) {
+            console.log(error);
+            dispatch(resultadopartidosfifaError());
+        }
+    }
+}
+
 ///obtener las posiciones de los usuarios
 export function obtenerposicionesAction(){
     return async (dispatch) =>{
