@@ -171,7 +171,7 @@ const Login  = ({history}) => {
                                 Ingresar
                                 </Button>
                             </Box>
-                        {/* <Link
+                        <Link
                           component="button"
                           variant="body2"
                           onClick={() => {
@@ -179,7 +179,7 @@ const Login  = ({history}) => {
                           }}
                         >
                           Crear cuenta
-                        </Link> */}
+                        </Link>
                         </Box>                    
                     </CardContent>
                 </Paper>
