@@ -134,7 +134,7 @@ const RegistroUsuarios = () => {
           <Table sx={{ minWidth: 400 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <StyledTableCell>REGISTRO DE USUARIO</StyledTableCell>                
+                <StyledTableCell>ACTUALIZAR PERFIL</StyledTableCell>                
               </TableRow>
             </TableHead>
           </Table>
