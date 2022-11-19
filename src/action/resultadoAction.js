@@ -156,7 +156,7 @@ export function obtenerResultadosFifaAction(){
         try {
             
             const res = await clienteAxios.get('/resultados/fifa');
-            console.log(res.data);
+            // console.log(res.data);
             if(res.data.msg === 'exito'){
                 dispatch(obtenerResultadosFifaExito(res.data.result));
             }else if(res.data.msg === 'noregistros'){
@@ -188,7 +188,7 @@ export function resultadopartidosfifaAction(f){
         try {
             console.log(f);
             const res = await clienteAxios.put('/resultados/resultadosfifa',f);
-            console.log(res.data);
+            // console.log(res.data);
             if(res.data.msg === 'exito'){   
                 Swal.fire({
                     icon: 'success',
@@ -234,7 +234,7 @@ export function obtenerposicionesAction(){
         try {
             
             const res = await clienteAxios.get('resultados/posiciones');
-            console.log(res.data);
+            // console.log(res.data);
             if(res.data.msg === 'exito'){                
                 dispatch(obtenerposicionesExito(res.data.result));
             }else if(res.data.msg === 'noregistros'){
@@ -266,7 +266,7 @@ export function obtenerdetallesposicionesAction(id){
         try {
             
             const res = await clienteAxios.get(`resultados/detalles/${id}`);
-            console.log(res.data);
+            // console.log(res.data);
             if(res.data.msg === 'exito'){                
                 dispatch(obtenerdetallesposicionesExito(res.data.result));
             }else if(res.data.msg === 'noregistros'){
