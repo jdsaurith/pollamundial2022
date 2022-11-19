@@ -93,10 +93,11 @@ const RegistroUsuarios = () => {
             actualizarUsuario({...input, pais});
             obtenerEditarUsuario(null);
             guardarError(false);
-        } else {
-            agregarUsuario({...input, tipousuario, pais});
-            guardarError(false);
         }
+        // } else {
+        //     agregarUsuario({...input, tipousuario, pais});
+        //     guardarError(false);
+        // }
         setInput({
           id_usuario: 0,
           nombres: "",
@@ -197,7 +198,7 @@ const RegistroUsuarios = () => {
                       fullWidth
                       // className={classes.submit}
                     >
-                      {actualizar ? "Actualizar" : "Guardar"}
+                      {actualizar ? "Actualizar" : "Actualizar"}
                     </Button>
                   </Grid>
                   <Grid item xs={4} >

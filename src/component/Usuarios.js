@@ -6,7 +6,7 @@ import UsuariosInfo from './UsuariosInfo'
 
 const Usuarios
  = ({perfil}) => {
-  console.log(perfil);
+  
   return (
     <>
       <Grid container spacing={2}>      

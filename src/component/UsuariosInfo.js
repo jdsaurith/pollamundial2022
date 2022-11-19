@@ -44,7 +44,7 @@ const UsuariosInfo = () => {
     const usuario = useSelector(state => state.auth.usuario);
     const usuarios = useSelector(state => state.usuario.usuarios);
     const usuarioadmin = useSelector(state => state.auth.usuario);
-    console.log(usuarioadmin);
+   
     useEffect(() => {
       if(usuarioadmin !== null){
         verUsuarios(usuarioadmin.tipousuario === 'ADMIN' ? 'ARG' : 'COL');

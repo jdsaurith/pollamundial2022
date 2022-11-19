@@ -137,7 +137,7 @@ export function agregarUsuarioPageAction(c){
         dispatch(iniciarSesion());
         try {
             const res = await clienteAxios.post('/usuarios/registro', c);
-            console.log(res.data);
+            // console.log(res.data);
             if(res.data.msg === 'guardado'){
                 dispatch(iniciarSesionExito(res.data));
                 Swal.fire({
