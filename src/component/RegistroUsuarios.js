@@ -48,7 +48,7 @@ const RegistroUsuarios = () => {
           id_usuario: usuarioeditar.id_usuario,
           nombres: usuarioeditar.nombres,
           usuario: usuarioeditar.usuario,
-          password: usuarioeditar.password,
+          password: '',
           tipousuario: usuarioeditar.tipousuario,
           recaudado: usuarioeditar.recaudado,
           estado: usuarioeditar.estado
