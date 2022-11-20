@@ -37,8 +37,7 @@ const ExpandMore = styled((props) => {
   
 
 const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, equipo2, icon1, icon2, descripcion,estado }) => {
-    const dispatch = useDispatch();
-    let fechajuego = moment().format('yyyy/MM/DD HH:mm:ss');
+    const dispatch = useDispatch();    
     let fecha2 = new Date(fechavalidacion);
     const [expanded, setExpanded] = React.useState(false);
     const [tiempo, setTiempo] = useState(Date.now()  >= formatearFechaDoshoras(fecha2, 2));
@@ -54,6 +53,8 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, eq
 
     ///actualizar partido a enjuego
     const updateStatePartido = (id) => dispatch(updateStatePartidoAction(id));
+
+    // console.log(fechajuego);
 
     useEffect(() => {
       obtenerResultados(usuario?.id_usuario);
@@ -107,7 +108,9 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, eq
 
     useEffect(() => {
       if(retornandovalores === false && input.golesequipo1 && input.golesequipo2){
+        let fechajuego = moment().format('yyyy/MM/DD HH:mm:ss');
         setResultadoapostador({...input, id_usuario: usuario.id_usuario, fecha: fechajuego, id_partido});
+        console.log(fechajuego);
       }
     }, [input])
 

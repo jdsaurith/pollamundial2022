@@ -3,7 +3,7 @@ import { Table, TableContainer, TableFooter, TableHead, TablePagination, TableRo
 import styled from '@emotion/styled';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import Paginacion from './layouts/Paginacion';
-
+import Swal from 'sweetalert2'
 //fortawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faToggleOff, faToggleOn } from '@fortawesome/free-solid-svg-icons';
@@ -63,7 +63,21 @@ const UsuariosInfo = () => {
       obtenerEditarUsuario({...u, tipousuario:usuario.tipousuario});
     }
     const editarPago = (usuario,pago) =>{
-      EditarPagoUsuario({usuario, pago});
+      Swal.fire({
+        icon: 'info',
+        title: 'Activar o Desactivar este Usuario?',
+        text: 'Se actualizara el estado del usuario!',
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: `Si, Cambiar`,
+        denyButtonText: `No`,
+      }).then(result =>{
+        if (result.isConfirmed){
+          EditarPagoUsuario({usuario, pago});
+        }
+
+      })
+      
     }
   return (
     <>
