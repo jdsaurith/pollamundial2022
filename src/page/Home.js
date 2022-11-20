@@ -31,6 +31,7 @@ import {  obtenerResultadosAction, resultadopartidosAction, obtenerPartidosActio
 import { formatearFecha, formatearFechaValidacion } from '../helpers';
 import Conteo from '../component/layouts/Conteo';
 import Perfil from '../component/Perfil';
+import ModalInfoSave from '../component/layouts/ModalInfoSave';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -188,12 +189,12 @@ theme = {
 const drawerWidth = 250;
 var datosapuesta = [];
 
-
-
 const Home = () => {  
   const history = useHistory();
   const dispatch = useDispatch();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [datos, setDatos] = useState();
   const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
   const [componente, setComponente] = useState('Usuarios');
   
@@ -208,6 +209,7 @@ const Home = () => {
   const consultarresultados = useSelector(state => state.resultado.consultarresultados);
   const resultadosapostados = useSelector(state => state.resultado.resultadosapostados);
 
+  // console.log(obtenerpartidos);
   
   useEffect(() => {
     if(!conectado) history.push("/");
@@ -237,8 +239,40 @@ const Home = () => {
        
   }
 
+  const btnInfoSave = () =>{
+    console.log('infosave');
+    setDatos({
+      titulo: 'RESULTADO GUARDADO',
+      contenido: 'Resultado registrado con éxito :)'
+    });
+    setOpenModal(true);
+  }
+
+  const btnInfoNoSave = () =>{
+    console.log('noinfosave');
+    setDatos({
+      titulo: 'PENDIENTE POR REGISTRAR',
+      contenido: `Puedes guardar el resultado en cualqueir momento,
+                  siempre y cuando sea dos horas antes del partido :).`
+    });
+    setOpenModal(true);
+  }
+
+  const handleCloseModal = () =>{
+    setOpenModal(false);
+  }
 
   return (
+    <>
+    {openModal &&
+      <ModalInfoSave 
+      keepMounted
+      open={openModal}
+      onClose={handleCloseModal}
+      classes={{maxWidth:'200', maxHeight:'400' }}
+      datos={datos}
+    />}
+    
     <ThemeProvider theme={theme}>
       <Box sx={{ display: 'flex', minHeight: '100vh' }}>
         <CssBaseline />
@@ -284,19 +318,30 @@ const Home = () => {
                                     <Grid xs={10} md={10} lg={10}>
                                       GRUPO { row.grupo }
                                     </Grid>
-                                    <Grid xs={2} md={2} lg={2}>
-                                      {resultadosapostados.map(r =>(
+                                    <Grid xs={2} md={2} lg={2}>                                                                        
+                                    {resultadosapostados.map(r =>(
                                         r.id_partido === row.id_partido ?
                                         <IconButton
                                         size="large"
-                                        aria-label="show 17 new notifications"
                                         color="inherit"
+                                        onClick={() => btnInfoSave()}
                                         >
-                                          <CheckCircleIcon /> 
+                                          
+                                            <CheckCircleIcon />
+                                        
+                                          
                                         </IconButton>
-                                        :
-                                        null
-                                      ))}
+                                        :null
+                                        // <IconButton
+                                        // size="large"
+                                        // color="inherit"
+                                        // onClick={() => btnInfoNoSave()}
+                                        // >
+                                        //   <Badge badgeContent={'i'} color="error">
+                                        //     <HelpOutlineIcon /> 
+                                        //   </Badge>                                          
+                                        // </IconButton>
+                                      ))}                                       
                                     </Grid>
                                   </StyledTableCell>
                                 </TableRow>
@@ -361,17 +406,28 @@ const Home = () => {
                                       GRUPO { row.grupo }
                                     </Grid>
                                     <Grid xs={2} md={2} lg={2}>
-                                      {resultadosapostados.map(r =>(
+                                    {resultadosapostados.map(r =>(
                                         r.id_partido === row.id_partido ?
                                         <IconButton
                                         size="large"
-                                        aria-label="show 17 new notifications"
                                         color="inherit"
+                                        onClick={() => btnInfoSave()}
                                         >
-                                          <CheckCircleIcon /> 
+                                          
+                                            <CheckCircleIcon />
+                                        
+                                          
                                         </IconButton>
-                                        :
-                                        null
+                                        :null
+                                        // <IconButton
+                                        // size="large"
+                                        // color="inherit"
+                                        // onClick={() => btnInfoNoSave()}
+                                        // >
+                                        //   <Badge badgeContent={'i'} color="error">
+                                        //     <HelpOutlineIcon /> 
+                                        //   </Badge>                                          
+                                        // </IconButton>
                                       ))}
                                     </Grid>
                                   </StyledTableCell>
@@ -434,17 +490,25 @@ const Home = () => {
                                       GRUPO { row.grupo }
                                     </Grid>
                                     <Grid xs={2} md={2} lg={2}>
-                                      {resultadosapostados.map(r =>(
+                                    {resultadosapostados.map(r =>(
                                         r.id_partido === row.id_partido ?
                                         <IconButton
                                         size="large"
-                                        aria-label="show 17 new notifications"
                                         color="inherit"
+                                        onClick={() => btnInfoSave()}
                                         >
-                                          <CheckCircleIcon /> 
+                                          <CheckCircleIcon />
                                         </IconButton>
-                                        :
-                                        null
+                                        :null
+                                        // <IconButton
+                                        // size="large"
+                                        // color="inherit"
+                                        // onClick={() => btnInfoNoSave()}
+                                        // >
+                                        //   <Badge badgeContent={'i'} color="error">
+                                        //     <HelpOutlineIcon /> 
+                                        //   </Badge>                                          
+                                        // </IconButton>
                                       ))}
                                     </Grid>
                                   </StyledTableCell>
@@ -502,7 +566,7 @@ const Home = () => {
         
       </Box>
     </ThemeProvider>
-    
+    </>
   );
 }
 
