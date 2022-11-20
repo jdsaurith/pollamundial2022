@@ -76,7 +76,7 @@ function returnPosi(arr) {
 const Posiciones = () => {
   const theme = useTheme();
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
     const [openModal, setOpenModal] = useState(false);
     const [datos, setDatos] = useState();
     const [bolsa, setBolsa] = useState(0);
@@ -112,7 +112,7 @@ const Posiciones = () => {
     };
 
     const handleChangeRowsPerPage = (event) => {
-      setRowsPerPage(parseInt(event.target.value, 5));
+      setRowsPerPage(parseInt(event.target.value, 10));
       setPage(0);
     };
 
@@ -224,8 +224,8 @@ const Posiciones = () => {
               <TableFooter>
                   <TableRow>
                       <TablePagination
-                          rowsPerPageOptions={[5, 15, 25, { label: 'All', value: -1 }]}
-                          colSpan={5}
+                          rowsPerPageOptions={[10, 15, 25, { label: 'All', value: -1 }]}
+                          colSpan={10}
                           count={posiciones.length === 0 ? 0 : posiciones.length}
                           rowsPerPage={rowsPerPage}
                           page={page}

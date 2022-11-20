@@ -383,7 +383,7 @@ const Home = () => {
                                   datosapuesta={datosapuesta}
                                   id_partido={row.id_partido}
                                   fecha={formatearFecha(row.fecha)}
-                                  fechavalidacion={formatearFechaValidacion(row.fecha)}
+                                  fechavalidacion={row.fecha}
                                   equipo1={row.equipouno}
                                   icon1={row.iconuno}
                                   equipo2={row.equipodos}
@@ -455,8 +455,8 @@ const Home = () => {
                                 key={row.id_partido}
                                 datosapuesta={datosapuesta}
                                 id_partido={row.id_partido}
-                                fecha={formatearFecha(row.fecha)}
-                                fechavalidacion={formatearFechaValidacion(row.fecha)}
+                                fecha={formatearFecha(row.fecha)}                               
+                                fechavalidacion={row.fecha}
                                 equipo1={row.equipouno}
                                 icon1={row.iconuno}
                                 equipo2={row.equipodos}

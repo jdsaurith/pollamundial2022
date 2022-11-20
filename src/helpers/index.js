@@ -16,8 +16,9 @@ export const  formatearFecha = fecha =>{
 }
 
 export const  formatearFechaValidacion = fecha =>{
-    const fechaNueva = new Date(fecha)
-
+    
+    const fechaNueva = new Date(fecha);
+    
     const opciones = {
         year: 'numeric',
         month: 'numeric',
@@ -32,7 +33,9 @@ export const  formatearFechaValidacion = fecha =>{
 }
 
 export const  formatearFechaDoshoras = (fecha, hora) =>{
-    var newDate = new Date(fecha - (hora * 60) * 60000);
+    
+    var newDate = new Date(fecha - ((hora * 60) * 60000));
+    
     return newDate;
 }
 
