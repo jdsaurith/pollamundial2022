@@ -6,6 +6,7 @@ import styled from '@emotion/styled';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { obtenerdetallesposicionesAction } from '../../action/resultadoAction';
+import { formatearFechaValidacion } from '../../helpers';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -64,6 +65,7 @@ const Modal = (props) => {
                   <StyledTableCell> RESULTADO FIFA </StyledTableCell>
                   <StyledTableCell> PUNTOS </StyledTableCell>
                   <StyledTableCell> ACIERTOS </StyledTableCell>
+                  <StyledTableCell> REGISTRO </StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -82,6 +84,7 @@ const Modal = (props) => {
                     <StyledTableCell align='center'>{  row.goles_equipo_uno +" - "+ row.goles_equipo_dos }</StyledTableCell>
                     <StyledTableCell align='center'>{ row.puntos }</StyledTableCell>
                     <StyledTableCell align='center'>{ row.acierto }</StyledTableCell>
+                    <StyledTableCell align='center'>{ formatearFechaValidacion(row.fecha) }</StyledTableCell>
                   </StyledTableRow>
                   ))}
               </TableBody>
