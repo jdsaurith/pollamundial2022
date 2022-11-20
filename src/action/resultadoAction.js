@@ -47,10 +47,11 @@ export function resultadopartidosAction(result){
                 if(res.data.msg === 'exito'){                
                     Swal.fire({
                         icon: 'success',
-                        title: 'Los Partidos se guardaron correctamente!',
+                        title: 'El o los Partidos se guardaron correctamente!',
                         showConfirmButton: false,
                         timer: 1500
-                    })                
+                    })
+                    dispatch(obtenerPartidosAction());                
                     dispatch(resultadopartidosExito());
                 } else if(res.data.msg === 'noexito'){
                     Swal.fire({
