@@ -28,7 +28,7 @@ import Resultados from '../component/Resultados';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch  } from 'react-redux'
 import {  obtenerResultadosAction, resultadopartidosAction, obtenerPartidosAction } from '../action/resultadoAction';
-import { formatearFecha, formatearFechaValidacion } from '../helpers';
+import { formatearFecha } from '../helpers';
 import Conteo from '../component/layouts/Conteo';
 import Perfil from '../component/Perfil';
 import ModalInfoSave from '../component/layouts/ModalInfoSave';

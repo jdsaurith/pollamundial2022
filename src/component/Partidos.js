@@ -20,7 +20,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { useDispatch, useSelector } from 'react-redux';
 import { faIgloo } from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment/moment';
-import { formatearFechaDoshoras, formatearFechaValidacion } from '../helpers';
+import { formatearFechaDoshoras } from '../helpers';
 import { obtenerResultadosAction, updateStatePartidoAction } from '../action/resultadoAction';
 
 const ExpandMore = styled((props) => {

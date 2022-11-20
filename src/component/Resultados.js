@@ -55,7 +55,7 @@ const Resultados = () => {
 
   return (
     <div style={{ flexDirection: 'column', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        {viewconteo && <Conteo setViewconteo={setViewconteo} />}
+        {/* {viewconteo && <Conteo setViewconteo={setViewconteo} />} */}
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}

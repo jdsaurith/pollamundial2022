@@ -15,22 +15,22 @@ export const  formatearFecha = fecha =>{
     return fechaNueva.toLocaleDateString('es-ES', opciones)
 }
 
-export const  formatearFechaValidacion = fecha =>{
+// export const  formatearFechaValidacion = fecha =>{
+//     // console.log(fecha);
+//     const fechaNueva = new Date(fecha);
     
-    const fechaNueva = new Date(fecha);
-    
-    const opciones = {
-        year: 'numeric',
-        month: 'numeric',
-        day: '2-digit',
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric'   
+//     const opciones = {
+//         year: 'numeric',
+//         month: 'numeric',
+//         day: '2-digit',
+//         hour: 'numeric',
+//         minute: 'numeric',
+//         second: 'numeric'   
 
-    }
+//     }
 
-    return fechaNueva.toLocaleDateString('es-ES', opciones)
-}
+//     return fechaNueva.toLocaleDateString('es-ES', opciones)
+// }
 
 export const  formatearFechaDoshoras = (fecha, hora) =>{
     
@@ -46,19 +46,19 @@ export const formatearDinero = cantidad =>{
     })
 }
 
-export const getRemainingTime = deadline => {
-    let now = new Date(),
-        remainTime = (new Date(deadline) - now + 1000) / 1000,
-        remainSeconds = ('0' + Math.floor(remainTime % 60)).slice(-2),
-        remainMinutes = ('0' + Math.floor(remainTime / 60 % 60)).slice(-2),
-        remainHours = ('0' + Math.floor(remainTime / 3600 % 24)).slice(-2),
-        remainDays = Math.floor(remainTime / (3600 * 24));
+// export const getRemainingTime = deadline => {
+//     let now = new Date(),
+//         remainTime = (new Date(deadline) - now + 1000) / 1000,
+//         remainSeconds = ('0' + Math.floor(remainTime % 60)).slice(-2),
+//         remainMinutes = ('0' + Math.floor(remainTime / 60 % 60)).slice(-2),
+//         remainHours = ('0' + Math.floor(remainTime / 3600 % 24)).slice(-2),
+//         remainDays = Math.floor(remainTime / (3600 * 24));
   
-    return {
-      remainSeconds,
-      remainMinutes,
-      remainHours,
-      remainDays,
-      remainTime
-    }
-  };
+//     return {
+//       remainSeconds,
+//       remainMinutes,
+//       remainHours,
+//       remainDays,
+//       remainTime
+//     }
+//   };

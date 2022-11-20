@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Grid, Paper } from '@mui/material';
-import { getRemainingTime } from '../../helpers';
+// import { getRemainingTime } from '../../helpers';
 
 
 const Conteo = (props) => {
@@ -9,16 +9,16 @@ const Conteo = (props) => {
  // console.log(getRemainingTime('Nov 20 2022 12:00:00 GMT-0300'));
 
     useEffect(() => {
-        const timerUpdate = setInterval( () => {
-            let t = getRemainingTime('Nov 20 2022 12:00:00 GMT-0300');
-            setTiempo({dias: t.remainDays, horas: t.remainHours, minutos: t.remainMinutes, segundos: t.remainSeconds})       
+        // const timerUpdate = setInterval( () => {
+        //     let t = getRemainingTime('Nov 20 2022 12:00:00 GMT-0300');
+        //     setTiempo({dias: t.remainDays, horas: t.remainHours, minutos: t.remainMinutes, segundos: t.remainSeconds})       
         
-            if(t.remainTime <= 1) {
-              clearInterval(timerUpdate);
-              setViewconteo(false);            
-            }
+        //     if(t.remainTime <= 1) {
+        //       clearInterval(timerUpdate);
+        //       setViewconteo(false);            
+        //     }
         
-        }, 1000)
+        // }, 1000)
     }, [])
 
   return (
