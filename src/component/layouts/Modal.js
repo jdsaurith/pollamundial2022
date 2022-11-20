@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Table, TableBody, TableCell, tableCellClasses, TableHead, TableRow } from '@mui/material';
 import styled from '@emotion/styled';
 import { useDispatch, useSelector } from 'react-redux';
-
+import Moment from 'moment';
 import { obtenerdetallesposicionesAction } from '../../action/resultadoAction';
 import { formatearFechaValidacion } from '../../helpers';
 
@@ -84,7 +84,7 @@ const Modal = (props) => {
                     <StyledTableCell align='center'>{  row.goles_equipo_uno +" - "+ row.goles_equipo_dos }</StyledTableCell>
                     <StyledTableCell align='center'>{ row.puntos }</StyledTableCell>
                     <StyledTableCell align='center'>{ row.acierto }</StyledTableCell>
-                    <StyledTableCell align='center'>{ formatearFechaValidacion(row.fecha) }</StyledTableCell>
+                    <StyledTableCell align='center'>{ Moment(row.fecha).format('YYYY-MM-DD, HH:mm:ss') }</StyledTableCell>
                   </StyledTableRow>
                   ))}
               </TableBody>
