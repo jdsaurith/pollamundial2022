@@ -36,11 +36,11 @@ const ExpandMore = styled((props) => {
   
   
 
-const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, equipo2, icon1, icon2, descripcion,estado }) => {
+const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, equipo2, icon1, icon2, descripcion,estado,setPendientes }) => {
     const dispatch = useDispatch();    
     let fecha2 = new Date(fechavalidacion);
     const [expanded, setExpanded] = React.useState(false);
-    const [tiempo, setTiempo] = useState(Date.now()  >= formatearFechaDoshoras(fecha2, 2));
+    const [tiempo, setTiempo] = useState(Date.now()  >= formatearFechaDoshoras(fecha2, 1));
     const [resultadoapostador, setResultadoapostador] = useState();
     const [input, setInput] = React.useState({
       retornandovalores: false
@@ -62,7 +62,7 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, eq
 
     useEffect(() => {
       setInterval(() => {
-        setTiempo(Date.now()  >= formatearFechaDoshoras(fecha2, 2));
+        setTiempo(Date.now()  >= formatearFechaDoshoras(fecha2, 1));
       }, 1200000);
       // console.log(tiempo);
       // console.log(estado);
@@ -103,6 +103,7 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, eq
           }
 
         })
+        setPendientes(datos.length);
       }
     },[])
 
@@ -140,6 +141,7 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, eq
 
                 }
               })
+              setPendientes(datos.length);
             }
           }else{
             ban = true;
@@ -148,7 +150,7 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, eq
             datosapuesta.push(resultadoapostador);
             const resultado = JSON.stringify(datosapuesta);
             localStorage.setItem('resultado', resultado);
-
+            setPendientes(datosapuesta.length);
           }
 
           if(!ban){
@@ -161,6 +163,7 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, eq
             localStorage.removeItem('resultado');
             const resultado = JSON.stringify(datosapuesta);
             localStorage.setItem('resultado', resultado);
+            setPendientes(datosapuesta.length);
             datosapuesta = [];
           }
       }
@@ -195,6 +198,7 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, eq
               })
             }
           })
+          setPendientes(datos.length);
         }
       }
     }

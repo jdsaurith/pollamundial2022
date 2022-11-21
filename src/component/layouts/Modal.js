@@ -6,7 +6,7 @@ import styled from '@emotion/styled';
 import { useDispatch, useSelector } from 'react-redux';
 import Moment from 'moment';
 import { obtenerdetallesposicionesAction } from '../../action/resultadoAction';
-import { formatearFechaValidacion } from '../../helpers';
+import { formatearFechaModal } from '../../helpers';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -34,12 +34,18 @@ const Modal = (props) => {
   const handleClose = () => onClose(false);
   const obtenerdetallesposiciones = (id)=>dispatch(obtenerdetallesposicionesAction(id));
   const detallesposiciones = useSelector(state =>state.resultado.detallesposiciones);
-  
-//   console.log(datos);
-  
+
   useEffect(() => {
     obtenerdetallesposiciones(datos?.id_usuario);
   }, [])
+
+  useEffect(()=>{
+    if(detallesposiciones.length !==0){
+      console.log(detallesposiciones[0].fecha);
+      console.log(new Date(detallesposiciones[0].fecha).toUTCString())
+      console.log(formatearFechaModal(detallesposiciones[0].fecha))
+    }
+  },[detallesposiciones])
 
 
   return (
@@ -84,7 +90,8 @@ const Modal = (props) => {
                     <StyledTableCell align='center'>{  row.goles_equipo_uno +" - "+ row.goles_equipo_dos }</StyledTableCell>
                     <StyledTableCell align='center'>{ row.puntos }</StyledTableCell>
                     <StyledTableCell align='center'>{ row.acierto }</StyledTableCell>
-                    <StyledTableCell align='center'>{ Moment(row.fecha).format('YYYY-MM-DD, HH:mm:ss') }</StyledTableCell>
+                    {/* <StyledTableCell align='center'>{ Moment(row.fecha).add(5, 'h').format('YYYY-MM-DD, HH:mm:ss') }</StyledTableCell> */}
+                    <StyledTableCell align='center'>{ formatearFechaModal(row.fecha) }</StyledTableCell>
                   </StyledTableRow>
                   ))}
               </TableBody>

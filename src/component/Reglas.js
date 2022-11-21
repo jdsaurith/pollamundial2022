@@ -45,8 +45,8 @@ const Reglas = () => {
       <h2>¿Cómo pronosticar y hasta cuándo tengo tiempo?</h2>
       <Typography paragraph>
         Dentro del juego podrás comenzar a pronosticar los partidos de las fechas habilitadas del mundial.
-        Tendrás <strong style={{backgroundColor: '#C8EDF3'}}>hasta dos(2) horas antes</strong> que comience el partido para pronosticar o modificar tu pronóstico,
-        de lo contrario, pasadas las dos horas previas, no podrás cambiar tu pronóstico del partido.
+        Tendrás <strong style={{backgroundColor: '#C8EDF3'}}>hasta una(1) hora antes</strong> que comience el partido para agregar o modificar tu pronóstico,
+        de lo contrario, pasada la hora previa, no podrás cambiar tu pronóstico del partido.
         Los puntos que se obtienen una vez finalizado el partido estarán dados de la siguiente forma:
       </Typography>
       <TableContainer component={Paper}>
@@ -122,7 +122,7 @@ const Reglas = () => {
       </Table>
       </TableContainer>
       <Typography paragraph variant="body2"  style={{marginTop: '1em'}}>
-        <i>*Recuerda que tienes <strong style={{backgroundColor: '#C8EDF3'}}>hasta dos(2) horas antes</strong> que comience el partido para pronosticar o modificar tu pronóstico </i> <br /><br />
+        <i>*Recuerda que tienes <strong style={{backgroundColor: '#C8EDF3'}}>hasta una(1) hora antes</strong> que comience el partido para agregar o modificar tu pronóstico </i> <br /><br />
         <i>*El costo de participación es de: <strong style={{backgroundColor: '#C8EDF3'}}>{formatearDinero(10000)}</strong> pesos.</i> <br />
         <i>*El primer (1) lugar obtendra <strong style={{backgroundColor: '#C8EDF3'}}>un 60% de lo recaudado</strong> por ejemplo si el total de lo recaudado es {formatearDinero(ejemploBolsa)} el 60% corresponde a {formatearDinero(ejemploBolsa*0.6)} mil pesos. </i><br />
         <i>*El segundo (2) lugar obtendra <strong style={{backgroundColor: '#C8EDF3'}}>un 20% de lo recaudado</strong> por ejemplo si el total de lo recaudado es {formatearDinero(ejemploBolsa)} el 20% corresponde a {formatearDinero(ejemploBolsa*0.2)} mil pesos. </i><br />

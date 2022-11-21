@@ -99,6 +99,7 @@ const Resultados = () => {
                             equipo2={row.equipodos}
                             icon2={row.icondos}
                             descripcion = 'MUNDIAL QATAR 2022 FECHA 1'
+                            estado={row.estado}
                             />
                         </TableBody>
                       </Table>
@@ -163,6 +164,7 @@ const Resultados = () => {
                           equipo2={row.equipodos}
                           icon2={row.icondos}
                           descripcion = 'MUNDIAL QATAR 2022 FECHA 2'
+                          estado={row.estado}
                           />
                       </TableBody>
                     </Table>
@@ -227,6 +229,7 @@ const Resultados = () => {
                           equipo2={row.equipodos}
                           icon2={row.icondos}
                           descripcion = 'MUNDIAL QATAR 2022 FECHA 3'
+                          estado={row.estado}
                           />
                       </TableBody>
                     </Table>
