@@ -197,7 +197,7 @@ const Home = () => {
   const [datos, setDatos] = useState();
   const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
   const [componente, setComponente] = useState('Usuarios');
-  
+  const [pendientes, setPendientes] = useState(0);
  
 
   const resultadopartidos = (rp) => dispatch(resultadopartidosAction(rp));
@@ -232,11 +232,10 @@ const Home = () => {
   const btnResultados = () => { 
     const datos = JSON.parse(localStorage.getItem('resultado'));
     // console.log(datos);
-    
     resultadopartidos(datos);
     datosapuesta = [];
-      
-       
+    setPendientes(0);
+
   }
 
   const btnInfoSave = () =>{
@@ -260,6 +259,19 @@ const Home = () => {
 
   const handleCloseModal = () =>{
     setOpenModal(false);
+  }
+  
+    function addIcon(idpartido){
+    let ban = false;
+    let r;
+    for(let i = 0; i < resultadosapostados.length; i++){
+      r = resultadosapostados[i];
+      if(r.id_partido === idpartido){
+        ban = true;
+        break;
+      }
+    }
+    return ban;
   }
 
   return (
@@ -318,30 +330,24 @@ const Home = () => {
                                     <Grid xs={10} md={10} lg={10}>
                                       GRUPO { row.grupo }
                                     </Grid>
-                                    <Grid xs={2} md={2} lg={2}>                                                                        
-                                    {resultadosapostados.map(r =>(
-                                        r.id_partido === row.id_partido ?
-                                        <IconButton
+                                    <Grid xs={2} md={2} lg={2}>
+                                  	{addIcon(row.id_partido)?
+                                      <IconButton
                                         size="large"
                                         color="inherit"
                                         onClick={() => btnInfoSave()}
                                         >
-                                          
-                                            <CheckCircleIcon />
-                                        
-                                          
-                                        </IconButton>
-                                        :null
-                                        // <IconButton
-                                        // size="large"
-                                        // color="inherit"
-                                        // onClick={() => btnInfoNoSave()}
-                                        // >
-                                        //   <Badge badgeContent={'i'} color="error">
-                                        //     <HelpOutlineIcon /> 
-                                        //   </Badge>                                          
-                                        // </IconButton>
-                                      ))}                                       
+                                          <CheckCircleIcon />
+                                        </IconButton>:
+                                        <IconButton
+                                        size="large"
+                                        color="inherit"
+                                        onClick={() => btnInfoNoSave()}
+                                        >
+                                          <Badge badgeContent={'i'} color="error">
+                                            <HelpOutlineIcon /> 
+                                          </Badge>
+                                        </IconButton>}
                                     </Grid>
                                   </StyledTableCell>
                                 </TableRow>
@@ -359,6 +365,7 @@ const Home = () => {
                                   icon2={row.icondos}
                                   descripcion = 'MUNDIAL QATAR 2022'
                                   estado={row.estado}
+                                  setPendientes={setPendientes}
                                 />
                               </TableBody>
                             </Table>
@@ -374,27 +381,27 @@ const Home = () => {
                       >
                         GUARDAR RESULTADOS
                       </Button>
-                      
+
                     </Grid> */}
-                   
+
                   </Grid>
                   <Box style={{ bottom:'30px', right:'30px', position:'fixed' }} >
                       {usuario.estado === 'DEBE' ?
                         <>
                         <Typography style={{ fontSize:'1em' }} color='red'>CANCELA LA CUOTA PARA PARTICIPAR</Typography>
-                        
+
                         </> 
-                       :
-                       <Fab color='primary' aria-label="add"  onClick={() => btnResultados()}>
-                        <SaveIcon />
-                       </Fab> }
+                      :<Fab color='primary' aria-label="add"  onClick={() => btnResultados()}>
+                        <SaveIcon /> {pendientes === 0 ? '' :  pendientes > 9 ? <b> 9+</b> : <b> {pendientes}</b> }
+                        {/* <SaveIcon /> {pendientes !== 0 && <b> {pendientes}</b> } */}
+                      </Fab> }
                   </Box>
-                  
+
                   </>
-                 }
-                 {componente === 'FECHA 2' &&
-                 <>
-                 <Grid container spacing={2} display='flex' justifyContent='center' alignItems='center'>
+                }
+                {componente === 'FECHA 2' &&
+                <>
+                <Grid container spacing={2} display='flex' justifyContent='center' alignItems='center'>
                     {obtenerpartidos.filter(f => f.jornada === 'FECHA2').map((row) =>( 
                         <Grid item xs={12} md={12} lg={5}>
                           <TableContainer> 
@@ -406,29 +413,23 @@ const Home = () => {
                                       GRUPO { row.grupo }
                                     </Grid>
                                     <Grid xs={2} md={2} lg={2}>
-                                    {resultadosapostados.map(r =>(
-                                        r.id_partido === row.id_partido ?
-                                        <IconButton
+                                    {addIcon(row.id_partido)?
+                                      <IconButton
                                         size="large"
                                         color="inherit"
                                         onClick={() => btnInfoSave()}
                                         >
-                                          
-                                            <CheckCircleIcon />
-                                        
-                                          
-                                        </IconButton>
-                                        :null
-                                        // <IconButton
-                                        // size="large"
-                                        // color="inherit"
-                                        // onClick={() => btnInfoNoSave()}
-                                        // >
-                                        //   <Badge badgeContent={'i'} color="error">
-                                        //     <HelpOutlineIcon /> 
-                                        //   </Badge>                                          
-                                        // </IconButton>
-                                      ))}
+                                          <CheckCircleIcon />
+                                        </IconButton>:
+                                        <IconButton
+                                        size="large"
+                                        color="inherit"
+                                        onClick={() => btnInfoNoSave()}
+                                        >
+                                          <Badge badgeContent={'i'} color="error">
+                                            <HelpOutlineIcon /> 
+                                          </Badge>
+                                        </IconButton>}
                                     </Grid>
                                   </StyledTableCell>
                                 </TableRow>
@@ -446,6 +447,7 @@ const Home = () => {
                                   icon2={row.icondos}
                                   descripcion = 'MUNDIAL QATAR 2022 FECHA 2'
                                   estado={row.estado}
+                                  setPendientes={setPendientes}
                                 />
                               </TableBody>
                             </Table>
@@ -467,18 +469,17 @@ const Home = () => {
                       {usuario.estado === 'DEBE' ?
                         <>
                         <Typography style={{ fontSize:'1em' }} color='red'>CANCELA LA CUOTA PARA PARTICIPAR</Typography>
-                        
                         </> 
-                       :
-                       <Fab color='primary' aria-label="add"  onClick={() => btnResultados()}>
-                        <SaveIcon />
-                       </Fab> }
-                  </Box>
-                  </> 
-                 }
-                 {componente === 'FECHA 3' && 
-                 <>
-                 <Grid container spacing={2} display='flex' justifyContent='center' alignItems='center'>
+                      :
+                      <Fab color='primary' aria-label="add"  onClick={() => btnResultados()}>
+                        <SaveIcon /> {pendientes === 0 ? '' :  pendientes > 9 ? <b> 9+</b> : <b> {pendientes}</b> }
+                      </Fab> }
+                </Box>
+                </> 
+                }
+                {componente === 'FECHA 3' && 
+                <>
+                <Grid container spacing={2} display='flex' justifyContent='center' alignItems='center'>
                   {obtenerpartidos.filter(f => f.jornada === 'FECHA3').map((row) =>( 
                       <Grid item xs={12} md={12} lg={5}>
                         <TableContainer> 
@@ -490,26 +491,23 @@ const Home = () => {
                                       GRUPO { row.grupo }
                                     </Grid>
                                     <Grid xs={2} md={2} lg={2}>
-                                    {resultadosapostados.map(r =>(
-                                        r.id_partido === row.id_partido ?
-                                        <IconButton
+                                    {addIcon(row.id_partido)?
+                                      <IconButton
                                         size="large"
                                         color="inherit"
                                         onClick={() => btnInfoSave()}
                                         >
                                           <CheckCircleIcon />
-                                        </IconButton>
-                                        :null
-                                        // <IconButton
-                                        // size="large"
-                                        // color="inherit"
-                                        // onClick={() => btnInfoNoSave()}
-                                        // >
-                                        //   <Badge badgeContent={'i'} color="error">
-                                        //     <HelpOutlineIcon /> 
-                                        //   </Badge>                                          
-                                        // </IconButton>
-                                      ))}
+                                        </IconButton>:
+                                        <IconButton
+                                        size="large"
+                                        color="inherit"
+                                        onClick={() => btnInfoNoSave()}
+                                        >
+                                          <Badge badgeContent={'i'} color="error">
+                                            <HelpOutlineIcon /> 
+                                          </Badge>
+                                        </IconButton>}
                                     </Grid>
                                   </StyledTableCell>
                               </TableRow>
@@ -519,7 +517,7 @@ const Home = () => {
                                 key={row.id_partido}
                                 datosapuesta={datosapuesta}
                                 id_partido={row.id_partido}
-                                fecha={formatearFecha(row.fecha)}                               
+                                fecha={formatearFecha(row.fecha)}
                                 fechavalidacion={row.fecha}
                                 equipo1={row.equipouno}
                                 icon1={row.iconuno}
@@ -527,6 +525,7 @@ const Home = () => {
                                 icon2={row.icondos}
                                 descripcion = 'MUNDIAL QATAR 2022 FECHA 3'
                                 estado={row.estado}
+                                setPendientes={setPendientes}
                               />
                             </TableBody>
                           </Table>
@@ -543,17 +542,17 @@ const Home = () => {
                       GUARDAR RESULTADOS
                     </Button>
                   </Grid> */}
-                 </Grid> 
-                 <Box style={{ bottom:'30px', right:'30px', position:'fixed' }} >
-                      {usuario.estado === 'DEBE' ?
-                        <>
-                        <Typography style={{ fontSize:'1em' }} color='red'>CANCELA LA CUOTA PARA PARTICIPAR</Typography>
-                        
-                        </> 
-                       :
-                       <Fab color='primary' aria-label="add"  onClick={() => btnResultados()}>
-                        <SaveIcon />
-                       </Fab> }
+                </Grid> 
+                <Box style={{ bottom:'30px', right:'30px', position:'fixed' }} >
+                    {usuario.estado === 'DEBE' ?
+                      <>
+                      <Typography style={{ fontSize:'1em' }} color='red'>CANCELA LA CUOTA PARA PARTICIPAR</Typography>
+
+                      </> 
+                      :
+                      <Fab color='primary' aria-label="add"  onClick={() => btnResultados()}>
+                      <SaveIcon /> {pendientes === 0 ? '' :  pendientes > 9 ? <b> 9+</b> : <b> {pendientes}</b> }
+                      </Fab> }
                   </Box>
                   </>
                 }
@@ -563,7 +562,7 @@ const Home = () => {
             <Copyright />
           </Box>
         </Box>
-        
+
       </Box>
     </ThemeProvider>
     </>

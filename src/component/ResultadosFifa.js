@@ -31,27 +31,26 @@ const ExpandMore = styled((props) => {
     }),
   }));
 
-const ResultadosFifa = ({id_partido, datosapuesta, fecha, equipo1, equipo2, icon1, icon2, descripcion }) => {
-    
+const ResultadosFifa = ({id_partido, datosapuesta, fecha, equipo1, equipo2, icon1, icon2, descripcion, estado }) => {
+
     const dispatch = useDispatch();
     let fechajuego = moment()
     .format('yyyy/MM/DD HH:mm:ss');
     const [expanded, setExpanded] = React.useState(false);
-    const [resultadoapostador, setResultadoapostador] = useState();    
+    const [resultadoapostador, setResultadoapostador] = useState();
     const [input, setInput] = React.useState({
       retornandovalores: false
     });
-    
+
     const usuario = useSelector(state => state.auth.usuario);
     const obtenerpartidos = useSelector(state => state.resultado.obtenerpartidos);
     // const resultadosfifa = useSelector(state =>state.resultado.resultadosfifa);
     const tipousuario = useSelector(state=> state.auth.tipousuario);
     const {retornandovalores} = input;
-    
-    
-   
+
+
     /// OBTENER LOS GOLES DE LOS EQUIPOS - RESULTADOS FIFA
-    useEffect(() => {      
+    useEffect(() => {
       obtenerpartidos?.filter(r => r.estado === 'ACTIVO').map((item) =>{
         if(item.id_partido === id_partido){
           setInput({
@@ -60,46 +59,45 @@ const ResultadosFifa = ({id_partido, datosapuesta, fecha, equipo1, equipo2, icon
             retornandovalores: true
           })
         }
-        
+
       })
-      
+
     }, [obtenerpartidos])
 
     //// OBTENER LOS GOLES ESCRITOS POR EL ADMIN O ROOT 
-    useEffect(() => {      
+    useEffect(() => {
       if(retornandovalores === false && input.golesequipo1 && input.golesequipo2){
         setResultadoapostador({...input, fecha_update: fechajuego, id_partido});
-      }      
+      }
     }, [input])
 
-    useEffect(() => {    
+    useEffect(() => {
       if(retornandovalores === false && input.golesequipo1 && input.golesequipo2){
         console.log('guardando los valores de input');
         var ban = false;
-        const resultado = localStorage.getItem("resultadofifa");  
+        const resultado = localStorage.getItem("resultadofifa");
         const datos = JSON.parse(resultado); 
         // console.log(datos);
           if(datos){ 
             console.log('entro Datos');
             datosapuesta = datos;
-            console.log(datosapuesta);        
+            console.log(datosapuesta);
             if(datos.length !== 0){
               datos.map( element => {
                 if(element.id_partido === id_partido){
                   console.log('BAN TRUE');
                   ban = true;
-                  
+
                   element.golesequipo1 = input.golesequipo1
                   element.golesequipo2 = input.golesequipo2
-                  
-                  const resultadofinal = JSON.stringify(datos);              
+
+                  const resultadofinal = JSON.stringify(datos);
                   localStorage.removeItem('resultadofifa');
                   localStorage.setItem('resultadofifa', resultadofinal);
-                                 
-                  
+
                 }
               })
-            }           
+            }
           }else{
             ban = true;
             console.log('primer nuevo resultado');
@@ -107,7 +105,7 @@ const ResultadosFifa = ({id_partido, datosapuesta, fecha, equipo1, equipo2, icon
             datosapuesta.push(resultadoapostador);
             const resultado = JSON.stringify(datosapuesta);
             localStorage.setItem('resultadofifa', resultado);
-            
+
           }
 
           if(!ban){
@@ -118,16 +116,15 @@ const ResultadosFifa = ({id_partido, datosapuesta, fecha, equipo1, equipo2, icon
             console.log(datosapuesta);
             console.log('removiendo resultado');
             localStorage.removeItem('resultadofifa');
-            const resultado = JSON.stringify(datosapuesta);          
+            const resultado = JSON.stringify(datosapuesta);
             localStorage.setItem('resultadofifa', resultado);
-            datosapuesta = [];             
-          }    
-      }   
-        
-      
+            datosapuesta = [];
+          }
+      }
+
     }, [resultadoapostador])
-    
-    const handleResultado = React.useCallback(e =>{      
+
+    const handleResultado = React.useCallback(e =>{
         setInput({
           ...input,
           [e.currentTarget.name]: e.currentTarget.value,
@@ -142,20 +139,20 @@ const ResultadosFifa = ({id_partido, datosapuesta, fecha, equipo1, equipo2, icon
         console.log(datos);
         if(datos){
           console.log('entro datos');
-          if(datos.length !== 0){        
+          if(datos.length !== 0){
             datos.map( element => {
               if(element.id_partido === id_partido){ 
                 console.log('encontro el idpartido en onfocus');  
                 console.log(input.golesequipo1);
-                console.log(input.golesequipo2);         
+                console.log(input.golesequipo2);
                 setInput({
                   golesequipo1 : element.golesequipo1,
                   golesequipo2 : element.golesequipo2,
                   retornandovalores: true
-                })            
+                })
               }
             })
-            
+
           }
         }
       }
@@ -164,7 +161,7 @@ const ResultadosFifa = ({id_partido, datosapuesta, fecha, equipo1, equipo2, icon
         // console.log('entro on focus');  
         // console.log(id_partido);
       }
-      
+
       const handleExpandClick = () => {
           setExpanded(!expanded);
         };
@@ -175,7 +172,7 @@ const ResultadosFifa = ({id_partido, datosapuesta, fecha, equipo1, equipo2, icon
         title={ equipo1 +' vs '+ equipo2  }
         subheader={fecha}
       />
-      
+
       <CardContent>
         <Grid container spacing={2}>
             <Grid item xs={6} md={6} lg={6} spacing={2} >
@@ -184,7 +181,7 @@ const ResultadosFifa = ({id_partido, datosapuesta, fecha, equipo1, equipo2, icon
                     <Avatar src={`/imagenes/${icon1}.png`}  sx={{ width: 46, height: 46 }} alt={equipo1} />
                 </Grid>
                 <Grid item xs={6}>
-                  {tipousuario === 'ROOT' || tipousuario === 'ADMIN' ?
+                  {(tipousuario === 'ROOT' || tipousuario === 'ADMIN') && estado !== 'ACTIVO' ?
                     <TextField 
                     required
                     type="number"
@@ -195,7 +192,7 @@ const ResultadosFifa = ({id_partido, datosapuesta, fecha, equipo1, equipo2, icon
                     onChange={handleResultado}
                     onFocus={onfocusEquipouno}
                     onBlur={onblurEquipouno}
-                    // className={}
+                    // disabled={estado === 'ACTIVO'?true:false}
                     color="secondary"
                     InputProps={{ inputProps: { min: "0", max: 5, step: "1" } }}
                     />
@@ -213,7 +210,7 @@ const ResultadosFifa = ({id_partido, datosapuesta, fecha, equipo1, equipo2, icon
             <Grid item xs={6} md={6} lg={6}>
               <Grid container justifyContent='center' alignItems='center' >
                   <Grid item xs={6}>
-                    {tipousuario === 'ROOT' || tipousuario === 'ADMIN' ? 
+                    {(tipousuario === 'ROOT' || tipousuario === 'ADMIN') && estado !== 'ACTIVO' ? 
                       <TextField 
                       required
                       type="number"
@@ -224,6 +221,7 @@ const ResultadosFifa = ({id_partido, datosapuesta, fecha, equipo1, equipo2, icon
                       onChange={handleResultado}
                       onFocus={onfocusEquipouno}
                       onBlur={onblurEquipouno}
+                      // disabled={estado === 'ACTIVO'?true:false}
                       color="secondary"
                       InputProps={{ inputProps: { min: "0", max: "5", step: "1" } }}
                       />

@@ -15,22 +15,26 @@ export const  formatearFecha = fecha =>{
     return fechaNueva.toLocaleDateString('es-ES', opciones)
 }
 
-// export const  formatearFechaValidacion = fecha =>{
-//     // console.log(fecha);
-//     const fechaNueva = new Date(fecha);
+export const  formatearFechaModal = fecha =>{
+    // console.log(fecha);
+    const fechaNueva = new Date(fecha);
     
-//     const opciones = {
-//         year: 'numeric',
-//         month: 'numeric',
-//         day: '2-digit',
-//         hour: 'numeric',
-//         minute: 'numeric',
-//         second: 'numeric'   
+    const opciones = {
+        year: 'numeric',
+        month: 'numeric',
+        day: '2-digit',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        timeZone: 'UTC'
 
-//     }
-
-//     return fechaNueva.toLocaleDateString('es-ES', opciones)
-// }
+    }
+// console.log(fecha)
+// console.log(fecha.toLocaleString('es-ES', opciones))
+// console.log(fechaNueva)
+// console.log(fechaNueva.toLocaleString('es-ES', opciones))
+    return fechaNueva.toLocaleDateString('es-ES', opciones)
+}
 
 export const  formatearFechaDoshoras = (fecha, hora) =>{
     
