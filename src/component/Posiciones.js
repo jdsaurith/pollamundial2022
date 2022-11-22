@@ -263,11 +263,11 @@ const Posiciones = () => {
                   <StyledTableRow key={i}>
                       <StyledTableCell component="th" scope="row" align="center">
                         {(row.orden == 1 && (row.puntos && row.puntos != 0))  ? 
-                        <span style={{fontSize: "2em"}}>&#x1F947; {row.orden}</span> : 
+                        <span style={{fontSize: "2em"}}>&#x1F947; </span> : 
                         (row.orden == 2 && (row.puntos && row.puntos != 0)) ? 
-                        <span style={{fontSize: "1.6em"}}>&#x1F948; {row.orden }</span> : 
+                        <span style={{fontSize: "1.6em"}}>&#x1F948; </span> : 
                         (row.orden == 3 && (row.puntos && row.puntos != 0)) ? 
-                        <span style={{fontSize: "1.3em"}}>&#x1F949; {row.orden}</span> : 
+                        <span style={{fontSize: "1.3em"}}>&#x1F949; </span> : 
                         (row.puntos && row.puntos != 0) ? row.orden : row.orden}
                       </StyledTableCell>
                       <StyledTableCell>{(row.orden == 1 && (row.puntos && row.puntos != 0))  ? 
