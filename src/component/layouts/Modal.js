@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Table, TableBody, TableCell, tableCellClasses, TableHead, TableRow } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Table, TableBody, TableCell, tableCellClasses, TableFooter, TableHead, TablePagination, TableRow } from '@mui/material';
 import styled from '@emotion/styled';
 import { useDispatch, useSelector } from 'react-redux';
 import Moment from 'moment';
 import { obtenerdetallesposicionesAction } from '../../action/resultadoAction';
 import { formatearFechaModal } from '../../helpers';
+import Paginacion from './Paginacion';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -30,14 +31,28 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const Modal = (props) => {
   const {open, onClose, datos, ...other} = props;
-  const dispatch = useDispatch();
+  
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(3);
+
   const handleClose = () => onClose(false);
+
+  const dispatch = useDispatch();
   const obtenerdetallesposiciones = (id)=>dispatch(obtenerdetallesposicionesAction(id));
   const detallesposiciones = useSelector(state =>state.resultado.detallesposiciones);
 
   useEffect(() => {
     obtenerdetallesposiciones(datos?.id_usuario);
   }, [])
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+  const handleChangeRowsPerPage = (event) => {
+    console.log('envento');
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
 
   return (
@@ -71,11 +86,11 @@ const Modal = (props) => {
                   detallesposiciones.length === 0 ?
                   (
                   <TableRow>
-                      <StyledTableCell colSpan={5}>No hay registro aún.</StyledTableCell>
+                      <StyledTableCell colSpan={6}>No hay registro aún.</StyledTableCell>
                   </TableRow>
                   )
                   :
-                  detallesposiciones.map((row) =>(
+                  detallesposiciones.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) =>(
                   <StyledTableRow key={ row.id_partido }>
                     <StyledTableCell >{  row.equipouno +' vs '+ row.equipodos }</StyledTableCell>
                     <StyledTableCell align='center'>{  row.golesuno +" - "+ row.golesdos }</StyledTableCell>
@@ -87,6 +102,26 @@ const Modal = (props) => {
                   </StyledTableRow>
                   ))}
               </TableBody>
+              <TableFooter>
+                <TableRow>
+                    <TablePagination
+                        rowsPerPageOptions={[3, 10, 25, { label: 'All', value: -1 }]}
+                        colSpan={6}
+                        count={detallesposiciones.length === 0 ? 0 : detallesposiciones.length}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        SelectProps={{
+                            inputProps: {
+                            'aria-label': 'rows per page',
+                            },
+                            native: true,
+                        }}
+                        onPageChange={handleChangePage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                        ActionsComponent={Paginacion}
+                    />
+                </TableRow>
+            </TableFooter>
             </Table>
         </DialogContent>
         <DialogActions>
