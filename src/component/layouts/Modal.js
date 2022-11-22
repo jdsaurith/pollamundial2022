@@ -33,7 +33,7 @@ const Modal = (props) => {
   const {open, onClose, datos, ...other} = props;
   
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(3);
+  const [rowsPerPage, setRowsPerPage] = useState(4);
 
   const handleClose = () => onClose(false);
 
@@ -49,7 +49,6 @@ const Modal = (props) => {
     setPage(newPage);
   };
   const handleChangeRowsPerPage = (event) => {
-    console.log('envento');
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
@@ -105,7 +104,7 @@ const Modal = (props) => {
               <TableFooter>
                 <TableRow>
                     <TablePagination
-                        rowsPerPageOptions={[3, 10, 25, { label: 'All', value: -1 }]}
+                        rowsPerPageOptions={[4, 10, 25, { label: 'All', value: -1 }]}
                         colSpan={6}
                         count={detallesposiciones.length === 0 ? 0 : detallesposiciones.length}
                         rowsPerPage={rowsPerPage}
