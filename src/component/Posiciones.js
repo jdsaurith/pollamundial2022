@@ -124,7 +124,7 @@ const Posiciones = () => {
     const posiciones = useSelector(state => state.resultado.posiciones);
     const usuario = useSelector(state => state.auth.usuario);
     
-    console.log(posicionesfil);
+    // console.log(posicionesfil);
 
     useEffect(() => {
       obtenerposiciones();
@@ -140,7 +140,7 @@ const Posiciones = () => {
     }, [bolsa, posiciones])
 
     const positionSearch = (ce) =>{
-      console.log(ce);
+      // console.log(ce);
       const lowercasedValor = ce.toLowerCase().trim();
       if (lowercasedValor === "") guardarposicionesFiltro(posiciones);
       else {
@@ -150,7 +150,7 @@ const Posiciones = () => {
           );
         });
         guardarposicionesFiltro(filteredData);
-            console.log(filteredData);
+            // console.log(filteredData);
       }
     }
 
