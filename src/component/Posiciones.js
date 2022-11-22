@@ -101,6 +101,7 @@ const Posiciones = () => {
     }
 
     const handleCloseModal = () =>{
+      setDatos()
       setOpenModal(false);
     }
 
