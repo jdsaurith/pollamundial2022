@@ -130,8 +130,8 @@ const Posiciones = () => {
       obtenerposiciones();
     }, [])
 
-    useEffect(() => {
-      guardarposicionesFiltro(posiciones);
+    useEffect(() => {      
+      guardarposicionesFiltro(returnPosi(posiciones));
     }, [posiciones])
 
     useEffect(() => {
@@ -259,7 +259,7 @@ const Posiciones = () => {
                       </TableRow>
                   )
                   :
-                  returnPosi(posicionesfil).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row,i) => (
+                  posicionesfil.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row,i) => (
                   <StyledTableRow key={i}>
                       <StyledTableCell component="th" scope="row" align="center">
                         {(row.orden == 1 && (row.puntos && row.puntos != 0))  ? 
