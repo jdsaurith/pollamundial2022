@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
-import { useTheme } from '@mui/material/styles';
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
+import { useState, useEffect } from 'react';
+import { useTheme, styled, alpha } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
@@ -11,13 +10,11 @@ import TableRow from '@mui/material/TableRow';
 import TableFooter from '@mui/material/TableFooter';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
-import Fab from '@mui/material/Fab';
-import AddIcon from '@mui/icons-material/Add';
-import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import SkipNextIcon from '@mui/icons-material/SkipNext';
 import { Card, CardContent, CardMedia, Grid, IconButton, TablePagination, Typography } from '@mui/material';
 
+////buscado
+import SearchIcon from '@mui/icons-material/Search';
+import InputBase from '@mui/material/InputBase';
 
 import { faClipboardList, faEye } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -30,6 +27,48 @@ import Modal from './layouts/Modal';
 import { formatearDinero } from '../helpers';
 
 
+////buscador
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  '&:hover': {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginLeft: 0,
+  width: '80%',
+  [theme.breakpoints.up('sm')]: {
+    marginLeft: theme.spacing(1),
+    width: '25%',
+  },
+}));
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: 'inherit',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      width: '12ch',
+      '&:focus': {
+        width: '20ch',
+      },
+    },
+  },
+}));
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -75,6 +114,7 @@ const Posiciones = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [openModal, setOpenModal] = useState(false);
+    const [posicionesfil, guardarposicionesFiltro] = useState([]);
     const [datos, setDatos] = useState();
     const [bolsa, setBolsa] = useState(0);
 
@@ -83,18 +123,36 @@ const Posiciones = () => {
     const limpiarDetallePosicion = () =>dispatch(limpiarDetallePosicionAction());
     const posiciones = useSelector(state => state.resultado.posiciones);
     const usuario = useSelector(state => state.auth.usuario);
-
-    // console.log(posiciones);
+    
+    // console.log(posicionesfil);
 
     useEffect(() => {
       obtenerposiciones();
     }, [])
 
+    useEffect(() => {      
+      guardarposicionesFiltro(returnPosi(posiciones));
+    }, [posiciones])
 
     useEffect(() => {
       setBolsa(posiciones.length * 10000)
       // console.log(posiciones)
     }, [bolsa, posiciones])
+
+    const positionSearch = (ce) =>{
+      // console.log(ce);
+      const lowercasedValor = ce.toLowerCase().trim();
+      if (lowercasedValor === "") guardarposicionesFiltro(posiciones);
+      else {
+        const filteredData = posiciones.filter(item => {
+          return Object.keys(item).some(key =>
+            item[key].toString().toLowerCase().includes(lowercasedValor)
+          );
+        });
+        guardarposicionesFiltro(filteredData);
+            // console.log(filteredData);
+      }
+    }
 
     const detalleApuesta = (row) =>{
       setDatos(row);
@@ -170,6 +228,21 @@ const Posiciones = () => {
             <TableContainer component={Paper}>
               <Table sx={{ minWidth: 600 }} aria-label="customized table">
               <TableHead>
+                  <TableRow>                  
+                    <StyledTableCell colSpan={5}>                      
+                      <Search>
+                        <SearchIconWrapper>
+                          <SearchIcon />
+                        </SearchIconWrapper>
+                        <StyledInputBase
+                          placeholder="Search…"
+                          inputProps={{ 'aria-label': 'search' }}
+                          onChange={e => positionSearch(e.target.value)}
+                        />
+                      </Search>
+                    </StyledTableCell>                 
+                    
+                  </TableRow>
                   <TableRow>
                   <StyledTableCell align="center">Posición</StyledTableCell>
                   <StyledTableCell>Nombres y Apellidos</StyledTableCell>
@@ -180,21 +253,21 @@ const Posiciones = () => {
               </TableHead>
               <TableBody>
                   {
-                  posiciones.length === 0 ?(
+                  posicionesfil.length === 0 ?(
                       <TableRow>
                           <StyledTableCell colSpan={4}>No hay registro aún</StyledTableCell>
                       </TableRow>
                   )
                   :
-                  returnPosi(posiciones).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row,i) => (
+                  posicionesfil.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row,i) => (
                   <StyledTableRow key={i}>
                       <StyledTableCell component="th" scope="row" align="center">
                         {(row.orden == 1 && (row.puntos && row.puntos != 0))  ? 
-                        <span style={{fontSize: "2em"}}>&#x1F947; {row.orden}</span> : 
+                        <span style={{fontSize: "2em"}}>&#x1F947; </span> : 
                         (row.orden == 2 && (row.puntos && row.puntos != 0)) ? 
-                        <span style={{fontSize: "1.6em"}}>&#x1F948; {row.orden }</span> : 
+                        <span style={{fontSize: "1.6em"}}>&#x1F948; </span> : 
                         (row.orden == 3 && (row.puntos && row.puntos != 0)) ? 
-                        <span style={{fontSize: "1.3em"}}>&#x1F949; {row.orden}</span> : 
+                        <span style={{fontSize: "1.3em"}}>&#x1F949; </span> : 
                         (row.puntos && row.puntos != 0) ? row.orden : row.orden}
                       </StyledTableCell>
                       <StyledTableCell>{(row.orden == 1 && (row.puntos && row.puntos != 0))  ? 
@@ -225,7 +298,7 @@ const Posiciones = () => {
                       <TablePagination
                           rowsPerPageOptions={[10, 15, 25, { label: 'All', value: -1 }]}
                           colSpan={10}
-                          count={posiciones.length === 0 ? 0 : posiciones.length}
+                          count={posicionesfil.length === 0 ? 0 : posicionesfil.length}
                           rowsPerPage={rowsPerPage}
                           page={page}
                           SelectProps={{

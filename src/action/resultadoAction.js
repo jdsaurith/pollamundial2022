@@ -188,7 +188,7 @@ export function resultadopartidosfifaAction(f){
     return async (dispatch) =>{
         dispatch(resultadopartidosfifa());
         try {
-            console.log(f);
+            // console.log(f);
             const res = await clienteAxios.put('/resultados/resultadosfifa',f);
             // console.log(res.data);
             if(res.data.msg === 'exito'){   
@@ -234,7 +234,7 @@ export function updateStatePartidoAction(id){
     return async (dispatch) =>{
         dispatch(resultadopartidosfifa());
         try {
-            console.log(id);
+            // console.log(id);
             const res = await clienteAxios.put(`/resultados/updatestate/${id}`);
             // console.log(res.data);
             if(res.data.msg === 'exito'){

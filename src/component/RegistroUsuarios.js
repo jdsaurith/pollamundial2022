@@ -144,7 +144,6 @@ const RegistroUsuarios = () => {
                     name="nombres"
                     label="Nombres"
                     variant="outlined"
-                    autoFocus
                     value={nombres}
                     onChange={handleChangeT}
                     fullWidth

@@ -73,7 +73,7 @@ export function editarUsuarioAction(c){
         const res = await clienteAxios.put('/usuarios',c);
         //  console.log(res.data);
         if(res.data.msg === 'actualizado'){
-            console.log(res.data.user);
+            // console.log(res.data.user);
             dispatch(editarUsuarioExito(res.data.user));
             Swal.fire({
                 icon: 'success',
@@ -116,7 +116,7 @@ export function EditarPagoUsuarioAction(c){
     return async dispatch =>{
         // dispatch(EditarPagoUsuario());
      try {
-        console.log(c);
+        // console.log(c);
          const res = await clienteAxios.put('/usuarios/pago',c);
         //  console.log(res.data);
          if(res.data.msg === 'actualizado'){

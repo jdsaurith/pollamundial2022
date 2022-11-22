@@ -104,7 +104,6 @@ let theme = createTheme({
             },
             [input]
         );
-        console.log(nombres)
     });
 
     const handleSubmit = (event) => {
@@ -129,7 +128,6 @@ let theme = createTheme({
             return;
         }
         //enviar los datos 
-        console.log(input);
         agregarUsuario({...input, tipousuario, pais});
         setInput({
             nombres: '',

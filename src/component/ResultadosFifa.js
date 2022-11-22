@@ -73,19 +73,19 @@ const ResultadosFifa = ({id_partido, datosapuesta, fecha, equipo1, equipo2, icon
 
     useEffect(() => {
       if(retornandovalores === false && input.golesequipo1 && input.golesequipo2){
-        console.log('guardando los valores de input');
+        // console.log('guardando los valores de input');
         var ban = false;
         const resultado = localStorage.getItem("resultadofifa");
         const datos = JSON.parse(resultado); 
         // console.log(datos);
           if(datos){ 
-            console.log('entro Datos');
+            // console.log('entro Datos');
             datosapuesta = datos;
-            console.log(datosapuesta);
+            // console.log(datosapuesta);
             if(datos.length !== 0){
               datos.map( element => {
                 if(element.id_partido === id_partido){
-                  console.log('BAN TRUE');
+                  // console.log('BAN TRUE');
                   ban = true;
 
                   element.golesequipo1 = input.golesequipo1
@@ -100,21 +100,15 @@ const ResultadosFifa = ({id_partido, datosapuesta, fecha, equipo1, equipo2, icon
             }
           }else{
             ban = true;
-            console.log('primer nuevo resultado');
-            console.log(resultadoapostador);
+            // console.log('primer nuevo resultado');
+            // console.log(resultadoapostador);
             datosapuesta.push(resultadoapostador);
             const resultado = JSON.stringify(datosapuesta);
             localStorage.setItem('resultadofifa', resultado);
-
           }
 
-          if(!ban){
-            console.log('creando el nuevo resultado');
-            console.log(resultadoapostador);
-            console.log(datosapuesta);
+          if(!ban){            
             datosapuesta.push(resultadoapostador);
-            console.log(datosapuesta);
-            console.log('removiendo resultado');
             localStorage.removeItem('resultadofifa');
             const resultado = JSON.stringify(datosapuesta);
             localStorage.setItem('resultadofifa', resultado);
@@ -133,18 +127,12 @@ const ResultadosFifa = ({id_partido, datosapuesta, fecha, equipo1, equipo2, icon
       },[input])
   
       const onfocusEquipouno = () =>{ 
-        console.log('entro on focus')
         const resultado = localStorage.getItem("resultadofifa");  
         const datos = JSON.parse(resultado);
-        console.log(datos);
         if(datos){
-          console.log('entro datos');
           if(datos.length !== 0){
             datos.map( element => {
-              if(element.id_partido === id_partido){ 
-                console.log('encontro el idpartido en onfocus');  
-                console.log(input.golesequipo1);
-                console.log(input.golesequipo2);
+              if(element.id_partido === id_partido){
                 setInput({
                   golesequipo1 : element.golesequipo1,
                   golesequipo2 : element.golesequipo2,
@@ -157,9 +145,7 @@ const ResultadosFifa = ({id_partido, datosapuesta, fecha, equipo1, equipo2, icon
         }
       }
   
-      const onblurEquipouno = () =>{  
-        // console.log('entro on focus');  
-        // console.log(id_partido);
+      const onblurEquipouno = () =>{
       }
 
       const handleExpandClick = () => {

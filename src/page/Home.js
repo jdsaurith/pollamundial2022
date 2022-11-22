@@ -223,8 +223,6 @@ const Home = () => {
     obtenerResultados(usuario?.id_usuario);
   }, [consultarresultados]);
 
-  
-
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -239,7 +237,6 @@ const Home = () => {
   }
 
   const btnInfoSave = () =>{
-    console.log('infosave');
     setDatos({
       titulo: 'RESULTADO GUARDADO',
       contenido: 'Resultado registrado con éxito :)'
@@ -248,7 +245,6 @@ const Home = () => {
   }
 
   const btnInfoNoSave = () =>{
-    console.log('noinfosave');
     setDatos({
       titulo: 'PENDIENTE POR REGISTRAR',
       contenido: `Puedes guardar el resultado en cualqueir momento,
@@ -299,12 +295,15 @@ const Home = () => {
               open={mobileOpen}
               onClose={handleDrawerToggle}
               setComponente={setComponente}
+              setMobileOpen={setMobileOpen}
             />
           )}
           <Navigator
             PaperProps={{ style: { width: drawerWidth } }}
             sx={{ display: { sm: 'block', xs: 'none' } }}
             setComponente={setComponente}
+            open={mobileOpen}
+            setMobileOpen={setMobileOpen}
           />
         </Box>
 

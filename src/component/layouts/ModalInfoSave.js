@@ -5,8 +5,6 @@ const ModalInfoSave = (props) => {
   const {open, onClose, datos, ...other} = props;
   const handleClose = () => onClose(false);
 
-    console.log(datos);
-
 
   return (
    <Dialog

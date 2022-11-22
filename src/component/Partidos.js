@@ -111,25 +111,25 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, eq
       if(retornandovalores === false && input.golesequipo1 && input.golesequipo2){
         let fechajuego = moment().format('yyyy/MM/DD HH:mm:ss');
         setResultadoapostador({...input, id_usuario: usuario.id_usuario, fecha: fechajuego, id_partido});
-        console.log(fechajuego);
+        // console.log(fechajuego);
       }
     }, [input])
 
     useEffect(() => {
       if(retornandovalores === false && input.golesequipo1 && input.golesequipo2){
-        console.log('guardando los valores de input');
+        // console.log('guardando los valores de input');
         var ban = false;
         const resultado = localStorage.getItem("resultado");  
         const datos = JSON.parse(resultado); 
         // console.log(datos);
           if(datos){ 
-            console.log('entro Datos');
+            // console.log('entro Datos');
             datosapuesta = datos;
             // console.log(datosapuesta);
             if(datos.length !== 0){
               datos.map( element => {
                 if(element.id_partido === id_partido){
-                  console.log('BAN TRUE');
+                  // console.log('BAN TRUE');
                   ban = true;
 
                   element.golesequipo1 = input.golesequipo1
@@ -145,7 +145,7 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, eq
             }
           }else{
             ban = true;
-            console.log('primer nuevo resultado');
+            // console.log('primer nuevo resultado');
             // console.log(resultadoapostador);
             datosapuesta.push(resultadoapostador);
             const resultado = JSON.stringify(datosapuesta);
@@ -154,12 +154,12 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, eq
           }
 
           if(!ban){
-            console.log('creando el nuevo resultado');
+            // console.log('creando el nuevo resultado');
             // console.log(resultadoapostador);
-            console.log(datosapuesta);
+            // console.log(datosapuesta);
             datosapuesta.push(resultadoapostador);
             // console.log(datosapuesta);
-            console.log('removiendo resultado');
+            // console.log('removiendo resultado');
             localStorage.removeItem('resultado');
             const resultado = JSON.stringify(datosapuesta);
             localStorage.setItem('resultado', resultado);
