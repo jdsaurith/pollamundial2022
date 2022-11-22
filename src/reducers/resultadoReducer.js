@@ -22,7 +22,8 @@ import {
     OBTENER_POSICIONES_ERROR,
     OBTENER_DETALLES_POSICIONES,
     OBTENER_DETALLES_POSICIONES_EXITO,
-    OBTENER_DETALLES_POSICIONES_ERROR
+    OBTENER_DETALLES_POSICIONES_ERROR,
+    LIMPIAR_DETALLE_APUESTA
 } from '../types'
 
 const initialState = {
@@ -119,6 +120,11 @@ const resultadoReducer = (state = initialState, action) =>{
                loading: false,
                error: null,
                detallesposiciones: action.payload
+            }
+        case LIMPIAR_DETALLE_APUESTA:
+            return{
+                ...state,
+                detallesposiciones: []
             }
 
         case OBTENER_DETALLES_POSICIONES_ERROR:

@@ -25,7 +25,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Paginacion from './layouts/Paginacion';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { obtenerposicionesAction } from '../action/resultadoAction';
+import { obtenerposicionesAction, limpiarDetallePosicionAction } from '../action/resultadoAction';
 import Modal from './layouts/Modal';
 import { formatearDinero } from '../helpers';
 
@@ -80,6 +80,7 @@ const Posiciones = () => {
 
     const dispatch = useDispatch();
     const obtenerposiciones = () =>dispatch(obtenerposicionesAction());
+    const limpiarDetallePosicion = () =>dispatch(limpiarDetallePosicionAction());
     const posiciones = useSelector(state => state.resultado.posiciones);
     const usuario = useSelector(state => state.auth.usuario);
 
@@ -101,7 +102,7 @@ const Posiciones = () => {
     }
 
     const handleCloseModal = () =>{
-      setDatos()
+      limpiarDetallePosicion();
       setOpenModal(false);
     }
 
