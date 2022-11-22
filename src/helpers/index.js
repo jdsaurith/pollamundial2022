@@ -16,7 +16,6 @@ export const  formatearFecha = fecha =>{
 }
 
 export const  formatearFechaModal = fecha =>{
-    // console.log(fecha);
     const fechaNueva = new Date(fecha);
     
     const opciones = {
@@ -29,10 +28,6 @@ export const  formatearFechaModal = fecha =>{
         timeZone: 'UTC'
 
     }
-// console.log(fecha)
-// console.log(fecha.toLocaleString('es-ES', opciones))
-// console.log(fechaNueva)
-// console.log(fechaNueva.toLocaleString('es-ES', opciones))
     return fechaNueva.toLocaleDateString('es-ES', opciones)
 }
 

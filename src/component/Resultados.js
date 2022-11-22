@@ -46,7 +46,7 @@ const Resultados = () => {
   }, [])
   
   const btnResultados = () =>{
-    console.log('click en enviar resultados a BD');
+    // console.log('click en enviar resultados a BD');
     const datos = JSON.parse(localStorage.getItem('resultadofifa'));
     // console.log(datos);
     resultadopartidosfifa(datos);

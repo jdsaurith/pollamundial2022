@@ -16,8 +16,6 @@ const Rutaprivada = ({ component: Component, ...props}) => {
 
     
     useEffect(() => {
-        // console.log("RUTA PRIVADA USEEFFECT");
-        // console.log(path);
         validarsesion();
     },[path])
 

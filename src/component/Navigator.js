@@ -62,11 +62,12 @@ const categories = [
   ];
 
 const Navigator = (props) => {
-    const { setComponente, ...other} = props;
+    const { setComponente, setMobileOpen, open, ...other} = props;
     const usuarioadmin = useSelector(state => state.auth.usuario);
     
     
     const btnListado = (id) => {
+      setMobileOpen(!open)
       return setComponente(id);
     }
 
@@ -74,7 +75,7 @@ const Navigator = (props) => {
       return setComponente('Perfil');
     }
     return ( 
-        <Drawer variant="permanent" {...other}>
+        <Drawer variant="permanent" {...other} open={open}>
             <List disablePadding>
                 <ListItem sx={{ ...item, ...itemCategory, fontSize: 22, color: '#fff' }}>
                     POLLA 2022

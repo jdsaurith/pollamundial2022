@@ -39,14 +39,6 @@ const Modal = (props) => {
     obtenerdetallesposiciones(datos?.id_usuario);
   }, [])
 
-  useEffect(()=>{
-    if(detallesposiciones.length !==0){
-      console.log(detallesposiciones[0].fecha);
-      console.log(new Date(detallesposiciones[0].fecha).toUTCString())
-      console.log(formatearFechaModal(detallesposiciones[0].fecha))
-    }
-  },[detallesposiciones])
-
 
   return (
     <Dialog
