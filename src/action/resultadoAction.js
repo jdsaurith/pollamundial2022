@@ -22,7 +22,8 @@ import {
     OBTENER_POSICIONES_ERROR,
     OBTENER_DETALLES_POSICIONES,
     OBTENER_DETALLES_POSICIONES_EXITO,
-    OBTENER_DETALLES_POSICIONES_ERROR
+    OBTENER_DETALLES_POSICIONES_ERROR,
+    LIMPIAR_DETALLE_APUESTA
 } from '../types';
 
 import clienteAxios from '../config/axios';
@@ -312,4 +313,15 @@ const obtenerdetallesposicionesExito = (res) => ({
 })
 const obtenerdetallesposicionesError = () => ({
     type: OBTENER_DETALLES_POSICIONES_ERROR
+})
+
+////limpiar datos de detalle apuesta
+export function limpiarDetallePosicionAction(){
+    return dispatch =>{
+        dispatch(limpiarDetalle());
+    }
+}
+
+const limpiarDetalle = () =>({
+    type: LIMPIAR_DETALLE_APUESTA
 })
