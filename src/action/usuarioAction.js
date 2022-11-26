@@ -10,7 +10,9 @@ import {
     EDITAR_USUARIO_EXITO,
     EDITAR_USUARIO_ERROR,
     EDITAR_PAGO_USUARIO_EXITO,
-    EDITAR_PAGO_USUARIO_ERROR
+    EDITAR_PAGO_USUARIO_ERROR,
+    HABILITAR_PERFIL,
+    DESHABILITAR_PERFIL
 } from '../types';
 
 import { obtenerposicionesAction } from './resultadoAction';
@@ -204,3 +206,23 @@ const guardarUsuarioError = () =>({
     type: GUARDAR_USUARIO_ERROR
 })
 
+/////habilitar el perfil
+export function habilitarPerfilAction(){
+    return dispatch=>{
+        dispatch(habilitarPerfil());
+    }
+}
+
+const habilitarPerfil = () =>({
+    type: HABILITAR_PERFIL
+})
+/////desabilitar el perfil
+export function desahabilitarPerfilAction(){
+    return dispatch=>{
+        dispatch(desahabilitarPerfil());
+    }
+}
+
+const desahabilitarPerfil = () =>({
+    type: DESHABILITAR_PERFIL
+})

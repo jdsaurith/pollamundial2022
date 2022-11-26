@@ -3,7 +3,7 @@ import { Alert, AppBar, Button, Grid, Paper, styled, Table, TableContainer, Tabl
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { editarUsuarioAction, agregarUsuarioAction, guardaUsuarioEditarAction } from '../action/usuarioAction';
+import { editarUsuarioAction, agregarUsuarioAction, guardaUsuarioEditarAction } from '../../action/usuarioAction';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {

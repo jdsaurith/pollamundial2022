@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react'
 import { Table, TableContainer, TableFooter, TableHead, TablePagination, TableRow, TableBody, Paper } from '@mui/material'
 import styled from '@emotion/styled';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import Paginacion from './layouts/Paginacion';
-
+import Paginacion from '../layouts/Paginacion';
+import Swal from 'sweetalert2'
 //fortawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faToggleOff, faToggleOn } from '@fortawesome/free-solid-svg-icons';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { guardaUsuarioEditarAction } from '../action/usuarioAction';
+import { verUsuariosAction, guardaUsuarioEditarAction, EditarPagoUsuarioAction } from '../../action/usuarioAction';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -32,17 +32,52 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
-const Perfil = () => {
+const UsuariosInfo = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
     const dispatch = useDispatch();
+    const verUsuarios = (tipo) => dispatch(verUsuariosAction(tipo));
     const obtenerEditarUsuario = (u) => dispatch(guardaUsuarioEditarAction(u));
-
-    const usuario = useSelector(state => state.auth.usuario);
+    const EditarPagoUsuario = (u) => dispatch(EditarPagoUsuarioAction(u));
     
-    const editarUsuario = (usuario) =>{        
-      obtenerEditarUsuario(usuario);
+    const usuario = useSelector(state => state.auth.usuario);
+    const usuarios = useSelector(state => state.usuario.usuarios);
+    const usuarioadmin = useSelector(state => state.auth.usuario);
+   
+    useEffect(() => {
+      if(usuarioadmin !== null){
+        verUsuarios(usuarioadmin.tipousuario === 'ADMIN' ? 'ARG' : 'COL');
+      }      
+    }, [usuarioadmin])
+
+    const handleChangePage = (event, newPage) => {
+      setPage(newPage);
+    };
+    const handleChangeRowsPerPage = (event) => {
+      setRowsPerPage(parseInt(event.target.value, 10));
+      setPage(0);
+    };
+
+    const editarUsuario = (u) =>{
+      obtenerEditarUsuario({...u, tipousuario:usuario.tipousuario});
+    }
+    const editarPago = (usuario,pago) =>{
+      Swal.fire({
+        icon: 'info',
+        title: 'Activar o Desactivar este Usuario?',
+        text: 'Se actualizara el estado del usuario!',
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: `Si, Cambiar`,
+        denyButtonText: `No`,
+      }).then(result =>{
+        if (result.isConfirmed){
+          EditarPagoUsuario({usuario, pago});
+        }
+
+      })
+      
     }
   return (
     <>
@@ -57,14 +92,17 @@ const Perfil = () => {
                 </TableRow>
             </TableHead>
             <TableBody>
-            {usuario === null ? (
+                {
+                usuarios.length === 0 ?(
                     <TableRow>
-                        <StyledTableCell colSpan={4}>Cargando datos..</StyledTableCell>
+                        <StyledTableCell colSpan={4}>No hay datos</StyledTableCell>
                     </TableRow>
-                ):
-                <StyledTableRow key={usuario?.idusuario}>
-                    <StyledTableCell component="th" scope="row" >{usuario?.nombres}</StyledTableCell>
-                    <StyledTableCell >{usuario?.usuario}</StyledTableCell>
+                )
+                :
+                usuarios.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
+                <StyledTableRow key={row.usuario}>
+                    <StyledTableCell component="th" scope="row" >{row.nombres}</StyledTableCell>
+                    <StyledTableCell >{row.usuario}</StyledTableCell>
                     {/* <StyledTableCell >{row.password}</StyledTableCell> */}
                     <StyledTableCell >**********</StyledTableCell>
                     <StyledTableCell >
@@ -78,13 +116,26 @@ const Perfil = () => {
                         icon={faEdit}
                         color="#363636"
                         size="2x"
-                        onClick={()=>editarUsuario(usuario)}
-                      />                       
+                        onClick={()=>editarUsuario(row)}
+                      />
+                        <FontAwesomeIcon
+                        style={{
+                          margin:  '1px',
+                          cursor: 'pointer'
+                        }}
+                        title={row.estado==='PAGO'?"Inactivar":"Activar"}
+                        name= {row.estado==='PAGO'?"activo":"inactivo"}
+                        icon= {row.estado==='PAGO'?faToggleOn:faToggleOff}                        
+                        color={row.estado==='PAGO'?"#04BB3C":"#DD0000"}
+                        size="2x"
+                        onClick={()=>editarPago(row, row.estado==='PAGO' ? false:true)}
+                      />
                     </StyledTableCell>
                 </StyledTableRow>
-            }
+                ))}
+                
             </TableBody>
-            {/* <TableFooter>
+            <TableFooter>
                 <TableRow>
                     <TablePagination
                         rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
@@ -103,11 +154,11 @@ const Perfil = () => {
                         ActionsComponent={Paginacion}
                     />
                 </TableRow>
-            </TableFooter> */}
+            </TableFooter>
             </Table>
         </TableContainer>        
     </>
   )
 }
 
-export default Perfil
+export default UsuariosInfo

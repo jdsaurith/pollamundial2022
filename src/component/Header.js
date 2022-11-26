@@ -13,28 +13,45 @@ import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
+import { Box, Divider, MenuItem } from '@mui/material';
+import Menu from '@mui/material/Menu';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { cerrarSesionAction } from '../action/authAction';
+import { habilitarPerfilAction, desahabilitarPerfilAction } from '../action/usuarioAction';
+import { width } from '@mui/system';
+
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
+
+const settings = ['Perfil', 'Cerrar Sesión'];
 
 const Header = (props) => {
     const dispatch = useDispatch();
     const { onDrawerToggle, nombre } = props; 
+    const [anchorElUser, setAnchorElUser] = React.useState(null);
+
     const cerrarSesion = () => dispatch(cerrarSesionAction());
-    
-    
-    const bntcerrarSesion = () =>{
-        cerrarSesion();
-    }
+    const habilitarPerfil = () =>dispatch(habilitarPerfilAction());
+    const desahabilitarPerfil = () => dispatch(desahabilitarPerfilAction());
    
+    const handleOpenUserMenu = (event) => {
+        setAnchorElUser(event.currentTarget);
+    };
+
+    const handleCloseUserMenu = (setting) => {
+        // console.log(setting);
+        if(setting === 'Cerrar Sesión') {desahabilitarPerfil(); cerrarSesion();}
+        if(setting === 'Perfil') habilitarPerfil();
+        setAnchorElUser(null);
+    };
+    
 
     return ( 
         <React.Fragment>
             <AppBar color="primary" position="sticky" elevation={0}>
                 <Toolbar>
-                    <Grid container spacing={1} alignItems="center">
+                    <Grid container display='flex' justifyContent='space-between'  alignItems='center'>
                         <Grid sx={{ display: { sm: 'none', xs: 'block' } }} item>
                             <IconButton
                                 color="inherit"
@@ -45,25 +62,45 @@ const Header = (props) => {
                                 <MenuIcon />
                             </IconButton>
                         </Grid>
-                        <Grid item xs />
-                        <Grid container alignItems="center" spacing={1} padding={1.5}>
-                        <Grid item xs>
-                            <Typography color="inherit" variant="h6" component="h3">
-                                {nombre}
-                            </Typography>
-                        </Grid>
-                        <Grid item>
-                            <Button
-                                sx={{ borderColor: lightColor }}
-                                variant="outlined"
-                                color="inherit"
-                                size="small"
-                                onClick={() => bntcerrarSesion()}
-                            >
-                                Cerrar Sesión
-                            </Button>
-                        </Grid>                        
-                    </Grid>                 
+                        <Grid item />                        
+                        <Grid sx={{ lg: { display: 'flex', justifyContent:'flex-end' } }} item>                      
+                      
+                            <Box sx={{ flexGrow: 0 }}>
+                                <Tooltip title="Open settings">
+                                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                                        <Avatar alt="balon" src="/imagenes/card/balon.jpg" />
+                                    </IconButton>                                   
+                                </Tooltip>                                
+                                <Menu
+                                sx={{ mt: '45px' }}
+                                id="menu-appbar"
+                                anchorEl={anchorElUser}
+                                anchorOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                open={Boolean(anchorElUser)}
+                                onClose={handleCloseUserMenu}
+                                >
+                                <Typography display={'flex'} flexDirection='column' p={2}>
+                                    <span style={{ fontSize:'1em', fontWeight:'bold', padding:'1', margin: '2'  }}>{nombre}</span>
+                                    <span style={{ fontSize:'1em', fontWeight:'normal'  }}>@Dante</span>
+                                </Typography>
+                                
+                                <Divider />
+                                {settings.map((setting) => (
+                                    <MenuItem key={setting} onClick={() => handleCloseUserMenu(setting)}>
+                                        <Typography textAlign="center">{setting}</Typography>
+                                    </MenuItem>
+                                ))}
+                                </Menu>
+                            </Box>                                              
+                        </Grid>                 
                     </Grid>
                 </Toolbar>
             </AppBar>

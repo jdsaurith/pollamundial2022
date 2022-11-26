@@ -22,8 +22,8 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import PhonelinkSetupIcon from '@mui/icons-material/PhonelinkSetup';
 import DnsRoundedIcon from '@mui/icons-material/DnsRounded';
 
-import { useSelector } from 'react-redux'
-
+import { useSelector, useDispatch } from 'react-redux';
+import { desahabilitarPerfilAction } from '../action/usuarioAction';
 const item = {
     py: '2px',
     px: 3,
@@ -63,47 +63,54 @@ const categories = [
 
 const Navigator = (props) => {
     const { setComponente, setMobileOpen, open, ...other} = props;
+    const dispatch = useDispatch();
+
+    const desahabilitarPerfil = () => dispatch(desahabilitarPerfilAction());
     const usuarioadmin = useSelector(state => state.auth.usuario);
+    const tipousuario = useSelector(state => state.auth.tipousuario);
     
     
     const btnListado = (id) => {
       setMobileOpen(!open)
+      desahabilitarPerfil();
       return setComponente(id);
     }
 
-    const btnPerfil = () => {
-      return setComponente('Perfil');
-    }
+
     return ( 
         <Drawer variant="permanent" {...other} open={open}>
             <List disablePadding>
-                <ListItem sx={{ ...item, ...itemCategory, fontSize: 22, color: '#fff' }}>
+                <ListItem sx={{ ...item, ...itemCategory, fontSize: 16, color: '#fff' }}>
                     POLLA 2022
                 </ListItem>
                 {categories.map(({ id, children }) => (
                     <Box key={id} sx={{ bgcolor: '#101F33' }}>
-                        <ListItem sx={{ py: 2, px: 3 }}>
-                            <ListItemText sx={{ color: '#fff' }}>{id}</ListItemText>
-                        </ListItem>
-                        {children.map(({ id: childId, icon, active }) => (
-                          childId === 'Usuarios' 
-                          ? 
-                          <ListItem  button onClick={() => btnListado(childId)} disablePadding key={childId}>
+                      {tipousuario === 'ROOT' && id === 'FECHAS FIFA' ? null :
+                        <>
+                          <ListItem sx={{ py: 2, px: 3 }}>
+                              <ListItemText sx={{ color: '#fff' }}>{id}</ListItemText>
+                          </ListItem>
+                          {children.map(({ id: childId, icon, active }) => (
+                            childId === 'Usuarios' 
+                            ? 
+                            <ListItem  button onClick={() => btnListado(childId)} disablePadding key={childId}>
+                                <ListItemButton selected={active} sx={item}>
+                                <ListItemIcon>{tipousuario === 'ROOT' ? icon : <HomeIcon /> }</ListItemIcon>
+                                <ListItemText>{tipousuario === 'ROOT' ? childId : 'Home'}</ListItemText>
+                                </ListItemButton>
+                            </ListItem>
+                            :
+                            <ListItem  button onClick={() => btnListado(childId)} disablePadding key={childId}>
                               <ListItemButton selected={active} sx={item}>
                               <ListItemIcon>{icon}</ListItemIcon>
-                              <ListItemText>{usuarioadmin?.tipousuario === 'ROOT' || usuarioadmin?.tipousuario === 'ADMIN' ? childId : 'Perfil'}</ListItemText>
+                              <ListItemText>{childId}</ListItemText>
                               </ListItemButton>
-                          </ListItem>
-                          :
-                          <ListItem  button onClick={() => btnListado(childId)} disablePadding key={childId}>
-                            <ListItemButton selected={active} sx={item}>
-                            <ListItemIcon>{icon}</ListItemIcon>
-                            <ListItemText>{childId}</ListItemText>
-                            </ListItemButton>
-                          </ListItem>
-                        ))}
+                            </ListItem>
+                          ))}
 
-                        <Divider sx={{ mt: 2 }} />
+                          <Divider sx={{ mt: 2 }} />
+                        </>
+                      }
                     </Box>
                 ))}
             </List>

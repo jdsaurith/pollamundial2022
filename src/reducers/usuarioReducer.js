@@ -10,7 +10,9 @@ import {
     GUARDAR_USUARIO_EXITO,
     GUARDAR_USUARIO_ERROR,
     EDITAR_PAGO_USUARIO_EXITO,
-    EDITAR_PAGO_USUARIO_ERROR    
+    EDITAR_PAGO_USUARIO_ERROR,
+    HABILITAR_PERFIL,
+    DESHABILITAR_PERFIL    
 } from '../types';
 
 const initialState = {
@@ -20,6 +22,7 @@ const initialState = {
     usuarioseliminados: [],
     usuarioseliminadosfiltro: [],
     usuariosactivos: [],
+    habilitarperfil: null,
     usuarioeditar: null,
     usuarioeliminar: null,
     usuarioactivo: null,
@@ -69,6 +72,17 @@ const usuarioReducer = (state = initialState, action) =>{
                    ? c = action.payload
                    : c),
                 usuarioeditar: null
+            }
+        case HABILITAR_PERFIL:
+            return{
+                ...state,
+                habilitarperfil: true
+                
+            }
+        case DESHABILITAR_PERFIL:
+            return{
+                ...state,
+                habilitarperfil: false
             }
 
         case GUARDAR_USUARIO_ERROR:
