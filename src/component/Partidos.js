@@ -14,7 +14,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { Fab, Grid, TableBody, TableCell, TableRow, TextField } from '@mui/material';
+import { Alert, Fab, Grid, TableBody, TableCell, TableRow, TextField } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -39,9 +39,11 @@ const ExpandMore = styled((props) => {
 const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, equipo2, icon1, icon2, descripcion,estado,setPendientes }) => {
     const dispatch = useDispatch();    
     let fecha2 = new Date(fechavalidacion);
+    let numeros = /^[0-9]+$/;
     const [expanded, setExpanded] = React.useState(false);
     const [tiempo, setTiempo] = useState(Date.now()  >= formatearFechaDoshoras(fecha2, 1));
     const [resultadoapostador, setResultadoapostador] = useState();
+    const [error, guardarError] = useState(false);
     const [input, setInput] = React.useState({
       retornandovalores: false
     });
@@ -54,7 +56,7 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, eq
     ///actualizar partido a enjuego
     const updateStatePartido = (id) => dispatch(updateStatePartidoAction(id));
 
-    // console.log(fechajuego);
+    // console.log(input);
 
     useEffect(() => {
       obtenerResultados(usuario?.id_usuario);
@@ -108,7 +110,7 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, eq
     },[])
 
     useEffect(() => {
-      if(retornandovalores === false && input.golesequipo1 && input.golesequipo2){
+      if(retornandovalores === false && input.golesequipo1 && input.golesequipo2 && error === false){
         let fechajuego = moment().format('yyyy/MM/DD HH:mm:ss');
         setResultadoapostador({...input, id_usuario: usuario.id_usuario, fecha: fechajuego, id_partido});
         // console.log(fechajuego);
@@ -116,7 +118,7 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, eq
     }, [input])
 
     useEffect(() => {
-      if(retornandovalores === false && input.golesequipo1 && input.golesequipo2){
+      if(retornandovalores === false && input.golesequipo1 && input.golesequipo2 && error === false){
         // console.log('guardando los valores de input');
         var ban = false;
         const resultado = localStorage.getItem("resultado");  
@@ -153,13 +155,8 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, eq
             setPendientes(datosapuesta.length);
           }
 
-          if(!ban){
-            // console.log('creando el nuevo resultado');
-            // console.log(resultadoapostador);
-            // console.log(datosapuesta);
-            datosapuesta.push(resultadoapostador);
-            // console.log(datosapuesta);
-            // console.log('removiendo resultado');
+          if(!ban){            
+            datosapuesta.push(resultadoapostador);            
             localStorage.removeItem('resultado');
             const resultado = JSON.stringify(datosapuesta);
             localStorage.setItem('resultado', resultado);
@@ -169,43 +166,60 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, eq
       }
     }, [resultadoapostador])
 
-    const handleResultado = React.useCallback(e =>{
+    const handleResultado = React.useCallback(e =>{      
+      if((e.target.value).length > 2){
+        // guardarError(true);
+        return
+      }else if(!numeros.test(e.target.value)){
+        
+        guardarError(true);
+        setInput({
+          ...input,
+          [e.currentTarget.name]: '',
+          retornandovalores: false
+        })
+        return
+      }else if(e.target.value === '00'){
+        return
+      }else if(Number(e.target.value) < 0 || e.target.value < 0){
+        guardarError(true);
+        return
+      }
+      
       setInput({
         ...input,
         [e.currentTarget.name]: e.currentTarget.value,
         retornandovalores: false
-      })
+      })  
+      guardarError(false);    
     },[input])
 
     const onfocusEquipouno = () =>{ 
-      // console.log('entro on focus')  
-      // console.log(id_partido);
-      const resultado = localStorage.getItem("resultado");  
-      const datos = JSON.parse(resultado);
-      // console.log(datos);
-      if(datos){
-        // console.log('entro datos');
-        if(datos.length !== 0){
-          datos.map( element => {
-            if(element.id_partido === id_partido){ 
-              // console.log('encontro el idpartido en onfocus');  
-              // console.log(input.golesequipo1);
-              // console.log(input.golesequipo2);
-              setInput({
-                golesequipo1 : element.golesequipo1,
-                golesequipo2 : element.golesequipo2,
-                retornandovalores: true
-              })
-            }
-          })
-          setPendientes(datos.length);
-        }
-      }
+      // const resultado = localStorage.getItem("resultado");  
+      // const datos = JSON.parse(resultado);
+      // // console.log(datos);
+      // if(datos){
+      //   // console.log('entro datos');
+      //   if(datos.length !== 0){
+      //     datos.map( element => {
+      //       if(element.id_partido === id_partido){ 
+      //         // console.log('encontro el idpartido en onfocus');  
+      //         // console.log(input.golesequipo1);
+      //         // console.log(input.golesequipo2);
+      //         setInput({
+      //           golesequipo1 : element.golesequipo1,
+      //           golesequipo2 : element.golesequipo2,
+      //           retornandovalores: true
+      //         })
+      //       }
+      //     })
+      //     setPendientes(datos.length);
+      //   }
+      // }
     }
 
-    const onblurEquipouno = () =>{  
-      // console.log('entro on focus');  
-      // console.log(id_partido);
+    const onblurEquipouno = () =>{      
+
     }
 
     const handleExpandClick = () => {
@@ -218,7 +232,11 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, eq
         title={ equipo1 +' vs '+ equipo2  }
         subheader={fecha}
       />
-
+      {error && (
+        <Alert variant="filled" severity="error">
+          Error al ingresar el resultado
+        </Alert>
+      )}
       <CardContent>
         <Grid container spacing={2} ddisplay='flex' justifyContent='center' alignItems='center'>
             <Grid item xs={6} md={6} lg={6} spacing={2} >
@@ -240,7 +258,7 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, eq
                   disabled={tiempo}
                   // className={}
                   color="secondary"
-                  InputProps={{ inputProps: { min: "0", max: "100", step: "1" } }}
+                  InputProps={{ inputProps: { min: "0", max: "99", step: "1" } }}
                   />
                 </Grid>
               </Grid>
@@ -261,7 +279,7 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, eq
                     onBlur={onblurEquipouno}
                     disabled={tiempo}
                     color="secondary"
-                    InputProps={{ inputProps: { min: "0", max: "5", step: "1" } }}
+                    InputProps={{ inputProps: { min: "0", max: "99", step: "1" } }}
                     />
                   </Grid>
                   <Grid item xs={6} md={6} lg={6}  direction='row' display='flex' justifyContent='flex-end' alignItems='center' >
