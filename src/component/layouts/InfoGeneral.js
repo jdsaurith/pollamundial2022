@@ -46,7 +46,7 @@ const InfoGeneral = () => {
     const posicionestabla = useSelector(state => state.resultado.posiciones);
     const puntosfecha = useSelector(state => state.usuario.puntostorneo);
     
-    console.log(usuario);
+    
 
     useEffect(() => {
         obtenerposiciones();
