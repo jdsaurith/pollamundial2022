@@ -335,7 +335,7 @@ export function obtenerPuntosFechaAction(datos){
     return async (dispatch) =>{
         dispatch(obtenerpuntosFecha());
         try {
-            console.log(datos);
+            // console.log(datos);
             const res = await clienteAxios.post('resultados/puntosfecha', datos);
             // console.log(res.data);
             if(res.data.msg === 'exito'){                

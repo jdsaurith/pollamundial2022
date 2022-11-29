@@ -70,7 +70,7 @@ const InfoGeneral = () => {
 
     useEffect(() => {
         if(puntosfecha){
-           const pf = puntosfecha.filter(f => f.fecha === 'FECHA2');
+           const pf = puntosfecha.filter(f => f.fecha === 'FECHA3');
            setPuntosfechax(pf[0]?.puntos);
         }  
     }, [puntosfecha])
@@ -261,8 +261,8 @@ const InfoGeneral = () => {
                             </Grid>
                             <Grid item xs={12} md={12} lg={12} display='flex' justifyContent='center'>                            
                                 <button onClick={btnPuntosFecha2}>
-                                    Puntos Fecha 2
-                                </button>
+                                    Puntos Fecha 3
+                                </button>                               
                             </Grid>
                     </Grid>
 
