@@ -132,7 +132,7 @@ const Perfil = () => {
           keepMounted
           open={openUsuario}
           onClose={handleClose}
-          datos={infousuario}
+          datos={usuarioeditar}
         />}
         <TableContainer component={Paper}>
             {error && (
@@ -193,20 +193,20 @@ const Perfil = () => {
                       </StyledTableCell>
                     }
                     <StyledTableCell >
-                      {!editar ?
-                      <FontAwesomeIcon
-                      style={{
-                        margin:  '1px',
-                        cursor: 'pointer'
-                      }}
-                      title="Editar"
-                      name="editar"
-                      icon={faEdit}
-                      color="#363636"
-                      size="2x"
-                      // onClick={()=>editarUsuario()}
-                      onClick={()=>editarUsuario(infousuario)}
-                    />
+                      {!editar ? null
+                    //   <FontAwesomeIcon
+                    //   style={{
+                    //     margin:  '1px',
+                    //     cursor: 'pointer'
+                    //   }}
+                    //   title="Editar"
+                    //   name="editar"
+                    //   icon={faEdit}
+                    //   color="#363636"
+                    //   size="2x"
+                    //   // onClick={()=>editarUsuario()}
+                    //   onClick={()=>editarUsuario(infousuario)}
+                    // />
                     :
                     <>
                     <FontAwesomeIcon
