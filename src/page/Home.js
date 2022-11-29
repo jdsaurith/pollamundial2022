@@ -320,7 +320,7 @@ const Home = () => {
                   {componente === 'Perfil' && <Perfil  />}
                   {componente === 'Usuarios' ? usuario?.tipousuario === 'ROOT' || usuario?.tipousuario === 'ADMIN' ? <Usuarios /> : <InfoGeneral /> : null}
                   {componente === 'Reglas' && <Reglas  />}
-                  {componente === 'Posiciones' && <Posiciones  />}
+                  {componente === 'Posiciones' && <Posiciones  sinpremio={false} />}
                   {componente === 'Resultados' && <Resultados  />}
                   {componente === 'FECHA 1' && 
                   <>

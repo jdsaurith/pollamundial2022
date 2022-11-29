@@ -109,7 +109,8 @@ function returnPosi(arr) {
 }
 
 
-const Posiciones = () => {
+const Posiciones = (props) => {
+  const { sinpremio } = props;
   const theme = useTheme();
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -184,7 +185,7 @@ const Posiciones = () => {
           datos={datos}
         />}
         <Grid container direction='row' display='flex' spacing={4} >
-          <Grid container xs={12} md={12} lg={12} display='flex' justifyContent='center' alignItems='center'>
+          {!sinpremio && <Grid container xs={12} md={12} lg={12} display='flex' justifyContent='center' alignItems='center'>
             <Grid xs={12} md={6} lg={6} display='flex' justifyContent='center' >
                 <Card sx={{ display: 'flex', bgcolor: 'transparent'}} >
                   <Box sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -223,7 +224,7 @@ const Posiciones = () => {
               </Card>
             </Grid>
 
-          </Grid>
+          </Grid>}
           <Grid item xs={12} md={12} lg={12}>
             <TableContainer component={Paper}>
               <Table sx={{ minWidth: 600 }} aria-label="customized table">

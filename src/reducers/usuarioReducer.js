@@ -12,7 +12,10 @@ import {
     EDITAR_PAGO_USUARIO_EXITO,
     EDITAR_PAGO_USUARIO_ERROR,
     HABILITAR_PERFIL,
-    DESHABILITAR_PERFIL    
+    DESHABILITAR_PERFIL,
+    OBTENER_PUNTOS_TORNEO,
+    OBTENER_PUNTOS_TORNEO_EXITO,
+    OBTENER_PUNTOS_TORNEO_ERROR   
 } from '../types';
 
 const initialState = {
@@ -22,6 +25,7 @@ const initialState = {
     usuarioseliminados: [],
     usuarioseliminadosfiltro: [],
     usuariosactivos: [],
+    puntostorneo: [],
     habilitarperfil: null,
     usuarioeditar: null,
     usuarioeliminar: null,
@@ -33,6 +37,7 @@ const initialState = {
 const usuarioReducer = (state = initialState, action) =>{
 // export default function (state = initialState, action){
     switch (action.type){ 
+        case OBTENER_PUNTOS_TORNEO:
         case GUARDAR_USUARIO:
         case USUARIO_EDITAR:
         case VER_USUARIOS:
@@ -84,7 +89,15 @@ const usuarioReducer = (state = initialState, action) =>{
                 ...state,
                 habilitarperfil: false
             }
-
+        case OBTENER_PUNTOS_TORNEO_EXITO:
+            return{
+                ...state,
+                loading: false,
+                error: false,
+                puntostorneo: action.payload
+            }
+        
+        case OBTENER_PUNTOS_TORNEO_ERROR:
         case GUARDAR_USUARIO_ERROR:
         case EDITAR_USUARIO_ERROR:
         case VER_USUARIOS_ERROR:

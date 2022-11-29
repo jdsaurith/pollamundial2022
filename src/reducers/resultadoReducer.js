@@ -23,7 +23,10 @@ import {
     OBTENER_DETALLES_POSICIONES,
     OBTENER_DETALLES_POSICIONES_EXITO,
     OBTENER_DETALLES_POSICIONES_ERROR,
-    LIMPIAR_DETALLE_APUESTA
+    LIMPIAR_DETALLE_APUESTA,
+    OBTENER_PUNTOS_FECHA,
+    OBTENER_PUNTOS_FECHA_EXITO,
+    OBTENER_PUNTOS_FECHA_ERROR
 } from '../types'
 
 const initialState = {
@@ -35,6 +38,7 @@ const initialState = {
     resultadosfifa: [],
     posiciones: [],
     detallesposiciones: [],
+    puntosfechas: [],
     consultarresultados: false,
     resultado: null,
     resultadoapuesta: false,
@@ -44,6 +48,7 @@ const initialState = {
 
 const resultadoReducer = (state = initialState, action) =>{
     switch (action.type) {
+        case OBTENER_PUNTOS_FECHA:
         case OBTENER_DETALLES_POSICIONES:
         case OBTENER_POSICIONES:
         case ENVIAR_RESULTADOS_FIFA:
@@ -126,7 +131,14 @@ const resultadoReducer = (state = initialState, action) =>{
                 ...state,
                 detallesposiciones: []
             }
-
+        case OBTENER_PUNTOS_FECHA_EXITO:
+            return{
+                ...state,
+                loading: false,
+                error: false,
+                puntosfechas: action.payload
+            }
+        case OBTENER_PUNTOS_FECHA_ERROR:
         case OBTENER_DETALLES_POSICIONES_ERROR:
         case OBTENER_POSICIONES_ERROR:
         case ENVIAR_RESULTADOS_FIFA_ERROR:
