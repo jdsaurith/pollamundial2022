@@ -23,7 +23,10 @@ import {
     OBTENER_DETALLES_POSICIONES,
     OBTENER_DETALLES_POSICIONES_EXITO,
     OBTENER_DETALLES_POSICIONES_ERROR,
-    LIMPIAR_DETALLE_APUESTA
+    LIMPIAR_DETALLE_APUESTA,
+    OBTENER_PUNTOS_FECHA,
+    OBTENER_PUNTOS_FECHA_EXITO,
+    OBTENER_PUNTOS_FECHA_ERROR
 } from '../types';
 
 import clienteAxios from '../config/axios';
@@ -324,4 +327,37 @@ export function limpiarDetallePosicionAction(){
 
 const limpiarDetalle = () =>({
     type: LIMPIAR_DETALLE_APUESTA
+})
+
+////obtener puntos por fecha
+///obtener las posiciones de los usuarios
+export function obtenerPuntosFechaAction(datos){
+    return async (dispatch) =>{
+        dispatch(obtenerpuntosFecha());
+        try {
+            console.log(datos);
+            const res = await clienteAxios.post('resultados/puntosfecha', datos);
+            // console.log(res.data);
+            if(res.data.msg === 'exito'){                
+                dispatch(obtenerpuntosFechaExito(res.data.result));
+            }else if(res.data.msg === 'noregistros'){
+                dispatch(obtenerpuntosFechaExito([]));
+            }
+            
+        } catch (error) {
+            console.log(error);            
+            dispatch(obtenerpuntosFechaError());
+        }
+    }
+    
+}
+const obtenerpuntosFecha = () => ({
+    type: OBTENER_PUNTOS_FECHA
+})
+const obtenerpuntosFechaExito = (res) => ({
+    type: OBTENER_PUNTOS_FECHA_EXITO,
+    payload: res
+})
+const obtenerpuntosFechaError = () => ({
+    type: OBTENER_PUNTOS_FECHA_ERROR
 })

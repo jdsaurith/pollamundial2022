@@ -20,7 +20,7 @@ import Header from '../component/Header';
 import Navigator from '../component/Navigator';
 import Contenedor from '../component/Contenedor';
 import Partidos from '../component/Partidos';
-import Usuarios from '../component/Usuarios';
+import Usuarios from '../component/usuario/Usuarios';
 import Reglas from '../component/Reglas';
 import Posiciones from '../component/Posiciones';
 import Resultados from '../component/Resultados';
@@ -29,9 +29,9 @@ import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch  } from 'react-redux'
 import {  obtenerResultadosAction, resultadopartidosAction, obtenerPartidosAction } from '../action/resultadoAction';
 import { formatearFecha } from '../helpers';
-import Conteo from '../component/layouts/Conteo';
-import Perfil from '../component/Perfil';
 import ModalInfoSave from '../component/layouts/ModalInfoSave';
+import InfoGeneral from '../component/layouts/InfoGeneral';
+import Perfil from '../component/perfil/Perfil';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -208,8 +208,9 @@ const Home = () => {
   const obtenerpartidos = useSelector(state => state.resultado.obtenerpartidos);
   const consultarresultados = useSelector(state => state.resultado.consultarresultados);
   const resultadosapostados = useSelector(state => state.resultado.resultadosapostados);
+  const habilitarperfil = useSelector(state=>state.usuario.habilitarperfil);
 
-  // console.log(obtenerpartidos);
+  // console.log(componente);
   
   useEffect(() => {
     if(!conectado) history.push("/");
@@ -222,6 +223,10 @@ const Home = () => {
   useEffect(() => {
     obtenerResultados(usuario?.id_usuario);
   }, [consultarresultados]);
+
+  useEffect(() => {
+    if (habilitarperfil) setComponente('Perfil');
+  }, [habilitarperfil])
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -312,9 +317,10 @@ const Home = () => {
           <Header onDrawerToggle={handleDrawerToggle} nombre={usuario?.nombres || ''} vista="home"/>
           <Box component="main" sx={{ flex: 1, py: componente === 'Reglas' ? 3 : 6, px: componente === 'Usuarios' ? 3 : 1, bgcolor: '#eaeff1' }}>
            <Contenedor>
-                  {componente === 'Usuarios' ? usuario?.tipousuario === 'ROOT' || usuario?.tipousuario === 'ADMIN' ? <Usuarios  perfil={false} /> : <Usuarios perfil={true} /> : null}
+                  {componente === 'Perfil' && <Perfil  />}
+                  {componente === 'Usuarios' ? usuario?.tipousuario === 'ROOT' || usuario?.tipousuario === 'ADMIN' ? <Usuarios /> : <InfoGeneral /> : null}
                   {componente === 'Reglas' && <Reglas  />}
-                  {componente === 'Posiciones' && <Posiciones  />}
+                  {componente === 'Posiciones' && <Posiciones  sinpremio={false} />}
                   {componente === 'Resultados' && <Resultados  />}
                   {componente === 'FECHA 1' && 
                   <>

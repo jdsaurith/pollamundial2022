@@ -10,7 +10,12 @@ import {
     EDITAR_USUARIO_EXITO,
     EDITAR_USUARIO_ERROR,
     EDITAR_PAGO_USUARIO_EXITO,
-    EDITAR_PAGO_USUARIO_ERROR
+    EDITAR_PAGO_USUARIO_ERROR,
+    HABILITAR_PERFIL,
+    DESHABILITAR_PERFIL,
+    OBTENER_PUNTOS_TORNEO,
+    OBTENER_PUNTOS_TORNEO_EXITO,
+    OBTENER_PUNTOS_TORNEO_ERROR
 } from '../types';
 
 import { obtenerposicionesAction } from './resultadoAction';
@@ -204,3 +209,62 @@ const guardarUsuarioError = () =>({
     type: GUARDAR_USUARIO_ERROR
 })
 
+/////habilitar el perfil
+export function habilitarPerfilAction(){
+    return dispatch=>{
+        dispatch(habilitarPerfil());
+    }
+}
+
+const habilitarPerfil = () =>({
+    type: HABILITAR_PERFIL
+})
+/////desabilitar el perfil
+export function desahabilitarPerfilAction(){
+    return dispatch=>{
+        dispatch(desahabilitarPerfil());
+    }
+}
+
+const desahabilitarPerfil = () =>({
+    type: DESHABILITAR_PERFIL
+})
+
+
+////funcion para obtener los puntos del usuario en el torneo
+export function obtenerPuntosTorneoAction(id){
+    return async dispatch =>{
+        dispatch(obtenerPuntos());
+        try {
+            const res = await clienteAxios.get(`/usuarios/puntostorneo/${id}`);
+            // console.log(res.data);
+            if(res.data.msg === 'exito'){
+                dispatch(obtenerPuntosExito(res.data.result));
+            }
+            
+        } catch (error) {
+            console.log(error);
+            dispatch(obtenerPuntosError());
+            //error del lado servidor
+            Swal.fire({
+                icon: 'error',
+                title: 'Hubo un Error',
+                text: 'Hubo un error, Intenta de nuevo',
+                showConfirmButton: true
+                //timer: 1500
+            })
+        }
+    }
+}
+const obtenerPuntos = ()=>({
+    type: OBTENER_PUNTOS_TORNEO
+})
+const obtenerPuntosExito = (c) =>({
+    type: OBTENER_PUNTOS_TORNEO_EXITO,
+    payload: c
+})
+const obtenerPuntosError = () =>({
+    type: OBTENER_PUNTOS_TORNEO_ERROR
+})
+
+/////obtener posicion y puntos

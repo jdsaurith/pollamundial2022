@@ -122,7 +122,7 @@ const Reglas = () => {
       </Table>
       </TableContainer>
       <Typography paragraph variant="body2"  style={{marginTop: '1em'}}>
-        <i>*Recuerda que tienes <strong style={{backgroundColor: '#C8EDF3'}}>hasta una(1) hora antes</strong> que comience el partido para agregar o modificar tu pronóstico </i> <br /><br />
+        <i>*Recuerda que <strong style={{backgroundColor: '#C8EDF3'}}> los Participantes que mas puntos hagan hasta el ultimo partido de la FECHA 3 seran los ganadores.</strong> </i> <br /><br />
         <i>*El costo de participación es de: <strong style={{backgroundColor: '#C8EDF3'}}>{formatearDinero(10000)}</strong> pesos.</i> <br />
         <i>*El primer (1) lugar obtendra <strong style={{backgroundColor: '#C8EDF3'}}>un 60% de lo recaudado</strong> por ejemplo si el total de lo recaudado es {formatearDinero(ejemploBolsa)} el 60% corresponde a {formatearDinero(ejemploBolsa*0.6)} mil pesos. </i><br />
         <i>*El segundo (2) lugar obtendra <strong style={{backgroundColor: '#C8EDF3'}}>un 20% de lo recaudado</strong> por ejemplo si el total de lo recaudado es {formatearDinero(ejemploBolsa)} el 20% corresponde a {formatearDinero(ejemploBolsa*0.2)} mil pesos. </i><br />
