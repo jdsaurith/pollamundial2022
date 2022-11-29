@@ -19,7 +19,7 @@ import Menu from '@mui/material/Menu';
 import { useDispatch, useSelector } from 'react-redux';
 import { cerrarSesionAction } from '../action/authAction';
 import { habilitarPerfilAction, desahabilitarPerfilAction } from '../action/usuarioAction';
-import { width } from '@mui/system';
+
 
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
@@ -34,6 +34,7 @@ const Header = (props) => {
     const cerrarSesion = () => dispatch(cerrarSesionAction());
     const habilitarPerfil = () =>dispatch(habilitarPerfilAction());
     const desahabilitarPerfil = () => dispatch(desahabilitarPerfilAction());
+    const usuario = useSelector(state => state.auth.usuario);
    
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
@@ -89,7 +90,7 @@ const Header = (props) => {
                                 >
                                 <Typography display={'flex'} flexDirection='column' p={2}>
                                     <span style={{ fontSize:'1em', fontWeight:'bold', padding:'1', margin: '2'  }}>{nombre}</span>
-                                    <span style={{ fontSize:'1em', fontWeight:'normal'  }}>@Dante</span>
+                                    <span style={{ fontSize:'1em', fontWeight:'normal'  }}>@{ usuario?.usuario }</span>
                                 </Typography>
                                 
                                 <Divider />

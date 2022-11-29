@@ -10,8 +10,9 @@ import { faCancel, faEdit, faSave, faToggleOff, faToggleOn } from '@fortawesome/
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { editarUsuarioAction } from '../../action/usuarioAction';
+import { editarUsuarioAction, guardaUsuarioEditarAction } from '../../action/usuarioAction';
 import Swal from 'sweetalert2';
+import ModalPerfil from './ModalPerfil';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -35,9 +36,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const Perfil = () => {
     const [error, guardarError] = useState(false);
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(5);
     const [editar, setEditar] = useState(false);
+    const [modalusuarioeditar, setModalUsuarioEditar] = useState(false);
+    const [openUsuario, setOpenUsuario] = useState(false);
+
     const [usuarioeditar, setUsuarioeditar] = useState({
       usuario:'',
       password:''
@@ -45,6 +47,7 @@ const Perfil = () => {
 
     const dispatch = useDispatch();
     const actualizarUsuario = (u) => dispatch(editarUsuarioAction(u));
+    const obtenerEditarUsuario = (u) => dispatch(guardaUsuarioEditarAction(u));
 
     const infousuario = useSelector(state => state.auth.usuario);
     
@@ -65,6 +68,13 @@ const Perfil = () => {
       }
     }, [editar])
 
+    useEffect(() => {
+      if(modalusuarioeditar){
+        setOpenUsuario(true);
+      }
+      // eslint-disable-next-line
+    }, [modalusuarioeditar])
+
     //Leer los valores del formulario
     const handleChange = React.useCallback((e) => {
       setUsuarioeditar(
@@ -77,9 +87,12 @@ const Perfil = () => {
       guardarError(false);
     });
     
-    const editarUsuario = () =>{ 
-      setEditar(true);       
+    const editarUsuario = (u) =>{ 
+      obtenerEditarUsuario(u);
+      // setEditar(true);
+      setModalUsuarioEditar(true);
     }
+    
     const guardarEditar = (usuario) =>{
       const pais = 'COL';
       if(usuario.usuario.trim() === '' || usuario.password.trim() === '' ){
@@ -99,14 +112,28 @@ const Perfil = () => {
         }
 
       })
-      
     }
     const cancelarEditar = () =>{
       setEditar(false);
     }
 
+    ///cerrar modales
+    const handleClose =  () =>{
+      setOpenUsuario(false);
+      // cerrarModalUsuario();
+    }
+
   return (
     <>
+    {modalusuarioeditar &&
+        <ModalPerfil
+          classes={{maxWidth:'600', maxHeight:'600' }}
+          id="newusuario"
+          keepMounted
+          open={openUsuario}
+          onClose={handleClose}
+          datos={infousuario}
+        />}
         <TableContainer component={Paper}>
             {error && (
               <Alert variant="filled" severity="error">
@@ -119,7 +146,7 @@ const Perfil = () => {
                 <StyledTableCell >Nombres</StyledTableCell>
                 <StyledTableCell >Usuario</StyledTableCell>
                 <StyledTableCell >Contraseña</StyledTableCell>
-                <StyledTableCell >Acciones</StyledTableCell>                
+                <StyledTableCell >Acciones</StyledTableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
@@ -149,21 +176,21 @@ const Perfil = () => {
                     </StyledTableCell>
                     }
                     {!editar ?
-                     <StyledTableCell>**********</StyledTableCell>
-                     :
-                     <StyledTableCell>
-                      <TextField
-                        required
-                        name="password"
-                        margin="normal"
-                        label="Password"
-                        placeholder="Password"
-                        variant="outlined"
-                        value={password}
-                        onChange={handleChange}
-                        color="secondary"
-                      />
-                     </StyledTableCell>
+                      <StyledTableCell>**********</StyledTableCell>
+                      :
+                      <StyledTableCell>
+                        <TextField
+                          required
+                          name="password"
+                          margin="normal"
+                          label="Password"
+                          placeholder="Password"
+                          variant="outlined"
+                          value={password}
+                          onChange={handleChange}
+                          color="secondary"
+                        />
+                      </StyledTableCell>
                     }
                     <StyledTableCell >
                       {!editar ?
@@ -177,7 +204,8 @@ const Perfil = () => {
                       icon={faEdit}
                       color="#363636"
                       size="2x"
-                      onClick={()=>editarUsuario()}
+                      // onClick={()=>editarUsuario()}
+                      onClick={()=>editarUsuario(infousuario)}
                     />
                     :
                     <>

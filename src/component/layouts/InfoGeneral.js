@@ -46,6 +46,7 @@ const InfoGeneral = () => {
     const posicionestabla = useSelector(state => state.resultado.posiciones);
     const puntosfecha = useSelector(state => state.usuario.puntostorneo);
     
+    console.log(usuario);
 
     useEffect(() => {
         obtenerposiciones();
@@ -70,7 +71,7 @@ const InfoGeneral = () => {
     useEffect(() => {
         if(puntosfecha){
            const pf = puntosfecha.filter(f => f.fecha === 'FECHA2');
-           setPuntosfechax(pf[0].puntos);
+           setPuntosfechax(pf[0]?.puntos);
         }  
     }, [puntosfecha])
 
