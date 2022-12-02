@@ -67,7 +67,7 @@ const ResultadosFifa = ({id_partido, datosapuesta, fecha, equipo1, equipo2, icon
     //// OBTENER LOS GOLES ESCRITOS POR EL ADMIN O ROOT 
     useEffect(() => {
       if(retornandovalores === false && input.golesequipo1 && input.golesequipo2){
-        setResultadoapostador({...input, fecha_update: fechajuego, id_partido});
+        setResultadoapostador({...input, fecha_update: fechajuego, id_partido, ganador_penales: 0});
       }
     }, [input])
 

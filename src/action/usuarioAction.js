@@ -15,7 +15,8 @@ import {
     DESHABILITAR_PERFIL,
     OBTENER_PUNTOS_TORNEO,
     OBTENER_PUNTOS_TORNEO_EXITO,
-    OBTENER_PUNTOS_TORNEO_ERROR
+    OBTENER_PUNTOS_TORNEO_ERROR,
+    IMFORMACION_VISTA
 } from '../types';
 
 import { obtenerposicionesAction } from './resultadoAction';
@@ -267,4 +268,26 @@ const obtenerPuntosError = () =>({
     type: OBTENER_PUNTOS_TORNEO_ERROR
 })
 
-/////obtener posicion y puntos
+/////true informacion vista el usuario
+/////desabilitar el perfil
+export function informacionvistaAction(id_usuario){
+    return async dispatch=>{
+        try {
+            const result = await clienteAxios.put(`/usuarios/info/${id_usuario}`);
+            console.log(result.data);
+            if(result.data.msg === 'actualizado'){
+                dispatch(informacionVista());
+            }else{
+                console.log('no actualizo la publicidad');
+            }
+            
+        } catch (error) {
+            console.log(error);
+        }
+        
+    }
+}
+
+const informacionVista = () =>({
+    type: IMFORMACION_VISTA
+})

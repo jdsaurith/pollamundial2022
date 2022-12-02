@@ -34,6 +34,8 @@ import InfoGeneral from '../component/layouts/InfoGeneral';
 import Perfil from '../component/perfil/Perfil';
 import Octavosfinal from '../component/octavos/Octavosfinal';
 import PosicionesFinales from '../component/octavos/PosicionesFinales';
+import ModalInformativo from '../component/layouts/ModalInformativo';
+import ReglasFinales from '../component/octavos/ReglasFinales';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -196,6 +198,7 @@ const Home = () => {
   const dispatch = useDispatch();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [openModalInfo, setOpenModalInfo] = useState(true);
   const [datos, setDatos] = useState();
   const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
   const [componente, setComponente] = useState('Usuarios');
@@ -212,7 +215,7 @@ const Home = () => {
   const resultadosapostados = useSelector(state => state.resultado.resultadosapostados);
   const habilitarperfil = useSelector(state=>state.usuario.habilitarperfil);
 
-  // console.log(obtenerpartidos);
+  // console.log(usuario?.publicidad);
   
   useEffect(() => {
     if(!conectado) history.push("/");
@@ -229,6 +232,13 @@ const Home = () => {
   useEffect(() => {
     if (habilitarperfil) setComponente('Perfil');
   }, [habilitarperfil])
+
+  // useEffect(() => {
+
+  //   if(usuario?.publicidad === 'FALSE'){
+  //     setOpenModalInfo(true);
+  //   }
+  // }, [!usuario])
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -263,6 +273,10 @@ const Home = () => {
   const handleCloseModal = () =>{
     setOpenModal(false);
   }
+
+  const handleCloseModalInfo = () =>{
+    setOpenModalInfo(false);
+  }
   
     function addIcon(idpartido){
     let ban = false;
@@ -287,6 +301,14 @@ const Home = () => {
       classes={{maxWidth:'200', maxHeight:'400' }}
       datos={datos}
     />}
+
+    {openModalInfo &&
+          <ModalInformativo 
+          keepMounted
+          open={openModalInfo}
+          onClose={handleCloseModalInfo}
+          classes={{maxWidth:'200', maxHeight:'400' }}
+        />}
     
     <ThemeProvider theme={theme}>
       <Box sx={{ display: 'flex', minHeight: '100vh' }}>
@@ -322,6 +344,7 @@ const Home = () => {
                   {componente === 'Perfil' && <Perfil  />}
                   {componente === 'Usuarios' ? usuario?.tipousuario === 'ROOT' || usuario?.tipousuario === 'ADMIN' ? <Usuarios /> : <InfoGeneral /> : null}
                   {componente === 'Reglas' && <Reglas  />}
+                  {componente === 'Reglas Fase Final' && <ReglasFinales  />}
                   {componente === 'Posiciones' && <Posiciones  sinpremio={false} />}
                   {componente === 'Posiciones Finales' && <PosicionesFinales />}
                   {componente === 'Resultados' && <Resultados  />}
