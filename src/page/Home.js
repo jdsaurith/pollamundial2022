@@ -199,7 +199,7 @@ const Home = () => {
   const dispatch = useDispatch();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-  const [openModalInfo, setOpenModalInfo] = useState(true);
+  const [openModalInfo, setOpenModalInfo] = useState(false);
   const [datos, setDatos] = useState();
   const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
   const [componente, setComponente] = useState('Usuarios');
@@ -234,12 +234,12 @@ const Home = () => {
     if (habilitarperfil) setComponente('Perfil');
   }, [habilitarperfil])
 
-  // useEffect(() => {
+  useEffect(() => {
 
-  //   if(usuario?.publicidad === 'FALSE'){
-  //     setOpenModalInfo(true);
-  //   }
-  // }, [!usuario])
+    if(usuario?.publicidad === 'FALSE'){
+      setOpenModalInfo(true);
+    }
+  }, [usuario])
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
