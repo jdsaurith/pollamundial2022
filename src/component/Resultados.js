@@ -16,6 +16,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle'; //guardado
 
 import { obtenerResultadosFifaAction, resultadopartidosfifaAction, obtenerPartidosAction } from '../action/resultadoAction';
 import Conteo from './layouts/Conteo';
+import ResultadosFinales from './octavos/ResultadosFinales';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -45,11 +46,11 @@ const Resultados = () => {
     obtenerPartidos();
   }, [])
   
-  const btnResultados = () =>{
+  const btnResultados = (rondas) =>{
     // console.log('click en enviar resultados a BD');
     const datos = JSON.parse(localStorage.getItem('resultadofifa'));
     // console.log(datos);
-    resultadopartidosfifa(datos);
+    resultadopartidosfifa({datos, rondas});
     datosapuesta = [];
   }
 
@@ -112,7 +113,7 @@ const Resultados = () => {
                       type='button'
                       variant='contained'
                       color='primary'
-                      onClick={() => btnResultados()}
+                      onClick={() => btnResultados('GRUPOS')}
                     >
                       GUARDAR RESULTADOS
                     </Button>}
@@ -177,7 +178,7 @@ const Resultados = () => {
                       type='button'
                       variant='contained'
                       color='primary'
-                      onClick={() => btnResultados()}
+                      onClick={() => btnResultados('GRUPOS')}
                     >
                       GUARDAR RESULTADOS
                     </Button>}
@@ -242,7 +243,75 @@ const Resultados = () => {
                       type='button'
                       variant='contained'
                       color='primary'
-                      onClick={() => btnResultados()}
+                      onClick={() => btnResultados('GRUPOS')}
+                    >
+                      GUARDAR RESULTADOS
+                    </Button>}
+                </Grid>
+            </Grid>
+          </AccordionDetails>
+        </Accordion>
+        {/* /////// OCTAVOS DE FINAL */}
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel3a-content"
+            id="panel3a-header"
+          >
+            <Typography>OCTAVOS DE FINAL</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Grid container spacing={2} display='flex' justifyContent='center' alignItems='center'>
+              {obtenerpartidos.filter(f => f.jornada === 'OCTAVOS').map(row =>(
+                <Grid item>
+                <TableContainer>
+                  <Table sx={{ minWidth: 430 }} aria-label="simple table">
+                      <TableHead>
+                        <TableRow>
+                          <StyledTableCell style={{ display: 'flex' }}>
+                          <Grid xs={10}>
+                            OCTAVOS DE FINAL
+                          </Grid>
+                          <Grid xs={2}>
+                            <IconButton
+                            size="large"
+                            aria-label="show 17 new notifications"
+                            color="inherit"
+                            >
+                              <CheckCircleIcon />
+                            </IconButton>
+                          </Grid>
+                          </StyledTableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        <ResultadosFinales
+                          key={row.id_partido}
+                          id_partido={row.id_partido}
+                          datosapuesta={datosapuesta}
+                          fecha={formatearFecha(row.fecha)}
+                          idequipo1={row.equipo_uno}
+                          idequipo2={row.equipo_dos}
+                          ganador_penales={row.ganador_penales}
+                          equipo1={row.equipouno}
+                          icon1={row.iconuno}
+                          equipo2={row.equipodos}
+                          icon2={row.icondos}
+                          descripcion = 'MUNDIAL QATAR 2022 FECHA 3'
+                          estado={row.estado}
+                          />
+                      </TableBody>
+                    </Table>
+                </TableContainer>
+                </Grid>
+              ))}
+              <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
+              {(tipousuario === 'ROOT' || tipousuario === 'ADMIN') &&
+                    <Button
+                      type='button'
+                      variant='contained'
+                      color='primary'
+                      onClick={() => btnResultados('FINALES')}
                     >
                       GUARDAR RESULTADOS
                     </Button>}

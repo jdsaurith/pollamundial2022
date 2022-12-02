@@ -14,39 +14,34 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { Grid, TableBody, TableCell, TableRow, TextField } from '@mui/material';
+import { Grid, Radio, TableBody, TableCell, TableRow, TextField } from '@mui/material';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { faIgloo } from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment/moment';
 
-const ExpandMore = styled((props) => {
-    const { expand, ...other } = props;
-    return <IconButton {...other} />;
-  })(({ theme, expand }) => ({
-    transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  }));
 
-const ResultadosFifa = ({id_partido, datosapuesta, fecha, equipo1, equipo2, icon1, icon2, descripcion, estado }) => {
+const ResultadosFinales = ({id_partido, datosapuesta, fecha, idequipo1, equipo1, idequipo2, equipo2, ganador_penales, icon1, icon2, descripcion, estado }) => {
 
     const dispatch = useDispatch();
     let fechajuego = moment()
     .format('yyyy/MM/DD HH:mm:ss');
-    const [expanded, setExpanded] = React.useState(false);
     const [resultadoapostador, setResultadoapostador] = useState();
+    const [radiobtn, setRadiobtn] = useState({
+        equipoA: false,
+        equipoB: false,
+        disable: false
+    });
     const [input, setInput] = React.useState({
-      retornandovalores: false
+      retornandovalores: false,
     });
 
     const usuario = useSelector(state => state.auth.usuario);
     const obtenerpartidos = useSelector(state => state.resultado.obtenerpartidos);
-    // const resultadosfifa = useSelector(state =>state.resultado.resultadosfifa);
+    // const resultadosFinales = useSelector(state =>state.resultado.resultadosFinales);
     const tipousuario = useSelector(state=> state.auth.tipousuario);
-    const {retornandovalores} = input;
+    
+    const {retornandovalores } = input;
+    const { equipoA, equipoB, disable } = radiobtn;
 
 
     /// OBTENER LOS GOLES DE LOS EQUIPOS - RESULTADOS FIFA
@@ -56,8 +51,23 @@ const ResultadosFifa = ({id_partido, datosapuesta, fecha, equipo1, equipo2, icon
           setInput({
             golesequipo1 : item.goles_equipo_uno,
             golesequipo2 : item.goles_equipo_dos,
+            ganador_penales: item.ganador_penales,
             retornandovalores: true
           })
+
+          if(item.ganador_penales === idequipo1){
+            setRadiobtn({
+              equipoA : true,
+              equipoB : false,
+              disable : true
+            })
+          }else{
+            setRadiobtn({
+              equipoA : false,
+              equipoB : true,
+              disable : true
+            })
+          }
         }
 
       })
@@ -66,13 +76,13 @@ const ResultadosFifa = ({id_partido, datosapuesta, fecha, equipo1, equipo2, icon
 
     //// OBTENER LOS GOLES ESCRITOS POR EL ADMIN O ROOT 
     useEffect(() => {
-      if(retornandovalores === false && input.golesequipo1 && input.golesequipo2){
-        setResultadoapostador({...input, fecha_update: fechajuego, id_partido, ganador_penales: 0});
+      if(retornandovalores === false && input.golesequipo1 && input.golesequipo2 && input.ganador_penales !== ''){
+        setResultadoapostador({...input, fecha_update: fechajuego, id_partido});
       }
     }, [input])
 
     useEffect(() => {
-      if(retornandovalores === false && input.golesequipo1 && input.golesequipo2){
+      if(retornandovalores === false && input.golesequipo1 && input.golesequipo2 && input.ganador_penales !== ''){
         // console.log('guardando los valores de input');
         var ban = false;
         const resultado = localStorage.getItem("resultadofifa");
@@ -90,6 +100,7 @@ const ResultadosFifa = ({id_partido, datosapuesta, fecha, equipo1, equipo2, icon
 
                   element.golesequipo1 = input.golesequipo1
                   element.golesequipo2 = input.golesequipo2
+                  element.ganador_penales = input.ganador_penales
 
                   const resultadofinal = JSON.stringify(datos);
                   localStorage.removeItem('resultadofifa');
@@ -136,6 +147,7 @@ const ResultadosFifa = ({id_partido, datosapuesta, fecha, equipo1, equipo2, icon
                 setInput({
                   golesequipo1 : element.golesequipo1,
                   golesequipo2 : element.golesequipo2,
+                  ganador_penales : element.ganador_penales,
                   retornandovalores: true
                 })
               }
@@ -143,14 +155,35 @@ const ResultadosFifa = ({id_partido, datosapuesta, fecha, equipo1, equipo2, icon
 
           }
         }
-      }
-  
-      const onblurEquipouno = () =>{
-      }
+      }  
+      
 
-      const handleExpandClick = () => {
-          setExpanded(!expanded);
-        };
+      const handleChange = (event) => { 
+        console.log(event.target.value);
+        console.log(event.target.name);
+        if(event.target.name === 'equipouno'){
+          setRadiobtn({
+            equipoA : true,
+            equipoB : false
+          })
+          setInput({
+            ...input,
+            ganador_penales: Number(event.target.value),
+            retornandovalores: false
+          })
+        }else{
+          setRadiobtn({
+            equipoA : false,
+            equipoB : true
+          })
+          setInput({
+            ...input,
+            ganador_penales: Number(event.target.value),
+            retornandovalores: false
+          })
+        }
+         
+      };
   
     return (
     <Card sx={{ maxWidth: 430, margin: 1 }}>
@@ -177,7 +210,6 @@ const ResultadosFifa = ({id_partido, datosapuesta, fecha, equipo1, equipo2, icon
                     value={input.golesequipo1}
                     onChange={handleResultado}
                     onFocus={onfocusEquipouno}
-                    onBlur={onblurEquipouno}
                     // disabled={estado === 'ACTIVO'?true:false}
                     color="secondary"
                     InputProps={{ inputProps: { min: "0", max: 5, step: "1" } }}
@@ -206,7 +238,6 @@ const ResultadosFifa = ({id_partido, datosapuesta, fecha, equipo1, equipo2, icon
                       value={input.golesequipo2}
                       onChange={handleResultado}
                       onFocus={onfocusEquipouno}
-                      onBlur={onblurEquipouno}
                       // disabled={estado === 'ACTIVO'?true:false}
                       color="secondary"
                       InputProps={{ inputProps: { min: "0", max: "5", step: "1" } }}
@@ -224,28 +255,39 @@ const ResultadosFifa = ({id_partido, datosapuesta, fecha, equipo1, equipo2, icon
                   </Grid>
               </Grid>
             </Grid>
+
+            <Grid container mt={2} display='flex' justifyContent='center' alignItems='center'>
+              <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
+                <Typography>EQUIPO GANADOR EN PENALES</Typography>
+              </Grid>
+              <Grid item xs={12} display='flex' justifyContent='space-evenly' alignItems='center' mt={1}>
+                <span>{equipo1}  
+                  <Radio
+                    disabled={(tipousuario === 'ROOT' || tipousuario === 'ADMIN') ? disable : true}
+                    checked={equipoA}
+                    onChange={handleChange}
+                    value={idequipo1}
+                    name="equipouno"
+                    inputProps={{ 'aria-label': 'A' }}
+                  />
+                </span>
+                <span>  
+                  <Radio
+                   disabled={(tipousuario === 'ROOT' || tipousuario === 'ADMIN') ? disable : true}
+                    checked={equipoB}
+                    onChange={handleChange}
+                    value={idequipo2}
+                    name="equipodos"
+                    inputProps={{ 'aria-label': 'B' }}
+                  />
+                  {equipo2}
+                </span>
+              </Grid>
+            </Grid>
         </Grid>
-      </CardContent>
-      <CardActions disableSpacing>
-        <ExpandMore
-          expand={expanded}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </ExpandMore>
-      </CardActions>
-      {/* <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography paragraph>{equipo1 + ' VS ' + equipo2}</Typography>
-          <Typography paragraph>
-            { descripcion }
-          </Typography>
-        </CardContent>
-      </Collapse> */}
+      </CardContent>      
     </Card>
   )
 }
 
-export default ResultadosFifa
+export default ResultadosFinales

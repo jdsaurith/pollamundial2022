@@ -26,7 +26,16 @@ import {
     LIMPIAR_DETALLE_APUESTA,
     OBTENER_PUNTOS_FECHA,
     OBTENER_PUNTOS_FECHA_EXITO,
-    OBTENER_PUNTOS_FECHA_ERROR
+    OBTENER_PUNTOS_FECHA_ERROR,
+    OBTENER_POSICIONES_FINALES,
+    OBTENER_POSICIONES_FINALES_EXITO,
+    OBTENER_POSICIONES_FINALES_ERROR,
+    OBTENER_DETALLES_POSICIONES_FINALES,
+    OBTENER_DETALLES_POSICIONES_FINALES_EXITO,
+    OBTENER_DETALLES_POSICIONES_FINALES_ERROR,
+    CONSULTAR_RECAUDO,
+    CONSULTAR_RECAUDO_EXITO,
+    CONSULTAR_RECAUDO_ERROR
 } from '../types'
 
 const initialState = {
@@ -37,9 +46,12 @@ const initialState = {
     resultadosapostados: [],
     resultadosfifa: [],
     posiciones: [],
+    posicionesfinales: [],
     detallesposiciones: [],
+    detallesposicionesfinales: [],
     puntosfechas: [],
     consultarresultados: false,
+    recaudo: 0,
     resultado: null,
     resultadoapuesta: false,
     loading: null,
@@ -48,6 +60,9 @@ const initialState = {
 
 const resultadoReducer = (state = initialState, action) =>{
     switch (action.type) {
+        case CONSULTAR_RECAUDO:
+        case OBTENER_DETALLES_POSICIONES_FINALES:
+        case OBTENER_POSICIONES_FINALES:
         case OBTENER_PUNTOS_FECHA:
         case OBTENER_DETALLES_POSICIONES:
         case OBTENER_POSICIONES:
@@ -138,6 +153,33 @@ const resultadoReducer = (state = initialState, action) =>{
                 error: false,
                 puntosfechas: action.payload
             }
+        case OBTENER_POSICIONES_FINALES_EXITO:{
+            return{
+                ...state,
+                loading: false,
+                error: null,
+                posicionesfinales: action.payload
+            }
+        }
+        case OBTENER_DETALLES_POSICIONES_FINALES_EXITO:
+            return{
+                ...state,
+                loading: false,
+                error: null,
+                detallesposicionesfinales: action.payload
+            }
+        case CONSULTAR_RECAUDO_EXITO:{
+            return{
+                ...state,
+                loading: false,
+                error: null,
+                recaudo: action.payload
+            }
+        }
+        
+        case CONSULTAR_RECAUDO_ERROR:
+        case OBTENER_DETALLES_POSICIONES_FINALES_ERROR:
+        case OBTENER_POSICIONES_FINALES_ERROR:
         case OBTENER_PUNTOS_FECHA_ERROR:
         case OBTENER_DETALLES_POSICIONES_ERROR:
         case OBTENER_POSICIONES_ERROR:
