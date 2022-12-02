@@ -26,7 +26,16 @@ import {
     LIMPIAR_DETALLE_APUESTA,
     OBTENER_PUNTOS_FECHA,
     OBTENER_PUNTOS_FECHA_EXITO,
-    OBTENER_PUNTOS_FECHA_ERROR
+    OBTENER_PUNTOS_FECHA_ERROR,
+    OBTENER_POSICIONES_FINALES,
+    OBTENER_POSICIONES_FINALES_EXITO,
+    OBTENER_POSICIONES_FINALES_ERROR,
+    OBTENER_DETALLES_POSICIONES_FINALES,
+    OBTENER_DETALLES_POSICIONES_FINALES_EXITO,
+    OBTENER_DETALLES_POSICIONES_FINALES_ERROR,
+    CONSULTAR_RECAUDO,
+    CONSULTAR_RECAUDO_EXITO,
+    CONSULTAR_RECAUDO_ERROR
 } from '../types';
 
 import clienteAxios from '../config/axios';
@@ -36,15 +45,27 @@ export function resultadopartidosAction(result){
     return async (dispatch) =>{
         dispatch(resultadopartidos());
         try {
-            // console.log(result);
-            if(!result){
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Ingresa tu pronóstico',
-                    text: 'Debes ingresar por lo menos un resultado',
-                    showConfirmButton: true
-                    //timer: 1500
-                })
+            // console.log(result.datos);
+            // console.log(result.rondas);
+            if(!result.datos){
+                if(result.rondas === 'grupos'){
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Ingresa tu pronóstico',
+                        text: 'Debes ingresar por lo menos un resultado',
+                        showConfirmButton: true
+                        //timer: 1500
+                    })
+                }else{
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Ingresa tu pronóstico',
+                        text: 'Debes ingresar por lo menos un resultado y ganador en penales',
+                        showConfirmButton: true
+                        //timer: 1500
+                    })
+                }
+                
             }else{
                 const res = await clienteAxios.post('/resultados',result);
                 // console.log(res.data);
@@ -286,6 +307,74 @@ const obtenerposicionesError = () => ({
     type: OBTENER_POSICIONES_ERROR
 })
 
+
+////OBTENER POSICIONES FINALES
+///obtener las posiciones de los usuarios
+export function obtenerPosicionesFinalesAction(){
+    return async (dispatch) =>{
+        dispatch(obtenerPosicionesFinales());
+        try {
+            
+            const res = await clienteAxios.get('resultados/posicionesfinales');
+            // console.log(res.data);
+            if(res.data.msg === 'exito'){                
+                dispatch(obtenerPosicionesFinalesExito(res.data.result));
+            }else if(res.data.msg === 'noregistros'){
+                dispatch(obtenerPosicionesFinalesExito([]));
+            }
+            
+        } catch (error) {
+            console.log(error);            
+            dispatch(obtenerPosicionesFinalesError());
+        }
+    }
+    
+}
+const obtenerPosicionesFinales = () => ({
+    type: OBTENER_POSICIONES_FINALES
+})
+const obtenerPosicionesFinalesExito = (res) => ({
+    type: OBTENER_POSICIONES_FINALES_EXITO,
+    payload: res
+})
+const obtenerPosicionesFinalesError = () => ({
+    type: OBTENER_POSICIONES_FINALES_ERROR
+})
+
+////OBTENER recaudo
+///obtener recaudo
+export function consultarRecaudoAction(){
+    return async (dispatch) =>{
+        dispatch(consultarRecaudo());
+        try {
+            
+            const res = await clienteAxios.get('resultados/recaudo');
+            // console.log(res.data);
+            if(res.data.msg === 'exito'){                
+                dispatch(consultarRecaudoExito(res.data.recaudo));
+            }else if(res.data.msg === 'nohabilitados'){
+                dispatch(consultarRecaudoExito([]));
+            }
+            
+        } catch (error) {
+            console.log(error);            
+            dispatch(consultarRecaudoError());
+        }
+    }
+    
+}
+const consultarRecaudo = () => ({
+    type: CONSULTAR_RECAUDO
+})
+const consultarRecaudoExito = (res) => ({
+    type: CONSULTAR_RECAUDO_EXITO,
+    payload: res
+})
+const consultarRecaudoError = () => ({
+    type: CONSULTAR_RECAUDO_ERROR
+})
+
+
 ///obtener las posiciones de los usuarios
 export function obtenerdetallesposicionesAction(id){
     return async (dispatch) =>{
@@ -316,6 +405,38 @@ const obtenerdetallesposicionesExito = (res) => ({
 })
 const obtenerdetallesposicionesError = () => ({
     type: OBTENER_DETALLES_POSICIONES_ERROR
+})
+
+///obtener las posiciones de los usuarios
+export function obtenerdetallesposicionesFinalesAction(id){
+    return async (dispatch) =>{
+        dispatch(obtenerdetallesposicionesFinales());
+        try {
+            
+            const res = await clienteAxios.get(`resultados/detallesfinales/${id}`);
+            // console.log(res.data);
+            if(res.data.msg === 'exito'){                
+                dispatch(obtenerdetallesposicionesFinalesExito(res.data.result));
+            }else if(res.data.msg === 'noregistros'){
+                dispatch(obtenerdetallesposicionesFinalesExito([]));
+            }
+            
+        } catch (error) {
+            console.log(error);            
+            dispatch(obtenerdetallesposicionesFinalesError());
+        }
+    }
+    
+}
+const obtenerdetallesposicionesFinales = () => ({
+    type: OBTENER_DETALLES_POSICIONES_FINALES
+})
+const obtenerdetallesposicionesFinalesExito = (res) => ({
+    type: OBTENER_DETALLES_POSICIONES_FINALES_EXITO,
+    payload: res
+})
+const obtenerdetallesposicionesFinalesError = () => ({
+    type: OBTENER_DETALLES_POSICIONES_FINALES_ERROR
 })
 
 ////limpiar datos de detalle apuesta

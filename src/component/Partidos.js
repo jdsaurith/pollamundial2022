@@ -45,7 +45,7 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, eq
     const [resultadoapostador, setResultadoapostador] = useState();
     const [error, guardarError] = useState(false);
     const [input, setInput] = React.useState({
-      retornandovalores: false
+      retornandovalores: false,      
     });
 
     const usuario = useSelector(state => state.auth.usuario);
@@ -112,7 +112,7 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, eq
     useEffect(() => {
       if(retornandovalores === false && input.golesequipo1 && input.golesequipo2 && error === false){
         let fechajuego = moment().format('yyyy/MM/DD HH:mm:ss');
-        setResultadoapostador({...input, id_usuario: usuario.id_usuario, fecha: fechajuego, id_partido});
+        setResultadoapostador({...input, id_usuario: usuario.id_usuario, fecha: fechajuego, id_partido, ganador_penales: 0});
         // console.log(fechajuego);
       }
     }, [input])
@@ -194,37 +194,10 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, eq
       guardarError(false);    
     },[input])
 
-    const onfocusEquipouno = () =>{ 
-      // const resultado = localStorage.getItem("resultado");  
-      // const datos = JSON.parse(resultado);
-      // // console.log(datos);
-      // if(datos){
-      //   // console.log('entro datos');
-      //   if(datos.length !== 0){
-      //     datos.map( element => {
-      //       if(element.id_partido === id_partido){ 
-      //         // console.log('encontro el idpartido en onfocus');  
-      //         // console.log(input.golesequipo1);
-      //         // console.log(input.golesequipo2);
-      //         setInput({
-      //           golesequipo1 : element.golesequipo1,
-      //           golesequipo2 : element.golesequipo2,
-      //           retornandovalores: true
-      //         })
-      //       }
-      //     })
-      //     setPendientes(datos.length);
-      //   }
-      // }
-    }
-
-    const onblurEquipouno = () =>{      
-
-    }
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
-      };
+    };
 
   return (
     <Card sx={{ maxWidth: 430, margin: 1 }}>
@@ -253,8 +226,6 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, eq
                   label=""
                   value={input.golesequipo1}
                   onChange={handleResultado}
-                  onFocus={onfocusEquipouno}
-                  onBlur={onblurEquipouno}
                   disabled={tiempo}
                   // className={}
                   color="secondary"
@@ -275,8 +246,6 @@ const Partidos = ({datosapuesta, id_partido, fecha, fechavalidacion, equipo1, eq
                     label=""
                     value={input.golesequipo2}
                     onChange={handleResultado}
-                    onFocus={onfocusEquipouno}
-                    onBlur={onblurEquipouno}
                     disabled={tiempo}
                     color="secondary"
                     InputProps={{ inputProps: { min: "0", max: "99", step: "1" } }}

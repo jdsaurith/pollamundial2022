@@ -32,6 +32,8 @@ import { formatearFecha } from '../helpers';
 import ModalInfoSave from '../component/layouts/ModalInfoSave';
 import InfoGeneral from '../component/layouts/InfoGeneral';
 import Perfil from '../component/perfil/Perfil';
+import Octavosfinal from '../component/octavos/Octavosfinal';
+import PosicionesFinales from '../component/octavos/PosicionesFinales';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -210,7 +212,7 @@ const Home = () => {
   const resultadosapostados = useSelector(state => state.resultado.resultadosapostados);
   const habilitarperfil = useSelector(state=>state.usuario.habilitarperfil);
 
-  // console.log(componente);
+  // console.log(obtenerpartidos);
   
   useEffect(() => {
     if(!conectado) history.push("/");
@@ -232,10 +234,10 @@ const Home = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  const btnResultados = () => { 
+  const btnResultados = (rondas) => { 
     const datos = JSON.parse(localStorage.getItem('resultado'));
     // console.log(datos);
-    resultadopartidos(datos);
+    resultadopartidos({datos, rondas});
     datosapuesta = [];
     setPendientes(0);
 
@@ -321,6 +323,7 @@ const Home = () => {
                   {componente === 'Usuarios' ? usuario?.tipousuario === 'ROOT' || usuario?.tipousuario === 'ADMIN' ? <Usuarios /> : <InfoGeneral /> : null}
                   {componente === 'Reglas' && <Reglas  />}
                   {componente === 'Posiciones' && <Posiciones  sinpremio={false} />}
+                  {componente === 'Posiciones Finales' && <PosicionesFinales />}
                   {componente === 'Resultados' && <Resultados  />}
                   {componente === 'FECHA 1' && 
                   <>
@@ -396,7 +399,7 @@ const Home = () => {
                         <Typography style={{ fontSize:'1em' }} color='red'>CANCELA LA CUOTA PARA PARTICIPAR</Typography>
 
                         </> 
-                      :<Fab color='primary' aria-label="add"  onClick={() => btnResultados()}>
+                      :<Fab color='primary' aria-label="add"  onClick={() => btnResultados('GRUPOS')}>
                         <SaveIcon /> {pendientes === 0 ? '' :  pendientes > 9 ? <b> 9+</b> : <b> {pendientes}</b> }
                         {/* <SaveIcon /> {pendientes !== 0 && <b> {pendientes}</b> } */}
                       </Fab> }
@@ -476,7 +479,7 @@ const Home = () => {
                         <Typography style={{ fontSize:'1em' }} color='red'>CANCELA LA CUOTA PARA PARTICIPAR</Typography>
                         </> 
                       :
-                      <Fab color='primary' aria-label="add"  onClick={() => btnResultados()}>
+                      <Fab color='primary' aria-label="add"  onClick={() => btnResultados('GRUPOS')}>
                         <SaveIcon /> {pendientes === 0 ? '' :  pendientes > 9 ? <b> 9+</b> : <b> {pendientes}</b> }
                       </Fab> }
                 </Box>
@@ -555,12 +558,82 @@ const Home = () => {
 
                       </> 
                       :
-                      <Fab color='primary' aria-label="add"  onClick={() => btnResultados()}>
+                      <Fab color='primary' aria-label="add"  onClick={() => btnResultados('GRUPOS')}>
                       <SaveIcon /> {pendientes === 0 ? '' :  pendientes > 9 ? <b> 9+</b> : <b> {pendientes}</b> }
                       </Fab> }
                   </Box>
                   </>
-                }
+              }
+              {componente === 'Octavos de Final' && 
+              <>
+              <Grid container spacing={2} display='flex' justifyContent='center' alignItems='center'>
+                {obtenerpartidos.filter(f => f.jornada === 'OCTAVOS').map((row) =>( 
+                  <Grid item xs={12} md={12} lg={5}>
+                    <TableContainer> 
+                      <Table sx={{ minWidth: 230, maxWidth: 430 }} aria-label="simple table">
+                        <TableHead>
+                          <TableRow key={row.id_partido}>
+                            <StyledTableCell style={{ display: 'flex' }}>
+                              <Grid xs={10} md={10} lg={10}>
+                                OCTAVOS DE FINAL
+                              </Grid>
+                              <Grid xs={2} md={2} lg={2}>
+                              {addIcon(row.id_partido)?
+                                <IconButton
+                                  size="large"
+                                  color="inherit"
+                                  onClick={() => btnInfoSave()}
+                                  >
+                                    <CheckCircleIcon />
+                                  </IconButton>:
+                                  <IconButton
+                                  size="large"
+                                  color="inherit"
+                                  onClick={() => btnInfoNoSave()}
+                                  >
+                                    <Badge badgeContent={'i'} color="error">
+                                      <HelpOutlineIcon /> 
+                                    </Badge>
+                                  </IconButton>}
+                              </Grid>
+                            </StyledTableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          <Octavosfinal
+                            key={row.id_partido}
+                            datosapuesta={datosapuesta}
+                            id_partido={row.id_partido}
+                            fecha={formatearFecha(row.fecha)}
+                            fechavalidacion={row.fecha}
+                            idequipo1={row.equipo_uno}
+                            idequipo2={row.equipo_dos}
+                            equipo1={row.equipouno}
+                            icon1={row.iconuno}
+                            equipo2={row.equipodos}
+                            icon2={row.icondos}
+                            descripcion = 'MUNDIAL QATAR 2022'
+                            estado={row.estado}
+                            setPendientes={setPendientes}
+                          />
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
+                  </Grid>
+                ))} 
+              </Grid>
+              <Box style={{ bottom:'30px', right:'30px', position:'fixed' }} >
+                {usuario.octavos === 'FALSE' ?
+                  <>
+                  <Typography style={{ fontSize:'1em' }} color='red'>CANCELA LA CUOTA PARA PARTICIPAR</Typography>
+                  </> 
+                  :
+                  <Fab color='primary' aria-label="add"  onClick={() => btnResultados('FINALES')}>
+                    <SaveIcon /> {pendientes === 0 ? '' :  pendientes > 9 ? <b> 9+</b> : <b> {pendientes}</b> }
+                  </Fab> }
+              </Box>
+              </>             
+              }
             </Contenedor> 
           </Box>
           <Box component="footer" sx={{ p: 2, bgcolor: '#eaeff1' }}>

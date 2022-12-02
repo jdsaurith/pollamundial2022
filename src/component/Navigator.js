@@ -49,6 +49,7 @@ const categories = [
         { id: 'Reglas', icon: <RuleIcon /> },        
         { id: 'Resultados', icon: <SportsSoccerIcon /> },
         { id: 'Posiciones', icon: <DnsRoundedIcon /> },
+        
       ],
     },
     {
@@ -57,6 +58,16 @@ const categories = [
         { id: 'FECHA 1', icon: <SportsIcon /> },
         { id: 'FECHA 2', icon: <SportsIcon /> },
         { id: 'FECHA 3', icon: <SportsIcon /> },
+        
+      ],
+    },
+    {
+      id: 'FASES FINALES',
+      children: [
+        { id: 'Posiciones Finales', icon: <DnsRoundedIcon /> },
+        { id: 'Octavos de Final', icon: <SportsIcon /> },
+        { id: 'Reglas Fase Final', icon: <RuleIcon /> },
+        { id: 'Final Soñada', icon: <SportsIcon /> },
       ],
     },
   ];
