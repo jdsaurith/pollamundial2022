@@ -35,7 +35,16 @@ import {
     OBTENER_DETALLES_POSICIONES_FINALES_ERROR,
     CONSULTAR_RECAUDO,
     CONSULTAR_RECAUDO_EXITO,
-    CONSULTAR_RECAUDO_ERROR
+    CONSULTAR_RECAUDO_ERROR,
+    OBTENER_EQUIPOS,
+    OBTENER_EQUIPOS_EXITO,
+    OBTENER_EQUIPOS_ERROR,
+    AGREGAR_PODIO,
+    AGREGAR_PODIO_EXITO,
+    AGREGAR_PODIO_ERROR,
+    OBTENER_PODIO,
+    OBTENER_PODIO_EXITO,
+    OBTENER_PODIO_ERROR
 } from '../types'
 
 const initialState = {
@@ -50,6 +59,9 @@ const initialState = {
     detallesposiciones: [],
     detallesposicionesfinales: [],
     puntosfechas: [],
+    equiposlist: [],
+    podio: [],
+    podioequipos: null,
     consultarresultados: false,
     recaudo: 0,
     resultado: null,
@@ -60,6 +72,9 @@ const initialState = {
 
 const resultadoReducer = (state = initialState, action) =>{
     switch (action.type) {
+        case OBTENER_PODIO:
+        case AGREGAR_PODIO:
+        case OBTENER_EQUIPOS:
         case CONSULTAR_RECAUDO:
         case OBTENER_DETALLES_POSICIONES_FINALES:
         case OBTENER_POSICIONES_FINALES:
@@ -176,7 +191,31 @@ const resultadoReducer = (state = initialState, action) =>{
                 recaudo: action.payload
             }
         }
+        case OBTENER_EQUIPOS_EXITO:
+            return{
+                ...state,
+                loading: false,
+                error: null,
+                equiposlist: action.payload
+            }
+        case AGREGAR_PODIO_EXITO:
+            return{
+                ...state,
+                loading: false,
+                error: null,
+                podio: action.payload
+            }
+        case OBTENER_PODIO_EXITO:
+            return{
+                ...state,
+                loading: false,
+                error: null,
+                podioequipos: action.payload
+            }
         
+        case OBTENER_PODIO_ERROR:
+        case AGREGAR_PODIO_ERROR:
+        case OBTENER_EQUIPOS_ERROR:
         case CONSULTAR_RECAUDO_ERROR:
         case OBTENER_DETALLES_POSICIONES_FINALES_ERROR:
         case OBTENER_POSICIONES_FINALES_ERROR:

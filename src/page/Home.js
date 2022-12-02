@@ -36,6 +36,7 @@ import Octavosfinal from '../component/octavos/Octavosfinal';
 import PosicionesFinales from '../component/octavos/PosicionesFinales';
 import ModalInformativo from '../component/layouts/ModalInformativo';
 import ReglasFinales from '../component/octavos/ReglasFinales';
+import FinalDeseada from '../component/octavos/FinalDeseada';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -347,6 +348,7 @@ const Home = () => {
                   {componente === 'Reglas Fase Final' && <ReglasFinales  />}
                   {componente === 'Posiciones' && <Posiciones  sinpremio={false} />}
                   {componente === 'Posiciones Finales' && <PosicionesFinales />}
+                  {componente === 'Final Soñada' && <FinalDeseada />}
                   {componente === 'Resultados' && <Resultados  />}
                   {componente === 'FECHA 1' && 
                   <>
