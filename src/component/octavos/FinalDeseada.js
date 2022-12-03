@@ -22,7 +22,7 @@ const FinalDeseada = () => {
     let fecha_podio = moment().utc()
     .format('yyyy/MM/DD HH:mm:ss');
     let fecha2 = new Date('2022-12-03T15:00:00.000Z');
-    const [tiempo, setTiempo] = useState(Date.now()  >= formatearFechaDoshoras(fecha2, 0.5));
+    const [tiempo, setTiempo] = useState(Date.now()  >= formatearFechaDoshoras(fecha2, 0));
     const [error, guardarError] = useState(false);
     const [input, setInput] = useState({
         campeon: 0,
@@ -49,8 +49,7 @@ const FinalDeseada = () => {
     const podioequipos = useSelector(state => state.resultado.podioequipos);
     const podio = useSelector(state => state.resultado.podio);
     
-    // console.log(fecha2);
-    // console.log(tiempo);
+    
     
     useEffect(() => {
         obtenerEquipos();
@@ -59,7 +58,7 @@ const FinalDeseada = () => {
 
     useEffect(() => {
         setInterval(() => {
-          setTiempo(Date.now()  >= formatearFechaDoshoras(fecha2, 0.5));
+          setTiempo(Date.now()  >= formatearFechaDoshoras(fecha2, 0));
         }, 600000);
     
       }, [tiempo]);
@@ -276,9 +275,7 @@ const FinalDeseada = () => {
                           })
                         }
                     </Grid>
-                </Grid>
-
-                <Grid container spacing={2} display='flex' justifyContent='center' alignContent='center' padding='2'>
+                </Grid>                
                 <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
                     <Button
                     disabled={usuario?.octavos === 'FALSE' ? true : tiempo ? true : false}
@@ -292,7 +289,7 @@ const FinalDeseada = () => {
                     Registrar
                     </Button>
                 </Grid>                
-                </Grid>
+                
             </Grid>
             </form>
         </TableContainer>
