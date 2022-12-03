@@ -500,7 +500,7 @@ export function obtenerEquiposAction(){
         try {
             // console.log(datos);
             const res = await clienteAxios.get('resultados/equipos');
-            console.log(res.data);
+            // console.log(res.data);
             if(res.data.msg === 'exito'){                
                 dispatch(obtenerEquiposExito(res.data.result));
             }else if(res.data.msg === 'noregistros'){

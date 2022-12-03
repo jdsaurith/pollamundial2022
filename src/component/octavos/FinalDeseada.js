@@ -46,7 +46,8 @@ const FinalDeseada = () => {
     const podioequipos = useSelector(state => state.resultado.podioequipos);
     const podio = useSelector(state => state.resultado.podio);
     
-    console.log(podioequipos);
+    // console.log(podioequipos);
+    // console.log(equiposlist);
     
     useEffect(() => {
         obtenerEquipos();
@@ -66,7 +67,7 @@ const FinalDeseada = () => {
     },[podioequipos]);
 
     useEffect(() => {
-        console.log(equiposlist);
+        // console.log(equiposlist);
         setcampeonlist(equiposlist);
         setsubcampeonlist(equiposlist);
         settercerolist(equiposlist);
@@ -136,101 +137,147 @@ const FinalDeseada = () => {
                 onSubmit={onSubmit}
             >
             <Grid container spacing={2} >
-                <Grid item xs={12}>
-                <TextField
-                    required
-                    select
-                    name="campeon"
-                    label="Campeon"
-                    variant="outlined"
-                    color="secondary"
-                    value={campeon}
-                    helperText="Selecione campeon"
-                    onChange={(e) => setInput({ ...input, campeon: e.target.value })}
-                    >
-                    {campeonlist.map((option) => (
-                        <MenuItem key={option.id_equipo} value={option.id_equipo}>
-                        {" "}
-                        {option.equipo}{" "}
-                        </MenuItem>
-                    ))}
-                    </TextField>
+                <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
+                    <Grid xs={6} display='flex' justifyContent='flex-end' alignItems='center' mr={2}>
+                        <TextField
+                        required
+                        select
+                        name="campeon"
+                        label="Campeón"
+                        variant="outlined"
+                        color="secondary"
+                        value={campeon}
+                        helperText="Selecione campeón"
+                        onChange={(e) => setInput({ ...input, campeon: e.target.value })}
+                        >
+                        {campeonlist.map((option) => (
+                            <MenuItem key={option.id_equipo} value={option.id_equipo}>
+                            {" "}
+                            {option.equipo}{" "}
+                            </MenuItem>
+                        ))}
+                        </TextField>
+                    </Grid>
+                    <Grid xs={6} display='flex' justifyContent='flex-start' alignItems='center' ml={2}>
+                        { 
+                          equiposlist.map(eq => {
+                            if(eq.id_equipo === campeon){
+                                return <img src={`/imagenes/${eq.icon}.png`}  alt='Campeón' loading='Campeón'/>
+                            }
+                          })
+                        }                   
+                                 
+                    </Grid>
+                
                 </Grid>
-                <Grid item xs={12}>
-                <TextField
-                    required
-                    select
-                    name="subcampeon"
-                    label="Subcampeon"
-                    variant="outlined"
-                    color="secondary"
-                    value={subcampeon}
-                    helperText="Selecione el subcampeon"
-                    onChange={(e) => setInput({ ...input, subcampeon: e.target.value })}
-                    >
-                    {subcampeonlist.map((option) => (
-                        <MenuItem key={option.id_equipo} value={option.id_equipo}>
-                        {" "}
-                        {option.equipo}{" "}
-                        </MenuItem>
-                    ))}
-                    </TextField>
+                <Grid item xs={12} display='flex' justifyContent='center' alignItems='center' >
+                    <Grid xs={6} display='flex' justifyContent='flex-end' alignItems='center' mr={2} >
+                        <TextField
+                            required
+                            select
+                            name="subcampeon"
+                            label="Subcampeon"
+                            variant="outlined"
+                            color="secondary"
+                            value={subcampeon}
+                            helperText="Selecione el subcampeon"
+                            onChange={(e) => setInput({ ...input, subcampeon: e.target.value })}
+                            >
+                            {subcampeonlist.map((option) => (
+                                <MenuItem key={option.id_equipo} value={option.id_equipo}>
+                                {" "}
+                                {option.equipo}{" "}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+                   </Grid>
+                   <Grid xs={6} display='flex' justifyContent='flex-start' alignItems='center' ml={2}>
+                        { 
+                          equiposlist.map(eq => {
+                            if(eq.id_equipo === subcampeon){
+                                return <img src={`/imagenes/${eq.icon}.png`}  alt='SubCampeón' loading='SubCampeón'/>
+                            }
+                          })
+                        }
+                    </Grid>
                 </Grid>
-                <Grid item xs={12}>
-                <TextField
-                    required
-                    select
-                    name="tercerpuesto"
-                    label="Tercer puesto"
-                    variant="outlined"
-                    color="secondary"
-                    value={tercerpuesto}
-                    helperText="Selecione el tercer puesto"
-                    onChange={(e) => setInput({ ...input, tercerpuesto: e.target.value })}
-                    >
-                    {tercerolist.map((option) => (
-                        <MenuItem key={option.id_equipo} value={option.id_equipo}>
-                        {" "}
-                        {option.equipo}{" "}
-                        </MenuItem>
-                    ))}
-                    </TextField>
+                <Grid item xs={12} display='flex' justifyContent='center' alignItems='center' >
+                    <Grid xs={6} display='flex' justifyContent='flex-end' alignItems='center' mr={2}>
+                        <TextField
+                            required
+                            select
+                            name="tercerpuesto"
+                            label="Tercer puesto"
+                            variant="outlined"
+                            color="secondary"
+                            value={tercerpuesto}
+                            helperText="Selecione el tercer puesto"
+                            onChange={(e) => setInput({ ...input, tercerpuesto: e.target.value })}
+                            >
+                            {tercerolist.map((option) => (
+                                <MenuItem key={option.id_equipo} value={option.id_equipo}>
+                                {" "}
+                                {option.equipo}{" "}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+                    </Grid>
+                    <Grid xs={6} display='flex' justifyContent='flex-start' alignItems='center' ml={2}>
+                        { 
+                          equiposlist.map(eq => {
+                            if(eq.id_equipo === tercerpuesto){
+                                return <img src={`/imagenes/${eq.icon}.png`}  alt='tercerpuesto' loading='tercerpuesto'/>
+                            }
+                          })
+                        }
+                    </Grid>
                 </Grid>
-                <Grid item xs={12}>
-                <TextField
-                    required
-                    select
-                    name="cuartopuesto"
-                    label="Cuarto puesto"
-                    variant="outlined"
-                    color="secondary"
-                    value={cuartopuesto}
-                    helperText="Selecione el cuarto puesto"
-                    onChange={(e) => setInput({ ...input, cuartopuesto: e.target.value })}
-                    >
-                    {cuartolist.map((option) => (
-                        <MenuItem key={option.id_equipo} value={option.id_equipo}>
-                        {" "}
-                        {option.equipo}{" "}
-                        </MenuItem>
-                    ))}
-                    </TextField>
+                <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
+                    <Grid xs={6} display='flex' justifyContent='flex-end' alignItems='center' mr={2}>
+                        <TextField
+                            required
+                            select
+                            name="cuartopuesto"
+                            label="Cuarto puesto"
+                            variant="outlined"
+                            color="secondary"
+                            value={cuartopuesto}
+                            helperText="Selecione el cuarto puesto"
+                            onChange={(e) => setInput({ ...input, cuartopuesto: e.target.value })}
+                            >
+                            {cuartolist.map((option) => (
+                                <MenuItem key={option.id_equipo} value={option.id_equipo}>
+                                {" "}
+                                {option.equipo}{" "}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+                    </Grid>
+                    <Grid xs={6} display='flex' justifyContent='flex-start' alignItems='center' ml={2}>
+                        { 
+                          equiposlist.map(eq => {
+                            if(eq.id_equipo === cuartopuesto){
+                                return <img src={`/imagenes/${eq.icon}.png`}  alt='cuartopuesto' loading='cuartopuesto'/>
+                            }
+                          })
+                        }
+                    </Grid>
                 </Grid>
 
                 <Grid container spacing={2} display='flex' justifyContent='center' alignContent='center' padding='2'>
-                <Grid item xs={6}>
+                <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
                     <Button
+                    disabled={usuario?.octavos === 'FALSE' ? true : false}
                     type="submit"
                     variant="contained"
                     color="primary"
                     fullWidth
+                    style={{ marginTop: 20 }}
                     // onClick={guardarFinalDeseada}
                     >
                     Registrar
                     </Button>
-                </Grid>
-                <Grid item xs={4} >
-                </Grid>
+                </Grid>                
                 </Grid>
             </Grid>
             </form>

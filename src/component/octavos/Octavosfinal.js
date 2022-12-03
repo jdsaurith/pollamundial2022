@@ -308,6 +308,7 @@ const Octavosfinal = ({ id_partido, datosapuesta, fecha, fechavalidacion, idequi
               <Grid item xs={12} display='flex' justifyContent='space-evenly' alignItems='center' mt={1}>
                 <span>{equipo1}  
                   <Radio
+                    disabled={tiempo}
                     checked={equipoA}
                     onChange={handleChange}
                     value={idequipo1}
@@ -317,6 +318,7 @@ const Octavosfinal = ({ id_partido, datosapuesta, fecha, fechavalidacion, idequi
                 </span>
                 <span>  
                   <Radio
+                    disabled={tiempo}
                     checked={equipoB}
                     onChange={handleChange}
                     value={idequipo2}

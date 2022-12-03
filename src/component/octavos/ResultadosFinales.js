@@ -29,7 +29,9 @@ const ResultadosFinales = ({id_partido, datosapuesta, fecha, idequipo1, equipo1,
     const [radiobtn, setRadiobtn] = useState({
         equipoA: false,
         equipoB: false,
-        disable: false
+        disable: false,
+        nopenales: false,
+        valuepenales: 0
     });
     const [input, setInput] = React.useState({
       retornandovalores: false,
@@ -41,7 +43,7 @@ const ResultadosFinales = ({id_partido, datosapuesta, fecha, idequipo1, equipo1,
     const tipousuario = useSelector(state=> state.auth.tipousuario);
     
     const {retornandovalores } = input;
-    const { equipoA, equipoB, disable } = radiobtn;
+    const { equipoA, equipoB, disable, nopenales, valuepenales } = radiobtn;
 
 
     /// OBTENER LOS GOLES DE LOS EQUIPOS - RESULTADOS FIFA
@@ -59,13 +61,25 @@ const ResultadosFinales = ({id_partido, datosapuesta, fecha, idequipo1, equipo1,
             setRadiobtn({
               equipoA : true,
               equipoB : false,
-              disable : true
+              disable : true,
+              nopenales: false,
+              valuepenales: 0
             })
-          }else{
+          }else if(item.ganador_penales === idequipo2){
             setRadiobtn({
               equipoA : false,
               equipoB : true,
-              disable : true
+              disable : true,
+              nopenales: false,
+              valuepenales: 0
+            })
+          }else if(item.ganador_penales == 0) {
+            setRadiobtn({
+              equipoA : false,
+              equipoB : false,
+              disable : true,
+              nopenales: true,
+              valuepenales: 0
             })
           }
         }
@@ -159,12 +173,24 @@ const ResultadosFinales = ({id_partido, datosapuesta, fecha, idequipo1, equipo1,
       
 
       const handleChange = (event) => { 
-        console.log(event.target.value);
-        console.log(event.target.name);
+        // console.log(event.target.value);
+        // console.log(event.target.name);
         if(event.target.name === 'equipouno'){
           setRadiobtn({
             equipoA : true,
-            equipoB : false
+            equipoB : false,
+            nopenales: false,
+          })
+          setInput({
+            ...input,
+            ganador_penales: Number(event.target.value),
+            retornandovalores: false
+          })
+        }else if(event.target.name === 'equipodos'){
+          setRadiobtn({
+            equipoA : false,
+            equipoB : true,
+            nopenales: false,
           })
           setInput({
             ...input,
@@ -174,14 +200,16 @@ const ResultadosFinales = ({id_partido, datosapuesta, fecha, idequipo1, equipo1,
         }else{
           setRadiobtn({
             equipoA : false,
-            equipoB : true
+            equipoB : false,
+            nopenales: true,
+            valuepenales: 0
           })
           setInput({
             ...input,
-            ganador_penales: Number(event.target.value),
+            ganador_penales: 0,
             retornandovalores: false
           })
-        }
+        } 
          
       };
   
@@ -281,6 +309,19 @@ const ResultadosFinales = ({id_partido, datosapuesta, fecha, idequipo1, equipo1,
                     inputProps={{ 'aria-label': 'B' }}
                   />
                   {equipo2}
+                </span>
+              </Grid>
+              <Grid xs={12} display='flex' justifyContent='center' alignItems='center'>
+              <span>NO PENALES  
+                  <Radio
+                   disabled={(tipousuario === 'ROOT' || tipousuario === 'ADMIN') ? disable : true}
+                    checked={nopenales}
+                    onChange={handleChange}
+                    value={valuepenales}
+                    name="nopenales"
+                    inputProps={{ 'aria-label': 'B' }}
+                  />
+                  
                 </span>
               </Grid>
             </Grid>

@@ -118,6 +118,7 @@ const PosicionesFinales = (props) => {
     const [posicionesfil, guardarposicionesFiltro] = useState([]);
     const [datos, setDatos] = useState();
     const [bolsa, setBolsa] = useState(0);
+    const [pais, setPais] = useState();
 
     const dispatch = useDispatch();
     const obtenerposicionesfinales = () =>dispatch(obtenerPosicionesFinalesAction());
@@ -127,7 +128,7 @@ const PosicionesFinales = (props) => {
     const recaudo = useSelector(state => state.resultado.recaudo);
     const usuario = useSelector(state => state.auth.usuario);
     
-    console.log(recaudo);
+    // console.log(usuario);
 
     useEffect(() => {
       obtenerposicionesfinales();
@@ -139,7 +140,12 @@ const PosicionesFinales = (props) => {
     }, [posicionesfinales])
 
     useEffect(() => {
-      setBolsa(recaudo * 20000)
+      if(usuario?.tipousuario === 'COLOMBIA'){
+        setBolsa(recaudo * 20000)
+      }else{
+        setBolsa(recaudo * 1500)
+      }
+      
       // console.log(posicionesfinales)
     }, [bolsa, recaudo])
 
