@@ -159,7 +159,8 @@ const resultadoReducer = (state = initialState, action) =>{
         case LIMPIAR_DETALLE_APUESTA:
             return{
                 ...state,
-                detallesposiciones: []
+                detallesposiciones: [],
+                detallesposicionesfinales: []
             }
         case OBTENER_PUNTOS_FECHA_EXITO:
             return{
