@@ -44,7 +44,7 @@ const UsuariosInfo = () => {
     const usuario = useSelector(state => state.auth.usuario);
     const usuarios = useSelector(state => state.usuario.usuarios);
     const usuarioadmin = useSelector(state => state.auth.usuario);
-   
+    // console.log(usuarios);
     useEffect(() => {
       if(usuarioadmin !== null){
         verUsuarios(usuarioadmin.tipousuario === 'ADMIN' ? 'ARG' : 'COL');
@@ -123,13 +123,13 @@ const UsuariosInfo = () => {
                           margin:  '1px',
                           cursor: 'pointer'
                         }}
-                        title={row.estado==='PAGO'?"Inactivar":"Activar"}
-                        name= {row.estado==='PAGO'?"activo":"inactivo"}
-                        icon= {row.estado==='PAGO'?faToggleOn:faToggleOff}                        
-                        color={row.estado==='PAGO'?"#04BB3C":"#DD0000"}
+                        title={row.octavos==='TRUE'?"Inactivar":"Activar"}
+                        name= {row.octavos==='TRUE'?"activo":"inactivo"}
+                        icon= {row.octavos==='TRUE'?faToggleOn:faToggleOff}                        
+                        color={row.octavos==='TRUE'?"#04BB3C":"#DD0000"}
                         size="2x"
-                        onClick={()=>editarPago(row, row.estado==='PAGO' ? false:true)}
-                      />
+                        onClick={()=>editarPago(row, row.octavos==='TRUE' ? false:true)}
+                      />                     
                     </StyledTableCell>
                 </StyledTableRow>
                 ))}

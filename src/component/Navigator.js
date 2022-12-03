@@ -48,19 +48,19 @@ const categories = [
         },
         { id: 'Reglas', icon: <RuleIcon /> },        
         { id: 'Resultados', icon: <SportsSoccerIcon /> },
-        { id: 'Posiciones', icon: <DnsRoundedIcon /> },
+        { id: 'Posiciones Fase Grupos', icon: <DnsRoundedIcon /> },
         
       ],
     },
-    {
-      id: 'FECHAS FIFA',
-      children: [
-        { id: 'FECHA 1', icon: <SportsIcon /> },
-        { id: 'FECHA 2', icon: <SportsIcon /> },
-        { id: 'FECHA 3', icon: <SportsIcon /> },
+    // {
+    //   id: 'FECHAS FIFA',
+    //   children: [
+    //     { id: 'FECHA 1', icon: <SportsIcon /> },
+    //     { id: 'FECHA 2', icon: <SportsIcon /> },
+    //     { id: 'FECHA 3', icon: <SportsIcon /> },
         
-      ],
-    },
+    //   ],
+    // },
     {
       id: 'FASES FINALES',
       children: [
