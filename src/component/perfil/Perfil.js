@@ -91,6 +91,7 @@ const Perfil = () => {
       obtenerEditarUsuario(u);
       // setEditar(true);
       setModalUsuarioEditar(true);
+      setOpenUsuario(true);
     }
     
     const guardarEditar = (usuario) =>{
@@ -108,7 +109,7 @@ const Perfil = () => {
         denyButtonText: `No`,
       }).then(result =>{
         if (result.isConfirmed){
-          actualizarUsuario({usuario, pais});
+          actualizarUsuario({...usuario, pais});
         }
 
       })
@@ -132,7 +133,6 @@ const Perfil = () => {
           keepMounted
           open={openUsuario}
           onClose={handleClose}
-          datos={usuarioeditar}
         />}
         <TableContainer component={Paper}>
             {error && (
@@ -193,20 +193,20 @@ const Perfil = () => {
                       </StyledTableCell>
                     }
                     <StyledTableCell >
-                      {!editar ? null
-                    //   <FontAwesomeIcon
-                    //   style={{
-                    //     margin:  '1px',
-                    //     cursor: 'pointer'
-                    //   }}
-                    //   title="Editar"
-                    //   name="editar"
-                    //   icon={faEdit}
-                    //   color="#363636"
-                    //   size="2x"
-                    //   // onClick={()=>editarUsuario()}
-                    //   onClick={()=>editarUsuario(infousuario)}
-                    // />
+                      {!editar ? 
+                      <FontAwesomeIcon
+                      style={{
+                        margin:  '1px',
+                        cursor: 'pointer'
+                      }}
+                      title="Editar"
+                      name="editar"
+                      icon={faEdit}
+                      color="#363636"
+                      size="2x"
+                      // onClick={()=>editarUsuario()}
+                      onClick={()=>editarUsuario(infousuario)}
+                    />
                     :
                     <>
                     <FontAwesomeIcon

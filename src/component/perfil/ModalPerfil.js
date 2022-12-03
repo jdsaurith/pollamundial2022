@@ -12,10 +12,7 @@ import { editarUsuarioAction } from '../../action/usuarioAction';
 
 
 const ModalPerfil = (props) => {
-  const {open, onClose, datos, ...other} = props;
-
-  ///el que mando por props
-  const {infousuario} = datos;
+  const {open, onClose, ...other} = props;
 
   const [error, guardarError] = useState(false);
   const [msgError, guardarMsgError] = useState('');
@@ -34,18 +31,19 @@ const ModalPerfil = (props) => {
   const { nombres, usuario, password } = usuarioeditar;
  
   useEffect(() => {
-    if(infousuario){
+    console.log(useredit)
+    if(useredit){
       setUsuarioeditar({
-        id_usuario: infousuario?.id_usuario,
-        nombres: infousuario?.nombres,
-        usuario: infousuario?.usuario,
+        id_usuario: useredit?.id_usuario,
+        nombres: useredit?.nombres,
+        usuario: useredit?.usuario,
         password: '',
-        tipousuario: infousuario?.tipousuario,
-        recaudado: infousuario?.recaudado,
-        estado: infousuario?.estado
+        tipousuario: useredit?.tipousuario,
+        recaudado: useredit?.recaudado,
+        estado: useredit?.estado
       })
     }
-  }, [infousuario])
+  }, [useredit])
 
     //Leer los valores del formulario
     const handleChange = React.useCallback((e) => {
@@ -59,6 +57,8 @@ const ModalPerfil = (props) => {
       guardarError(false);
     });
 
+    const handleClose = () => onClose(false);
+
   const guardarEditar = (usuarioeditar) =>{
     const pais = 'COL';
     if(usuarioeditar.usuario.trim() === '' || usuarioeditar.password.trim() === '' ){
@@ -66,7 +66,7 @@ const ModalPerfil = (props) => {
       guardarMsgError('El usuario y la password son obligatorios');
       return;
     }
-    actualizarUsuario({usuarioeditar, pais});
+    actualizarUsuario({...usuarioeditar, pais});
     setUsuarioeditar({
       id_usuario: 0,
       nombres: '',
@@ -76,9 +76,8 @@ const ModalPerfil = (props) => {
       recaudado: 0,
       estado: ''
     })
+    handleClose();
   }
-
-  const handleClose = () => onClose(false);
 
   return (
     <Dialog
