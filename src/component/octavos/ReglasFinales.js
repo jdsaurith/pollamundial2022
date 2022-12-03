@@ -109,7 +109,7 @@ const ReglasFinales = () => {
         En caso de empate en una fecha, se posicionará primero al participante que:<br/><br/>
         <b>PRIMERA CLÁUSULA:</b> Haya obtenido la mayor cantidad de puntos.<br/>
         <b>SEGUNDA CLÁUSULA:</b> Haya obtenido más aciertos exactos.<br/>
-        <b>TERCERA CLÁUSULA:</b> Haya registrado sus pronosticos con mayor anticipación.<br/>
+        <b>TERCERA CLÁUSULA:</b> Haya hecho más puntos en la Final Soñada.<br/>
       </Typography>
     </div>
   )
