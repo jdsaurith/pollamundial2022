@@ -532,14 +532,34 @@ export function agregarPodioAction(datos){
             console.log(datos);
             const res = await clienteAxios.post('resultados/podiofinalista', datos);
             console.log(res.data);
-            if(res.data.msg === 'exito'){                
+            if(res.data.msg === 'exito'){
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Los Equipos se guardaron correctamente!',
+                    showConfirmButton: false,
+                    timer: 1500
+                })               
                 dispatch(agregarPodioExito(datos));
             }else if(res.data.msg === 'noregistros'){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Hubo un Error',
+                    text: 'Intenta de nuevo o comunicate con el ADMIN.',
+                    showConfirmButton: true
+                    //timer: 1500
+                })
                 dispatch(agregarPodioExito([]));
             }
             
         } catch (error) {
             console.log(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Hubo un Error',
+                text: 'Intenta de nuevo o comunicate con el ADMIN.',
+                showConfirmButton: true
+                //timer: 1500
+            })
             dispatch(agregarPodioError())
         }
     }

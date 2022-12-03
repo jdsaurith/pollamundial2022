@@ -7,8 +7,9 @@ import Puntostorneo from '../puntos/Puntostorneo';
 import PuntosFechas from '../puntos/PuntosFechas';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { obtenerposicionesAction } from '../../action/resultadoAction';
+import { obtenerposicionesAction, obtenerPosicionesFinalesAction } from '../../action/resultadoAction';
 import { obtenerPuntosTorneoAction } from '../../action/usuarioAction';
+import PosicionesFinales from '../octavos/PosicionesFinales';
 
 const background = '/imagenes/card/trofeo.jpg';
 const background1 = '/imagenes/card/puntos.jpg';
@@ -41,24 +42,39 @@ const InfoGeneral = () => {
     
     const dispatch = useDispatch();
     const obtenerposiciones = () =>dispatch(obtenerposicionesAction());
+    const obtenerPosicionesFinales = () =>dispatch(obtenerPosicionesFinalesAction());
     const obtenerPuntosTorneo = (id) => dispatch(obtenerPuntosTorneoAction(id));
     const usuario = useSelector(state => state.auth.usuario);    
     const posicionestabla = useSelector(state => state.resultado.posiciones);
+    const posicionesfinales = useSelector(state => state.resultado.posicionesfinales);
     const puntosfecha = useSelector(state => state.usuario.puntostorneo);
     
     
 
     useEffect(() => {
         obtenerposiciones();
+        obtenerPosicionesFinales();
       }, [])
 
     useEffect(() => {
         obtenerPuntosTorneo(usuario?.id_usuario);
     }, [])
   
+    // useEffect(() => {
+    //     if(posicionestabla){
+    //         returnPosi(posicionestabla).map(p => {
+    //             if(p.id_usuario === usuario?.id_usuario){
+    //                 guardarposicionesFiltro(p);
+    //                 return
+    //             }                
+    //        })
+    //     }     
+        
+    // }, [posicionestabla]) 
+
     useEffect(() => {
-        if(posicionestabla){
-            returnPosi(posicionestabla).map(p => {
+        if(posicionesfinales){
+            returnPosi(posicionesfinales).map(p => {
                 if(p.id_usuario === usuario?.id_usuario){
                     guardarposicionesFiltro(p);
                     return
@@ -66,11 +82,11 @@ const InfoGeneral = () => {
            })
         }     
         
-    }, [posicionestabla])
+    }, [posicionesfinales])
 
     useEffect(() => {
         if(puntosfecha){
-           const pf = puntosfecha.filter(f => f.fecha === 'FECHA3');
+           const pf = puntosfecha.filter(f => f.fecha === 'OCTAVOS');
            setPuntosfechax(pf[0]?.puntos);
         }  
     }, [puntosfecha])
@@ -261,7 +277,7 @@ const InfoGeneral = () => {
                             </Grid>
                             <Grid item xs={12} md={12} lg={12} display='flex' justifyContent='center'>                            
                                 <button onClick={btnPuntosFecha2}>
-                                    Puntos Fecha 3
+                                    Puntos octavos 
                                 </button>                               
                             </Grid>
                     </Grid>
@@ -272,7 +288,7 @@ const InfoGeneral = () => {
 
             </Grid>
             <Grid xs={12} display='flex' justifyContent='center' alignItems='center' mt='20px'>
-                {posiciones && <Posiciones sinpremio={true}/>}
+                {posiciones && <PosicionesFinales sinpremio={true}/>}
                 {puntostorneo && <Puntostorneo /> }
                 {puntosfecha2 && <PuntosFechas /> }
 

@@ -346,8 +346,8 @@ const Home = () => {
                   {componente === 'Usuarios' ? usuario?.tipousuario === 'ROOT' || usuario?.tipousuario === 'ADMIN' ? <Usuarios /> : <InfoGeneral /> : null}
                   {componente === 'Reglas' && <Reglas  />}
                   {componente === 'Reglas Fase Final' && <ReglasFinales  />}
-                  {componente === 'Posiciones' && <Posiciones  sinpremio={false} />}
-                  {componente === 'Posiciones Finales' && <PosicionesFinales />}
+                  {componente === 'Posiciones Fase Grupos' && <Posiciones  sinpremio={false} />}
+                  {componente === 'Posiciones Finales' && <PosicionesFinales sinpremio={false}/>}
                   {componente === 'Final Soñada' && <FinalDeseada />}
                   {componente === 'Resultados' && <Resultados  />}
                   {componente === 'FECHA 1' && 
