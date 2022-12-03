@@ -266,7 +266,7 @@ const Home = () => {
     setDatos({
       titulo: 'PENDIENTE POR REGISTRAR',
       contenido: `Puedes guardar el resultado en cualqueir momento,
-                  siempre y cuando sea una hora antes del partido :).`
+                  siempre y cuando sea antes del inicio del partido :).`
     });
     setOpenModal(true);
   }
