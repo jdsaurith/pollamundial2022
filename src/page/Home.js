@@ -36,6 +36,7 @@ import Octavosfinal from '../component/octavos/Octavosfinal';
 import PosicionesFinales from '../component/octavos/PosicionesFinales';
 import ModalInformativo from '../component/layouts/ModalInformativo';
 import ReglasFinales from '../component/octavos/ReglasFinales';
+import FinalDeseada from '../component/octavos/FinalDeseada';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -198,7 +199,7 @@ const Home = () => {
   const dispatch = useDispatch();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-  const [openModalInfo, setOpenModalInfo] = useState(true);
+  const [openModalInfo, setOpenModalInfo] = useState(false);
   const [datos, setDatos] = useState();
   const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
   const [componente, setComponente] = useState('Usuarios');
@@ -233,12 +234,12 @@ const Home = () => {
     if (habilitarperfil) setComponente('Perfil');
   }, [habilitarperfil])
 
-  // useEffect(() => {
+  useEffect(() => {
 
-  //   if(usuario?.publicidad === 'FALSE'){
-  //     setOpenModalInfo(true);
-  //   }
-  // }, [!usuario])
+    if(usuario?.publicidad === 'FALSE'){
+      setOpenModalInfo(true);
+    }
+  }, [usuario])
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -347,6 +348,7 @@ const Home = () => {
                   {componente === 'Reglas Fase Final' && <ReglasFinales  />}
                   {componente === 'Posiciones' && <Posiciones  sinpremio={false} />}
                   {componente === 'Posiciones Finales' && <PosicionesFinales />}
+                  {componente === 'Final Soñada' && <FinalDeseada />}
                   {componente === 'Resultados' && <Resultados  />}
                   {componente === 'FECHA 1' && 
                   <>

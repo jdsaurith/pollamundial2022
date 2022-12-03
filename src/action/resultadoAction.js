@@ -35,11 +35,21 @@ import {
     OBTENER_DETALLES_POSICIONES_FINALES_ERROR,
     CONSULTAR_RECAUDO,
     CONSULTAR_RECAUDO_EXITO,
-    CONSULTAR_RECAUDO_ERROR
+    CONSULTAR_RECAUDO_ERROR,
+    OBTENER_EQUIPOS,
+    OBTENER_EQUIPOS_EXITO,
+    OBTENER_EQUIPOS_ERROR,
+    AGREGAR_PODIO,
+    AGREGAR_PODIO_EXITO,
+    AGREGAR_PODIO_ERROR,
+    OBTENER_PODIO,
+    OBTENER_PODIO_EXITO,
+    OBTENER_PODIO_ERROR
 } from '../types';
 
 import clienteAxios from '../config/axios';
 import Swal from 'sweetalert2';
+import { DisplaySettings } from '@mui/icons-material';
 
 export function resultadopartidosAction(result){
     return async (dispatch) =>{
@@ -481,4 +491,99 @@ const obtenerpuntosFechaExito = (res) => ({
 })
 const obtenerpuntosFechaError = () => ({
     type: OBTENER_PUNTOS_FECHA_ERROR
+})
+
+////obtener todos los equipos
+export function obtenerEquiposAction(){
+    return async (dispatch) =>{
+        dispatch(obtenerEquipos());
+        try {
+            // console.log(datos);
+            const res = await clienteAxios.get('resultados/equipos');
+            console.log(res.data);
+            if(res.data.msg === 'exito'){                
+                dispatch(obtenerEquiposExito(res.data.result));
+            }else if(res.data.msg === 'noregistros'){
+                dispatch(obtenerEquiposExito([]));
+            }
+            
+        } catch (error) {
+            console.log(error);            
+            dispatch(obtenerEquiposError());
+        }
+    }
+    
+}
+const obtenerEquipos = () => ({
+    type: OBTENER_EQUIPOS
+})
+const obtenerEquiposExito = (res) => ({
+    type: OBTENER_EQUIPOS_EXITO,
+    payload: res
+})
+const obtenerEquiposError = () => ({
+    type: OBTENER_EQUIPOS_ERROR
+})
+
+export function agregarPodioAction(datos){
+    return async dispatch =>{
+        dispatch(agregarPodio())
+        try {
+            console.log(datos);
+            const res = await clienteAxios.post('resultados/podiofinalista', datos);
+            console.log(res.data);
+            if(res.data.msg === 'exito'){                
+                dispatch(agregarPodioExito(datos));
+            }else if(res.data.msg === 'noregistros'){
+                dispatch(agregarPodioExito([]));
+            }
+            
+        } catch (error) {
+            console.log(error);
+            dispatch(agregarPodioError())
+        }
+    }
+}
+
+const agregarPodio = () => ({
+    type: AGREGAR_PODIO
+})
+const agregarPodioExito = (res) => ({
+    type: AGREGAR_PODIO_EXITO,
+    payload: res
+})
+const agregarPodioError = () => ({
+    type: AGREGAR_PODIO_ERROR
+})
+
+////obtener  el podio de los 4 equipos
+export function obtenerPodioAction(id){
+    return async (dispatch) =>{
+        dispatch(obtenerPodio());
+        try {
+            // console.log(datos);
+            const res = await clienteAxios.get(`resultados/obtenerpodio/${id}`);
+            console.log(res.data);
+            if(res.data.msg === 'exito'){                
+                dispatch(obtenerPodioExito(res.data.result));
+            }else if(res.data.msg === 'noregistros'){
+                dispatch(obtenerPodioExito([]));
+            }
+            
+        } catch (error) {
+            console.log(error);            
+            dispatch(obtenerPodioError());
+        }
+    }
+    
+}
+const obtenerPodio = () => ({
+    type: OBTENER_PODIO
+})
+const obtenerPodioExito = (res) => ({
+    type: OBTENER_PODIO_EXITO,
+    payload: res
+})
+const obtenerPodioError = () => ({
+    type: OBTENER_PODIO_ERROR
 })

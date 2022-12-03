@@ -12,7 +12,7 @@ const ModalInformativo = (props) => {
   const usuario = useSelector(state => state.auth.usuario);
   
   const handleClose = () => {
-    // informacionvista(usuario?.id_usuario);
+    informacionvista(usuario?.id_usuario);
     onClose(false);
   }
 
@@ -34,21 +34,22 @@ const ModalInformativo = (props) => {
         </DialogTitle>
         <DialogContent dividers>
             <Typography>
-            Estimados y estimadas, como están estipuladas las reglas, 
-            la polla <strong style={{backgroundColor: '#C8EDF3'}}>finaliza con el último partido de la fecha 3 </strong>, 
-            los tres participantes que más puntos obtengan serán los ganadores;
+            Felicidades a los ganadores de la fase de grupos, 
+            los cuales son 
             </Typography>
             <Typography>
-            Estamos muy agradecidos con su participación, felicidades al ganador o ganadora y 
-            los que no ganaron no me queda más que desearle mucha suerte para la próxima polla.
+            <strong style={{backgroundColor: '#C8EDF3'}}>1: DIVIER LASCARRO </strong><br/>
+            <strong style={{backgroundColor: '#C8EDF3'}}>2: JAIDIS LOZADA </strong><br/>
+            <strong style={{backgroundColor: '#C8EDF3'}}>3: EFREN ROBLES </strong><br/>
+            <strong style={{backgroundColor: '#C8EDF3'}}>3: ADRIANA OLIVEROS </strong><br/><br/>
             </Typography>
-            {/* <Typography>
+            <Typography>
             A pedido de la mayoría de ustedes me solicitaron realizar otra <strong style={{backgroundColor: '#C8EDF3'}}>polla con los partidos de la 
             fase final del mundial con un valor de 20.000 pesos </strong>para quien quiera ser parte nuevamente 
             comunicarse con al WhatsApp +54 1127492450 (Jefferson Saurith)  o +57 3023015168 (Kevin Florez).
             <strong style={{backgroundColor: '#C8EDF3'}}>Las reglas se van a especificar el viernes por la noche. 
             (está vez el empate suma puntos y en caso de penales sumaran puntos si eligen al equipo ganador.)</strong>
-            </Typography> */}
+            </Typography>
         </DialogContent>
         <DialogActions>
           <Button
