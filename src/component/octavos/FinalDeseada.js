@@ -4,6 +4,7 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import { useDispatch, useSelector } from 'react-redux';
 import { obtenerEquiposAction, agregarPodioAction, obtenerPodioAction } from '../../action/resultadoAction';
 import moment from 'moment';
+import { formatearFechaDoshoras } from '../../helpers';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -20,6 +21,8 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 const FinalDeseada = () => {
     let fecha_podio = moment().utc()
     .format('yyyy/MM/DD HH:mm:ss');
+    let fecha2 = new Date('2022-12-03T15:00:00.000Z');
+    const [tiempo, setTiempo] = useState(Date.now()  >= formatearFechaDoshoras(fecha2, 0.5));
     const [error, guardarError] = useState(false);
     const [input, setInput] = useState({
         campeon: 0,
@@ -46,13 +49,20 @@ const FinalDeseada = () => {
     const podioequipos = useSelector(state => state.resultado.podioequipos);
     const podio = useSelector(state => state.resultado.podio);
     
-    // console.log(podioequipos);
-    // console.log(equiposlist);
+    // console.log(fecha2);
+    // console.log(tiempo);
     
     useEffect(() => {
         obtenerEquipos();
         obtenerPodio(usuario?.id_usuario);
     },[]);
+
+    useEffect(() => {
+        setInterval(() => {
+          setTiempo(Date.now()  >= formatearFechaDoshoras(fecha2, 0.5));
+        }, 600000);
+    
+      }, [tiempo]);
 
     useEffect(() => {
         if(podioequipos){
@@ -140,6 +150,7 @@ const FinalDeseada = () => {
                 <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
                     <Grid xs={6} display='flex' justifyContent='flex-end' alignItems='center' mr={2}>
                         <TextField
+                        disabled={tiempo}
                         required
                         select
                         name="campeon"
@@ -173,6 +184,7 @@ const FinalDeseada = () => {
                 <Grid item xs={12} display='flex' justifyContent='center' alignItems='center' >
                     <Grid xs={6} display='flex' justifyContent='flex-end' alignItems='center' mr={2} >
                         <TextField
+                            disabled={tiempo}
                             required
                             select
                             name="subcampeon"
@@ -204,6 +216,7 @@ const FinalDeseada = () => {
                 <Grid item xs={12} display='flex' justifyContent='center' alignItems='center' >
                     <Grid xs={6} display='flex' justifyContent='flex-end' alignItems='center' mr={2}>
                         <TextField
+                            disabled={tiempo}
                             required
                             select
                             name="tercerpuesto"
@@ -235,6 +248,7 @@ const FinalDeseada = () => {
                 <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
                     <Grid xs={6} display='flex' justifyContent='flex-end' alignItems='center' mr={2}>
                         <TextField
+                            disabled={tiempo}
                             required
                             select
                             name="cuartopuesto"
@@ -267,7 +281,7 @@ const FinalDeseada = () => {
                 <Grid container spacing={2} display='flex' justifyContent='center' alignContent='center' padding='2'>
                 <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
                     <Button
-                    disabled={usuario?.octavos === 'FALSE' ? true : false}
+                    disabled={usuario?.octavos === 'FALSE' ? true : tiempo ? true : false}
                     type="submit"
                     variant="contained"
                     color="primary"
