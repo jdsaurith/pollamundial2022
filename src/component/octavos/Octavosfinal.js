@@ -27,7 +27,7 @@ const Octavosfinal = ({ id_partido, datosapuesta, fecha, fechavalidacion, idequi
   let fecha2 = new Date(fechavalidacion);
   let numeros = /^[0-9]+$/;
   const [expanded, setExpanded] = React.useState(false);
-  const [tiempo, setTiempo] = useState(Date.now()  >= formatearFechaDoshoras(fecha2, 0));
+  const [tiempo, setTiempo] = useState(Date.now()  >= formatearFechaDoshoras(fecha2, 0.2));
   const [resultadoapostador, setResultadoapostador] = useState();
   const [radiobtn, setRadiobtn] = useState({
     equipoA: false,
@@ -57,7 +57,7 @@ const Octavosfinal = ({ id_partido, datosapuesta, fecha, fechavalidacion, idequi
 
   useEffect(() => {
     setInterval(() => {
-      setTiempo(Date.now()  >= formatearFechaDoshoras(fecha2, 0));
+      setTiempo(Date.now()  >= formatearFechaDoshoras(fecha2, 0.2));
     }, 60000);
     if(tiempo && estado ==='INACTIVO'){
       updateStatePartido(id_partido);
