@@ -48,7 +48,8 @@ const categories = [
         },
         { id: 'Reglas', icon: <RuleIcon /> },        
         { id: 'Resultados', icon: <SportsSoccerIcon /> },
-        { id: 'Posiciones Fase Grupos', icon: <DnsRoundedIcon /> },
+        { id: 'Agregar Fechas', icon: <SportsIcon /> },
+        // { id: 'Posiciones Fase Grupos', icon: <DnsRoundedIcon /> },
         
       ],
     },
@@ -80,6 +81,7 @@ const Navigator = (props) => {
     const usuarioadmin = useSelector(state => state.auth.usuario);
     const tipousuario = useSelector(state => state.auth.tipousuario);
     
+    // console.log(tipousuario);
     
     const btnListado = (id) => {
       setMobileOpen(!open)
@@ -95,8 +97,7 @@ const Navigator = (props) => {
                     POLLA 2022
                 </ListItem>
                 {categories.map(({ id, children }) => (
-                    <Box key={id} sx={{ bgcolor: '#101F33' }}>
-                      {tipousuario === 'ROOT' && id === 'FECHAS FIFA' ? null :
+                    <Box key={id} sx={{ bgcolor: '#101F33' }}>                      
                         <>
                           <ListItem sx={{ py: 2, px: 3 }}>
                               <ListItemText sx={{ color: '#fff' }}>{id}</ListItemText>
@@ -110,6 +111,16 @@ const Navigator = (props) => {
                                 <ListItemText>{tipousuario === 'ROOT' ? childId : 'Home'}</ListItemText>
                                 </ListItemButton>
                             </ListItem>
+                            :    
+                            childId === 'Agregar Fechas' 
+                            ?                        
+                            tipousuario === 'ROOT' ?
+                            <ListItem  button onClick={() => btnListado(childId)} disablePadding key={childId}>
+                              <ListItemButton selected={active} sx={item}>
+                              <ListItemIcon>{icon}</ListItemIcon>
+                              <ListItemText>{childId}</ListItemText>
+                              </ListItemButton>
+                            </ListItem>:null
                             :
                             <ListItem  button onClick={() => btnListado(childId)} disablePadding key={childId}>
                               <ListItemButton selected={active} sx={item}>
@@ -120,8 +131,7 @@ const Navigator = (props) => {
                           ))}
 
                           <Divider sx={{ mt: 2 }} />
-                        </>
-                      }
+                        </>                     
                     </Box>
                 ))}
             </List>
