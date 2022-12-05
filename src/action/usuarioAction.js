@@ -75,7 +75,6 @@ export function editarUsuarioAction(c){
     return async dispatch =>{
         dispatch(usuarioEditar());
      try {
-        // console.log(c);
         const res = await clienteAxios.put('/usuarios',c);
         //  console.log(res.data);
         if(res.data.msg === 'actualizado'){
@@ -90,7 +89,7 @@ export function editarUsuarioAction(c){
             //refrescar los datos
             if(c.tipousuario === 'COLOMBIA'){
             dispatch(actualizarUsuarioColombia(res.data.user));
-            }else{                
+            }else{
             dispatch(verUsuariosAction(c.pais));
             }
         }

@@ -44,7 +44,13 @@ import {
     AGREGAR_PODIO_ERROR,
     OBTENER_PODIO,
     OBTENER_PODIO_EXITO,
-    OBTENER_PODIO_ERROR
+    OBTENER_PODIO_ERROR,
+    OBTENER_EQUIPOS_FASES_FINALES,
+    OBTENER_EQUIPOS_FASES_FINALES_EXITO,
+    OBTENER_EQUIPOS_FASES_FINALES_ERROR,
+    AGREGAR_PARTIDOS_FINALES,
+    AGREGAR_PARTIDOS_FINALES_EXITO,
+    AGREGAR_PARTIDOS_FINALES_ERROR
 } from '../types';
 
 import clienteAxios from '../config/axios';
@@ -525,6 +531,38 @@ const obtenerEquiposError = () => ({
     type: OBTENER_EQUIPOS_ERROR
 })
 
+////obtener equipos de cuarto de final en adelante
+export function obtenerEquiposFaseFinalesAction(f){
+    return async (dispatch) =>{
+        dispatch(obtenerEquiposFaseFinales());
+        try {
+            console.log(f);
+            const res = await clienteAxios.get(`resultados/equiposfinales/${f}`);
+            // console.log(res.data);
+            if(res.data.msg === 'exito'){                
+                dispatch(obtenerEquiposFaseFinalesExito(res.data.result));
+            }else if(res.data.msg === 'noregistros'){
+                dispatch(obtenerEquiposFaseFinalesExito([]));
+            }
+            
+        } catch (error) {
+            console.log(error);            
+            dispatch(obtenerEquiposFaseFinalesError());
+        }
+    }
+    
+}
+const obtenerEquiposFaseFinales = () => ({
+    type: OBTENER_EQUIPOS_FASES_FINALES
+})
+const obtenerEquiposFaseFinalesExito = (res) => ({
+    type: OBTENER_EQUIPOS_FASES_FINALES_EXITO,
+    payload: res
+})
+const obtenerEquiposFaseFinalesError = () => ({
+    type: OBTENER_EQUIPOS_FASES_FINALES_ERROR
+})
+
 export function agregarPodioAction(datos){
     return async dispatch =>{
         dispatch(agregarPodio())
@@ -574,6 +612,58 @@ const agregarPodioExito = (res) => ({
 })
 const agregarPodioError = () => ({
     type: AGREGAR_PODIO_ERROR
+})
+
+///agregar fase finales
+export function agregarPartidoFinalesAction(datos){
+    return async dispatch =>{
+        dispatch(agregarPartidosFinales())
+        try {
+            console.log(datos);
+            const res = await clienteAxios.post('resultados/agregarpartidosFinales', datos);
+            console.log(res.data);
+            if(res.data.msg === 'exito'){
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Los Equipos se guardaron correctamente!',
+                    showConfirmButton: false,
+                    timer: 1500
+                })               
+                dispatch(agregarPartidosFinalesExito(datos));
+            }else if(res.data.msg === 'noregistros'){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Hubo un Error',
+                    text: 'Intenta de nuevo o comunicate con el ADMIN.',
+                    showConfirmButton: true
+                    //timer: 1500
+                })
+                dispatch(agregarPartidosFinalesExito([]));
+            }
+            
+        } catch (error) {
+            console.log(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Hubo un Error',
+                text: 'Intenta de nuevo o comunicate con el ADMIN.',
+                showConfirmButton: true
+                //timer: 1500
+            })
+            dispatch(agregarPartidosFinalesError())
+        }
+    }
+}
+
+const agregarPartidosFinales = () => ({
+    type: AGREGAR_PARTIDOS_FINALES
+})
+const agregarPartidosFinalesExito = (res) => ({
+    type: AGREGAR_PARTIDOS_FINALES_EXITO,
+    payload: res
+})
+const agregarPartidosFinalesError = () => ({
+    type: AGREGAR_PARTIDOS_FINALES_ERROR
 })
 
 ////obtener  el podio de los 4 equipos

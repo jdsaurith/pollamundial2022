@@ -44,7 +44,13 @@ import {
     AGREGAR_PODIO_ERROR,
     OBTENER_PODIO,
     OBTENER_PODIO_EXITO,
-    OBTENER_PODIO_ERROR
+    OBTENER_PODIO_ERROR,
+    OBTENER_EQUIPOS_FASES_FINALES,
+    OBTENER_EQUIPOS_FASES_FINALES_EXITO,
+    OBTENER_EQUIPOS_FASES_FINALES_ERROR,
+    AGREGAR_PARTIDOS_FINALES,
+    AGREGAR_PARTIDOS_FINALES_EXITO,
+    AGREGAR_PARTIDOS_FINALES_ERROR
 } from '../types'
 
 const initialState = {
@@ -61,6 +67,7 @@ const initialState = {
     puntosfechas: [],
     equiposlist: [],
     podio: [],
+    equiposfinalistas: [],
     podioequipos: null,
     consultarresultados: false,
     recaudo: 0,
@@ -72,6 +79,8 @@ const initialState = {
 
 const resultadoReducer = (state = initialState, action) =>{
     switch (action.type) {
+        case AGREGAR_PARTIDOS_FINALES:
+        case OBTENER_EQUIPOS_FASES_FINALES:
         case OBTENER_PODIO:
         case AGREGAR_PODIO:
         case OBTENER_EQUIPOS:
@@ -213,7 +222,22 @@ const resultadoReducer = (state = initialState, action) =>{
                 error: null,
                 podioequipos: action.payload
             }
-        
+        case OBTENER_EQUIPOS_FASES_FINALES_EXITO:
+            return{
+                ...state,
+                loading: false,
+                error: null,
+                equiposfinalistas: action.payload
+            }
+        case AGREGAR_PARTIDOS_FINALES_EXITO:
+            return{
+                ...state,
+                loading: false,
+                error: null
+            }
+
+        case AGREGAR_PARTIDOS_FINALES_ERROR:
+        case OBTENER_EQUIPOS_FASES_FINALES_ERROR:
         case OBTENER_PODIO_ERROR:
         case AGREGAR_PODIO_ERROR:
         case OBTENER_EQUIPOS_ERROR:

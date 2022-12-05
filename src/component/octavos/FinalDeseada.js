@@ -77,48 +77,54 @@ const FinalDeseada = () => {
 
     useEffect(() => {
         // console.log(equiposlist);
-        setcampeonlist(equiposlist);
-        setsubcampeonlist(equiposlist);
-        settercerolist(equiposlist);
-        setcuartolist(equiposlist);
+        const orderlist = equiposlist.sort((a,b) => {if(b?.equipo < a?.equipo){return 1 }else if( b?.equipo > a?.equipo){return -1}else return 0});
+        setcampeonlist(orderlist);
+        setsubcampeonlist(orderlist);
+        settercerolist(orderlist);
+        setcuartolist(orderlist);
     },[equiposlist]);
 
     useEffect(()=>{
-        const aux = equiposlist.filter(und => campeon !== und.id_equipo);
-        setsubcampeonlist(aux);
-        settercerolist(aux);
-        setcuartolist(aux);
-    },[campeon])
+        guardarError(false);
+        const auxchamp = equiposlist.filter(und => subcampeon !== und.id_equipo && tercerpuesto !== und.id_equipo && cuartopuesto !== und.id_equipo);
+        const auxsubchamp = equiposlist.filter(und => campeon !== und.id_equipo && tercerpuesto !== und.id_equipo && cuartopuesto !== und.id_equipo);
+        const auxthird = equiposlist.filter(und => campeon !== und.id_equipo && subcampeon !== und.id_equipo && cuartopuesto !== und.id_equipo);
+        const auxfourth = equiposlist.filter(und => campeon !== und.id_equipo && subcampeon !== und.id_equipo && tercerpuesto !== und.id_equipo);
+        setcampeonlist(auxchamp);
+        setsubcampeonlist(auxsubchamp);
+        settercerolist(auxthird);
+        setcuartolist(auxfourth);
+    },[campeon,subcampeon,tercerpuesto,cuartopuesto])
 
-    useEffect(()=>{
-        const aux = equiposlist.filter(und => subcampeon !== und.id_equipo);
-        setcampeonlist(aux);
-        settercerolist(aux);
-        setcuartolist(aux);
-    },[subcampeon])
+    // useEffect(()=>{
+    //     const aux = equiposlist.filter(und => subcampeon !== und.id_equipo);
+    //     setcampeonlist(aux);
+    //     settercerolist(aux);
+    //     setcuartolist(aux);
+    // },[subcampeon])
 
-    useEffect(()=>{
-        const aux = equiposlist.filter(und => tercerpuesto !== und.id_equipo);
-        setcampeonlist(aux);
-        setsubcampeonlist(aux);
-        setcuartolist(aux);
-    },[tercerpuesto])
+    // useEffect(()=>{
+    //     const aux = equiposlist.filter(und => tercerpuesto !== und.id_equipo);
+    //     setcampeonlist(aux);
+    //     setsubcampeonlist(aux);
+    //     setcuartolist(aux);
+    // },[tercerpuesto])
 
-    useEffect(()=>{
-        const aux = equiposlist.filter(und => cuartopuesto !== und.id_equipo);
-        setcampeonlist(aux);
-        setsubcampeonlist(aux);
-        settercerolist(aux);
-    },[cuartopuesto])
+    // useEffect(()=>{
+    //     const aux = equiposlist.filter(und => cuartopuesto !== und.id_equipo);
+    //     setcampeonlist(aux);
+    //     setsubcampeonlist(aux);
+    //     settercerolist(aux);
+    // },[cuartopuesto])
 
     const  onSubmit = (e) =>{
         e.preventDefault();
         //validacion de datos
-        if(campeon === 0 || subcampeon === 0 || tercerpuesto === 0 || cuartopuesto === 0){
+        if(!campeon || !subcampeon || !tercerpuesto || !cuartopuesto){
         guardarError(true);
         return;
         }
-        // console.log(fecha_podio);
+        // console.log(input,usuario?.id_usuario,fecha_podio);
         //guardar en a base de datos
         agregarPodio({...input, id_usuario: usuario?.id_usuario, fecha_podio});
     }
@@ -175,8 +181,7 @@ const FinalDeseada = () => {
                                 return <img src={`/imagenes/${eq.icon}.png`}  alt='Campeón' loading='Campeón'/>
                             }
                           })
-                        }                   
-                                 
+                        }
                     </Grid>
                 
                 </Grid>

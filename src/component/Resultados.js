@@ -319,6 +319,210 @@ const Resultados = () => {
             </Grid>
           </AccordionDetails>
         </Accordion>
+        {/* /////// CUARTOS DE FINAL */}
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel3a-content"
+            id="panel3a-header"
+          >
+            <Typography>CUARTOS DE FINAL</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Grid container spacing={2} display='flex' justifyContent='center' alignItems='center'>
+              {obtenerpartidos.filter(f => f.jornada === 'CUARTOSFINAL').map(row =>(
+                <Grid item>
+                <TableContainer>
+                  <Table sx={{ minWidth: 430 }} aria-label="simple table">
+                      <TableHead>
+                        <TableRow>
+                          <StyledTableCell style={{ display: 'flex' }}>
+                          <Grid xs={10}>
+                            OCTAVOS DE FINAL
+                          </Grid>
+                          <Grid xs={2}>
+                            <IconButton
+                            size="large"
+                            aria-label="show 17 new notifications"
+                            color="inherit"
+                            >
+                              <CheckCircleIcon />
+                            </IconButton>
+                          </Grid>
+                          </StyledTableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        <ResultadosFinales
+                          key={row.id_partido}
+                          id_partido={row.id_partido}
+                          datosapuesta={datosapuesta}
+                          fecha={formatearFecha(row.fecha)}
+                          idequipo1={row.equipo_uno}
+                          idequipo2={row.equipo_dos}
+                          ganador_penales={row.ganador_penales}
+                          equipo1={row.equipouno}
+                          icon1={row.iconuno}
+                          equipo2={row.equipodos}
+                          icon2={row.icondos}
+                          descripcion = 'MUNDIAL QATAR 2022 CUARTOS DE FINAL'
+                          estado={row.estado}
+                          />
+                      </TableBody>
+                    </Table>
+                </TableContainer>
+                </Grid>
+              ))}
+              <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
+              {(tipousuario === 'ROOT' || tipousuario === 'ADMIN') &&
+                    <Button
+                      type='button'
+                      variant='contained'
+                      color='primary'
+                      onClick={() => btnResultados('FINALES')}
+                    >
+                      GUARDAR RESULTADOS
+                    </Button>}
+                </Grid>
+            </Grid>
+          </AccordionDetails>
+        </Accordion>
+        {/* /////// SEMIFINAL */}
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel3a-content"
+            id="panel3a-header"
+          >
+            <Typography>SEMIFINAL</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Grid container spacing={2} display='flex' justifyContent='center' alignItems='center'>
+              {obtenerpartidos.filter(f => f.jornada === 'SEMIFINAL').map(row =>(
+                <Grid item>
+                <TableContainer>
+                  <Table sx={{ minWidth: 430 }} aria-label="simple table">
+                      <TableHead>
+                        <TableRow>
+                          <StyledTableCell style={{ display: 'flex' }}>
+                          <Grid xs={10}>
+                            OCTAVOS DE FINAL
+                          </Grid>
+                          <Grid xs={2}>
+                            <IconButton
+                            size="large"
+                            aria-label="show 17 new notifications"
+                            color="inherit"
+                            >
+                              <CheckCircleIcon />
+                            </IconButton>
+                          </Grid>
+                          </StyledTableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        <ResultadosFinales
+                          key={row.id_partido}
+                          id_partido={row.id_partido}
+                          datosapuesta={datosapuesta}
+                          fecha={formatearFecha(row.fecha)}
+                          idequipo1={row.equipo_uno}
+                          idequipo2={row.equipo_dos}
+                          ganador_penales={row.ganador_penales}
+                          equipo1={row.equipouno}
+                          icon1={row.iconuno}
+                          equipo2={row.equipodos}
+                          icon2={row.icondos}
+                          descripcion = 'MUNDIAL QATAR 2022 SEMIFINAL'
+                          estado={row.estado}
+                          />
+                      </TableBody>
+                    </Table>
+                </TableContainer>
+                </Grid>
+              ))}
+              <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
+              {(tipousuario === 'ROOT' || tipousuario === 'ADMIN') &&
+                    <Button
+                      type='button'
+                      variant='contained'
+                      color='primary'
+                      onClick={() => btnResultados('FINALES')}
+                    >
+                      GUARDAR RESULTADOS
+                    </Button>}
+                </Grid>
+            </Grid>
+          </AccordionDetails>
+        </Accordion>
+        {/* /////// FINAL */}
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel3a-content"
+            id="panel3a-header"
+          >
+            <Typography>FINAL</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Grid container spacing={2} display='flex' justifyContent='center' alignItems='center'>
+              {obtenerpartidos.filter(f => f.jornada === 'TERCEROYCUARTO' && f.jornada === 'FINAL').map(row =>(
+                <Grid item>
+                <TableContainer>
+                  <Table sx={{ minWidth: 430 }} aria-label="simple table">
+                      <TableHead>
+                        <TableRow>
+                          <StyledTableCell style={{ display: 'flex' }}>
+                          <Grid xs={10}>
+                            FINAL
+                          </Grid>
+                          <Grid xs={2}>
+                            <IconButton
+                            size="large"
+                            aria-label="show 17 new notifications"
+                            color="inherit"
+                            >
+                              <CheckCircleIcon />
+                            </IconButton>
+                          </Grid>
+                          </StyledTableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        <ResultadosFinales
+                          key={row.id_partido}
+                          id_partido={row.id_partido}
+                          datosapuesta={datosapuesta}
+                          fecha={formatearFecha(row.fecha)}
+                          idequipo1={row.equipo_uno}
+                          idequipo2={row.equipo_dos}
+                          ganador_penales={row.ganador_penales}
+                          equipo1={row.equipouno}
+                          icon1={row.iconuno}
+                          equipo2={row.equipodos}
+                          icon2={row.icondos}
+                          descripcion = 'MUNDIAL QATAR 2022 TERCER Y CUARTO PUESTO Y LA FINAL'
+                          estado={row.estado}
+                          />
+                      </TableBody>
+                    </Table>
+                </TableContainer>
+                </Grid>
+              ))}
+              <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
+              {(tipousuario === 'ROOT' || tipousuario === 'ADMIN') &&
+                    <Button
+                      type='button'
+                      variant='contained'
+                      color='primary'
+                      onClick={() => btnResultados('FINALES')}
+                    >
+                      GUARDAR RESULTADOS
+                    </Button>}
+                </Grid>
+            </Grid>
+          </AccordionDetails>
+        </Accordion>        
     </div>
   )
 }
