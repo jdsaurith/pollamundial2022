@@ -45,7 +45,7 @@ const Reglas = () => {
       <h2>¿Cómo pronosticar y hasta cuándo tengo tiempo?</h2>
       <Typography paragraph>
         Dentro del juego podrás comenzar a pronosticar los partidos de las fechas habilitadas del mundial.
-        Tendrás <strong style={{backgroundColor: '#C8EDF3'}}>hasta antes</strong> que comience el partido para agregar o modificar tu pronóstico,
+        Tendrás <strong style={{backgroundColor: '#C8EDF3'}}>hasta 10 minutos antes</strong> que comience el partido para agregar o modificar tu pronóstico,
         de lo contrario, pasada la media hora previa, no podrás cambiar tu pronóstico del partido.
         Los puntos que se obtienen una vez finalizado el partido estarán dados de la siguiente forma:
       </Typography>
