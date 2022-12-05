@@ -619,9 +619,9 @@ export function agregarPartidoFinalesAction(datos){
     return async dispatch =>{
         dispatch(agregarPartidosFinales())
         try {
-            console.log(datos);
+            // console.log(datos);
             const res = await clienteAxios.post('resultados/agregarpartidosFinales', datos);
-            console.log(res.data);
+            // console.log(res.data);
             if(res.data.msg === 'exito'){
                 Swal.fire({
                     icon: 'success',
@@ -673,7 +673,7 @@ export function obtenerPodioAction(id){
         try {
             // console.log(datos);
             const res = await clienteAxios.get(`resultados/obtenerpodio/${id}`);
-            console.log(res.data);
+            // console.log(res.data);
             if(res.data.msg === 'exito'){                
                 dispatch(obtenerPodioExito(res.data.result));
             }else if(res.data.msg === 'noregistros'){
