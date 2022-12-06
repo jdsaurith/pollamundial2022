@@ -125,7 +125,7 @@ const Octavosfinal = ({ id_partido, datosapuesta, fecha, fechavalidacion, idequi
 
   useEffect(() => {
     // console.log(input);
-    if(retornandovalores === false && input.golesequipo1 && input.golesequipo2 && error === false && ganador_penales !== ''){
+    if(retornandovalores === false && input.golesequipo1 && input.golesequipo2 && error === false && ganador_penales !== 0){
       let fechajuego = moment().format('yyyy/MM/DD HH:mm:ss');
       setResultadoapostador({...input, id_usuario: usuario.id_usuario, fecha: fechajuego, id_partido});
       // console.log(fechajuego);
@@ -134,7 +134,7 @@ const Octavosfinal = ({ id_partido, datosapuesta, fecha, fechavalidacion, idequi
 
   useEffect(() => {
     // console.log(resultadoapostador);
-    if(retornandovalores === false && input.golesequipo1 && input.golesequipo2 && error === false && ganador_penales !== ''){
+    if(retornandovalores === false && input.golesequipo1 && input.golesequipo2 && error === false && ganador_penales !== 0){
       // console.log('guardando los valores de input');
       var ban = false;
       const resultado = localStorage.getItem("resultado");  
