@@ -66,7 +66,7 @@ const categories = [
       id: 'FASES FINALES',
       children: [
         { id: 'Posiciones Finales', icon: <DnsRoundedIcon /> },
-        { id: 'Octavos de Final', icon: <SportsIcon /> },
+        { id: 'Cuartos de Final', icon: <SportsIcon /> },
         { id: 'Reglas Fase Final', icon: <RuleIcon /> },
         { id: 'Final Soñada', icon: <SportsIcon /> },
       ],

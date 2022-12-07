@@ -591,10 +591,10 @@ const Home = () => {
                   </Box>
                   </>
               }
-              {componente === 'Octavos de Final' && 
+              {componente === 'Cuartos de Final' && 
               <>
               <Grid container spacing={2} display='flex' justifyContent='center' alignItems='center'>
-                {obtenerpartidos.filter(f => f.jornada === 'OCTAVOS').map((row) =>( 
+                {obtenerpartidos.filter(f => f.jornada === 'CUARTOSFINAL').map((row) =>( 
                   <Grid item xs={12} md={12} lg={5}>
                     <TableContainer> 
                       <Table sx={{ minWidth: 230, maxWidth: 430 }} aria-label="simple table">

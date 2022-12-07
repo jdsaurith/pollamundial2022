@@ -38,7 +38,7 @@ const PuntosFechas = () => {
 
   
   useEffect(() => {
-    obtenerPuntosFecha({id_usuario: usuario?.id_usuario, fecha:'OCTAVOS'});
+    obtenerPuntosFecha({id_usuario: usuario?.id_usuario, fecha:'CUARTOSFINAL'});
   }, [])
 
   return (

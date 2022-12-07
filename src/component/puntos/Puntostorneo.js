@@ -32,10 +32,7 @@ const Puntostorneo = () => {
     const obtenerPuntosTorneo = (id) => dispatch(obtenerPuntosTorneoAction(id));
     const usuario = useSelector(state => state.auth.usuario);
     const puntostorneo = useSelector(state => state.usuario.puntostorneo);
-
-    // useEffect(() => {
-    //   obtenerPuntosTorneo(usuario?.id_usuario);
-    // }, [])
+    
   
   
  return (
