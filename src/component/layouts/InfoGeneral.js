@@ -49,7 +49,7 @@ const InfoGeneral = () => {
     const posicionesfinales = useSelector(state => state.resultado.posicionesfinales);
     const puntosfecha = useSelector(state => state.usuario.puntostorneo);
     
-    
+    // console.log(posicionesfinales);
 
     useEffect(() => {
         obtenerposiciones();
@@ -86,7 +86,7 @@ const InfoGeneral = () => {
 
     useEffect(() => {
         if(puntosfecha){
-           const pf = puntosfecha.filter(f => f.fecha === 'OCTAVOS');
+           const pf = puntosfecha.filter(f => f.fecha === 'CUARTOSFINAL');
            setPuntosfechax(pf[0]?.puntos);
         }  
     }, [puntosfecha])
@@ -277,7 +277,7 @@ const InfoGeneral = () => {
                             </Grid>
                             <Grid item xs={12} md={12} lg={12} display='flex' justifyContent='center'>                            
                                 <button onClick={btnPuntosFecha2}>
-                                    Puntos octavos 
+                                    Puntos Cuartos de final 
                                 </button>                               
                             </Grid>
                     </Grid>
