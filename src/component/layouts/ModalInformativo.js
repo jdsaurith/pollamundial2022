@@ -2,7 +2,8 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography }
 import React from 'react'
 import { useSelector, useDispatch  } from 'react-redux';
 import { informacionvistaAction } from '../../action/usuarioAction';
-
+import { faTrophy } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const ModalInformativo = (props) => {
   const {open, onClose, ...other} = props;
@@ -29,26 +30,20 @@ const ModalInformativo = (props) => {
     >
         <DialogTitle id="confirmation-dialog-title">
           <div style={{ textAlign: 'center', }}> 
-            <strong>FINAL DE LA POLLAFUTBOLERA.NET (FASE DE GRUPOS)</strong>
+            <strong>NUEVA FUNCIONALIDAD</strong>
           </div>
         </DialogTitle>
         <DialogContent dividers>
             <Typography>
-            Felicidades a los ganadores de la fase de grupos, 
-            los cuales son 
-            </Typography>
+             Ya puedes ver la final soñada o podio de tus rivales. <br />
+            </Typography>            
             <Typography>
-            <strong style={{backgroundColor: '#C8EDF3'}}>1: DIVIER LASCARRO </strong><br/>
-            <strong style={{backgroundColor: '#C8EDF3'}}>2: JAIDIS LOZADA </strong><br/>
-            <strong style={{backgroundColor: '#C8EDF3'}}>3: EFREN ROBLES </strong><br/>
-            <strong style={{backgroundColor: '#C8EDF3'}}>3: ADRIANA OLIVEROS </strong><br/><br/>
-            </Typography>
-            <Typography>
-            A pedido de la mayoría de ustedes me solicitaron realizar otra <strong style={{backgroundColor: '#C8EDF3'}}>polla con los partidos de la 
-            fase final del mundial con un valor de 20.000 pesos </strong>para quien quiera ser parte nuevamente 
-            comunicarse con al WhatsApp +54 1127492450 (Jefferson Saurith)  o +57 3023015168 (Kevin Florez).
-            <strong style={{backgroundColor: '#C8EDF3'}}>Las reglas se van a especificar el viernes por la noche. 
-            (está vez el empate suma puntos y en caso de penales sumaran puntos si eligen al equipo ganador.)</strong>
+              En la tabla Posiciones Finales encontraras un nuevo icono en forma de trofeo   
+              <FontAwesomeIcon
+              style={{
+                margin:  '0 5px'
+              }}
+              icon={faTrophy}/>, dale click y veras la final soñada del usuario.
             </Typography>
         </DialogContent>
         <DialogActions>
