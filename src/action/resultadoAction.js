@@ -50,7 +50,8 @@ import {
     OBTENER_EQUIPOS_FASES_FINALES_ERROR,
     AGREGAR_PARTIDOS_FINALES,
     AGREGAR_PARTIDOS_FINALES_EXITO,
-    AGREGAR_PARTIDOS_FINALES_ERROR
+    AGREGAR_PARTIDOS_FINALES_ERROR,
+    LIMPIAR_PODIO
 } from '../types';
 
 import clienteAxios from '../config/axios';
@@ -696,4 +697,14 @@ const obtenerPodioExito = (res) => ({
 })
 const obtenerPodioError = () => ({
     type: OBTENER_PODIO_ERROR
+})
+
+export function limpiarPodioAction(){
+    return dispatch =>{
+        dispatch(limpiarPodio());
+    }
+}
+
+const limpiarPodio = () =>({
+    type: LIMPIAR_PODIO
 })

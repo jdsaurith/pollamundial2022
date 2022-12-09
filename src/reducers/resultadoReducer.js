@@ -50,7 +50,8 @@ import {
     OBTENER_EQUIPOS_FASES_FINALES_ERROR,
     AGREGAR_PARTIDOS_FINALES,
     AGREGAR_PARTIDOS_FINALES_EXITO,
-    AGREGAR_PARTIDOS_FINALES_ERROR
+    AGREGAR_PARTIDOS_FINALES_ERROR,
+    LIMPIAR_PODIO
 } from '../types'
 
 const initialState = {
@@ -68,7 +69,7 @@ const initialState = {
     equiposlist: [],
     podio: [],
     equiposfinalistas: [],
-    podioequipos: null,
+    podioequipos: [],
     consultarresultados: false,
     recaudo: 0,
     resultado: null,
@@ -100,6 +101,11 @@ const resultadoReducer = (state = initialState, action) =>{
                 loading: true,
                 error: null,
                 consultarresultados: false
+            }
+        case LIMPIAR_PODIO:
+            return{
+                ...state,
+                podioequipos: []
             }
         case RESULTADO_PARTIDOS_EXITO:
             localStorage.removeItem('resultado');
