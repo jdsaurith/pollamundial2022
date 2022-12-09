@@ -49,7 +49,7 @@ const FinalDeseada = () => {
     const podioequipos = useSelector(state => state.resultado.podioequipos);
     const podio = useSelector(state => state.resultado.podio);
     
-    
+    // console.log(podioequipos);
     
     useEffect(() => {
         obtenerEquipos();
