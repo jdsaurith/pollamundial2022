@@ -37,6 +37,8 @@ const ModalPodio = (props) => {
   const dispatch = useDispatch();
   const obtenerPodio = (id)=>dispatch(obtenerPodioAction(id));
   const podioequipos = useSelector(state =>state.resultado.podioequipos);
+  
+  // console.log(podioequipos);
 
   useEffect(() => {
     obtenerPodio(datos?.id_usuario);

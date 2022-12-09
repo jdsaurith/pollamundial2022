@@ -22,7 +22,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Paginacion from '../layouts/Paginacion';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { obtenerPosicionesFinalesAction, limpiarDetallePosicionAction, consultarRecaudoAction } from '../../action/resultadoAction';
+import { obtenerPosicionesFinalesAction, limpiarDetallePosicionAction, consultarRecaudoAction, limpiarPodioAction } from '../../action/resultadoAction';
 import ModalFinales from '../layouts/ModalFinales';
 import { formatearDinero } from '../../helpers';
 import ModalPodio from '../layouts/ModalPodio';
@@ -126,6 +126,7 @@ const PosicionesFinales = (props) => {
     const obtenerposicionesfinales = () =>dispatch(obtenerPosicionesFinalesAction());
     const consultarRecaudo = () =>dispatch(consultarRecaudoAction());
     const limpiarDetallePosicion = () =>dispatch(limpiarDetallePosicionAction());
+    const limpiarPodio = () =>dispatch(limpiarPodioAction());
     const posicionesfinales = useSelector(state => state.resultado.posicionesfinales);
     const recaudo = useSelector(state => state.resultado.recaudo);
     const usuario = useSelector(state => state.auth.usuario);
@@ -182,7 +183,7 @@ const PosicionesFinales = (props) => {
     }
 
     const handleCloseModalFinal = () =>{
-      // limpiarDetallePosicion();
+      limpiarPodio();
       setOpenModalFinal(false);
     }
 
