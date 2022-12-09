@@ -16,7 +16,7 @@ import { Card, CardContent, CardMedia, Grid, IconButton, TablePagination, Typogr
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 
-import { faClipboardList, faEye } from '@fortawesome/free-solid-svg-icons';
+import { faClipboardList, faEye, faTrophy } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import Paginacion from '../layouts/Paginacion';
@@ -25,6 +25,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { obtenerPosicionesFinalesAction, limpiarDetallePosicionAction, consultarRecaudoAction } from '../../action/resultadoAction';
 import ModalFinales from '../layouts/ModalFinales';
 import { formatearDinero } from '../../helpers';
+import ModalPodio from '../layouts/ModalPodio';
 
 
 ////buscador
@@ -115,6 +116,7 @@ const PosicionesFinales = (props) => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [openModal, setOpenModal] = useState(false);
+    const [openModalFinal, setOpenModalFinal] = useState(false);
     const [posicionesfil, guardarposicionesFiltro] = useState([]);
     const [datos, setDatos] = useState();
     const [bolsa, setBolsa] = useState(0);
@@ -169,9 +171,19 @@ const PosicionesFinales = (props) => {
       setOpenModal(true);
     }
 
+    const finalSoñada = (row) =>{
+      setDatos(row);
+      setOpenModalFinal(true);
+    }
+
     const handleCloseModal = () =>{
       limpiarDetallePosicion();
       setOpenModal(false);
+    }
+
+    const handleCloseModalFinal = () =>{
+      // limpiarDetallePosicion();
+      setOpenModalFinal(false);
     }
 
     const handleChangePage = (event, newPage) => {
@@ -190,6 +202,14 @@ const PosicionesFinales = (props) => {
           keepMounted
           open={openModal}
           onClose={handleCloseModal}
+          classes={{maxWidth:'900', maxHeight:'600' }}
+          datos={datos}
+        />}
+        {openModalFinal &&
+          <ModalPodio 
+          keepMounted
+          open={openModalFinal}
+          onClose={handleCloseModalFinal}
           classes={{maxWidth:'900', maxHeight:'600' }}
           datos={datos}
         />}
@@ -295,6 +315,19 @@ const PosicionesFinales = (props) => {
                               opacity={usuario.octavos !== 'TRUE' && "50%"}
                               size="2x"
                               onClick={usuario.octavos === 'TRUE' ? ()=>detalleApuesta(row) : null}
+                            />
+                            <FontAwesomeIcon
+                              style={{
+                                margin:  '0 5px'
+                              }}
+                              title="FinalSoñada"
+                              name="finalsoñada"
+                              cursor={usuario.octavos === 'TRUE' ? 'pointer' :'not-allowed'}
+                              icon={faTrophy}
+                              color="#363636"
+                              opacity={usuario.octavos !== 'TRUE' && "50%"}
+                              size="2x"
+                              onClick={usuario.octavos === 'TRUE' ? ()=>finalSoñada(row) : null}
                             />
                       </StyledTableCell>
                   </StyledTableRow>

@@ -75,8 +75,8 @@ const ModalFinales = (props) => {
                   <StyledTableCell> PARTIDO </StyledTableCell>
                   <StyledTableCell> APUESTA </StyledTableCell>                  
                   <StyledTableCell> RESULTADO FIFA </StyledTableCell>
+                  <StyledTableCell> APUESTA PENALES </StyledTableCell>
                   <StyledTableCell> GANADOR PENALES </StyledTableCell>
-                  <StyledTableCell> GANADOR PENALES FIFA </StyledTableCell>
                   <StyledTableCell> PUNTOS </StyledTableCell>
                   <StyledTableCell> ACIERTOS </StyledTableCell>
                   <StyledTableCell> REGISTRO </StyledTableCell>
