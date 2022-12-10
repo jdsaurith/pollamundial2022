@@ -466,7 +466,7 @@ const Resultados = () => {
           </AccordionSummary>
           <AccordionDetails>
             <Grid container spacing={2} display='flex' justifyContent='center' alignItems='center'>
-              {obtenerpartidos.filter(f => f.jornada === 'TERCEROYCUARTO' && f.jornada === 'FINAL').map(row =>(
+              {obtenerpartidos.filter(f => f.jornada === 'TERCEROYCUARTO' || f.jornada === 'FINAL').map(row =>(
                 <Grid item>
                 <TableContainer>
                   <Table sx={{ minWidth: 430 }} aria-label="simple table">
@@ -474,7 +474,7 @@ const Resultados = () => {
                         <TableRow>
                           <StyledTableCell style={{ display: 'flex' }}>
                           <Grid xs={10}>
-                            FINAL
+                            {row.jornada === 'FINAL' ? 'FINAL' : 'TERCER LUGAR'}
                           </Grid>
                           <Grid xs={2}>
                             <IconButton
@@ -503,6 +503,7 @@ const Resultados = () => {
                           icon2={row.icondos}
                           descripcion = 'MUNDIAL QATAR 2022 TERCER Y CUARTO PUESTO Y LA FINAL'
                           estado={row.estado}
+                          jornada={row.jornada}
                           />
                       </TableBody>
                     </Table>

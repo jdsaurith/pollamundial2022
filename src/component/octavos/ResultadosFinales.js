@@ -20,7 +20,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment/moment';
 
 
-const ResultadosFinales = ({id_partido, datosapuesta, fecha, idequipo1, equipo1, idequipo2, equipo2, ganador_penales, icon1, icon2, descripcion, estado }) => {
+const ResultadosFinales = ({id_partido, datosapuesta, fecha, idequipo1, equipo1, idequipo2, equipo2, ganador_penales, icon1, icon2, descripcion, estado, jornada }) => {
 
     const dispatch = useDispatch();
     let fechajuego = moment()
@@ -91,7 +91,7 @@ const ResultadosFinales = ({id_partido, datosapuesta, fecha, idequipo1, equipo1,
     //// OBTENER LOS GOLES ESCRITOS POR EL ADMIN O ROOT 
     useEffect(() => {
       if(retornandovalores === false && input.golesequipo1 && input.golesequipo2 && input.ganador_penales !== ''){
-        setResultadoapostador({...input, fecha_update: fechajuego, id_partido});
+        setResultadoapostador({...input, fecha_update: fechajuego, id_partido, jornada});
       }
     }, [input])
 

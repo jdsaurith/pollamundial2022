@@ -305,12 +305,12 @@ const Home = () => {
     />}
 
     {openModalInfo &&
-          <ModalInformativo 
-          keepMounted
-          open={openModalInfo}
-          onClose={handleCloseModalInfo}
-          classes={{maxWidth:'200', maxHeight:'400' }}
-        />}
+      <ModalInformativo 
+      keepMounted
+      open={openModalInfo}
+      onClose={handleCloseModalInfo}
+      classes={{maxWidth:'200', maxHeight:'400' }}
+    />}
     
     <ThemeProvider theme={theme}>
       <Box sx={{ display: 'flex', minHeight: '100vh' }}>
@@ -602,7 +602,147 @@ const Home = () => {
                           <TableRow key={row.id_partido}>
                             <StyledTableCell style={{ display: 'flex' }}>
                               <Grid xs={10} md={10} lg={10}>
-                                OCTAVOS DE FINAL
+                                CUARTOS DE FINAL
+                              </Grid>
+                              <Grid xs={2} md={2} lg={2}>
+                              {addIcon(row.id_partido)?
+                                <IconButton
+                                  size="large"
+                                  color="inherit"
+                                  onClick={() => btnInfoSave()}
+                                  >
+                                    <CheckCircleIcon />
+                                  </IconButton>:
+                                  <IconButton
+                                  size="large"
+                                  color="inherit"
+                                  onClick={() => btnInfoNoSave()}
+                                  >
+                                    <Badge badgeContent={'i'} color="error">
+                                      <HelpOutlineIcon /> 
+                                    </Badge>
+                                  </IconButton>}
+                              </Grid>
+                            </StyledTableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          <Octavosfinal
+                            key={row.id_partido}
+                            datosapuesta={datosapuesta}
+                            id_partido={row.id_partido}
+                            fecha={formatearFecha(row.fecha)}
+                            fechavalidacion={row.fecha}
+                            idequipo1={row.equipo_uno}
+                            idequipo2={row.equipo_dos}
+                            equipo1={row.equipouno}
+                            icon1={row.iconuno}
+                            equipo2={row.equipodos}
+                            icon2={row.icondos}
+                            descripcion = 'MUNDIAL QATAR 2022 CUARTOS DE FINAL'
+                            estado={row.estado}
+                            setPendientes={setPendientes}
+                          />
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
+                  </Grid>
+                ))} 
+              </Grid>
+              <Box style={{ bottom:'30px', right:'30px', position:'fixed' }} >
+                {usuario.octavos === 'FALSE' ?
+                  <>
+                  <Typography style={{ fontSize:'1em' }} color='red'>CANCELA LA CUOTA PARA PARTICIPAR</Typography>
+                  </> 
+                  :
+                  <Fab color='primary' aria-label="add"  onClick={() => btnResultados('FINALES')}>
+                    <SaveIcon /> {pendientes === 0 ? '' :  pendientes > 9 ? <b> 9+</b> : <b> {pendientes}</b> }
+                  </Fab> }
+              </Box>
+              </>             
+              }
+              {componente === 'Semifinales' && 
+              <>
+              <Grid container spacing={2} display='flex' justifyContent='center' alignItems='center'>
+                {obtenerpartidos.filter(f => f.jornada === 'SEMIFINAL').map((row) =>( 
+                  <Grid item xs={12} md={12} lg={5}>
+                    <TableContainer> 
+                      <Table sx={{ minWidth: 230, maxWidth: 430 }} aria-label="simple table">
+                        <TableHead>
+                          <TableRow key={row.id_partido}>
+                            <StyledTableCell style={{ display: 'flex' }}>
+                              <Grid xs={10} md={10} lg={10}>
+                                SEMIFINALES
+                              </Grid>
+                              <Grid xs={2} md={2} lg={2}>
+                              {addIcon(row.id_partido)?
+                                <IconButton
+                                  size="large"
+                                  color="inherit"
+                                  onClick={() => btnInfoSave()}
+                                  >
+                                    <CheckCircleIcon />
+                                  </IconButton>:
+                                  <IconButton
+                                  size="large"
+                                  color="inherit"
+                                  onClick={() => btnInfoNoSave()}
+                                  >
+                                    <Badge badgeContent={'i'} color="error">
+                                      <HelpOutlineIcon /> 
+                                    </Badge>
+                                  </IconButton>}
+                              </Grid>
+                            </StyledTableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          <Octavosfinal
+                            key={row.id_partido}
+                            datosapuesta={datosapuesta}
+                            id_partido={row.id_partido}
+                            fecha={formatearFecha(row.fecha)}
+                            fechavalidacion={row.fecha}
+                            idequipo1={row.equipo_uno}
+                            idequipo2={row.equipo_dos}
+                            equipo1={row.equipouno}
+                            icon1={row.iconuno}
+                            equipo2={row.equipodos}
+                            icon2={row.icondos}
+                            descripcion = 'MUNDIAL QATAR 2022'
+                            estado={row.estado}
+                            setPendientes={setPendientes}
+                          />
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
+                  </Grid>
+                ))} 
+              </Grid>
+              <Box style={{ bottom:'30px', right:'30px', position:'fixed' }} >
+                {usuario.octavos === 'FALSE' ?
+                  <>
+                  <Typography style={{ fontSize:'1em' }} color='red'>CANCELA LA CUOTA PARA PARTICIPAR</Typography>
+                  </> 
+                  :
+                  <Fab color='primary' aria-label="add"  onClick={() => btnResultados('FINALES')}>
+                    <SaveIcon /> {pendientes === 0 ? '' :  pendientes > 9 ? <b> 9+</b> : <b> {pendientes}</b> }
+                  </Fab> }
+              </Box>
+              </>             
+              }
+              {componente === 'Finales' && 
+              <>
+              <Grid container spacing={2} display='flex' justifyContent='center' alignItems='center'>
+                {obtenerpartidos.filter(f => f.jornada === 'FINAL' || f.jornada === 'TERCEROYCUARTO' ).map((row) =>( 
+                  <Grid item xs={12} md={12} lg={5}>
+                    <TableContainer> 
+                      <Table sx={{ minWidth: 230, maxWidth: 430 }} aria-label="simple table">
+                        <TableHead>
+                          <TableRow key={row.id_partido}>
+                            <StyledTableCell style={{ display: 'flex' }}>
+                              <Grid xs={10} md={10} lg={10}>
+                                {row.jornada === 'FINAL' ? 'FINAL' : 'TERCER LUGAR'}
                               </Grid>
                               <Grid xs={2} md={2} lg={2}>
                               {addIcon(row.id_partido)?
